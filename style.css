@@ -622,12 +622,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Photo Collage with Horizontal Scroll */
+.photo-collage-container {
+    position: relative;
+    margin-bottom: 40px;
+}
+
 .photo-collage-wrapper {
     overflow-x: auto;
     overflow-y: hidden;
-    margin-bottom: 40px;
     padding-bottom: 10px;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: var(--warm-brown) var(--light-gray);
 }
@@ -648,6 +653,43 @@ h1, h2, h3, h4, h5, h6 {
 
 .photo-collage-wrapper::-webkit-scrollbar-thumb:hover {
     background: var(--bronze);
+}
+
+/* Scroll Buttons */
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 120px;
+    background: rgba(139, 111, 71, 0.3);
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.scroll-btn span {
+    font-size: 2rem;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-btn:hover {
+    background: rgba(139, 111, 71, 0.6);
+}
+
+.scroll-btn-left {
+    left: 0;
+    border-radius: 0 10px 10px 0;
+}
+
+.scroll-btn-right {
+    right: 0;
+    border-radius: 10px 0 0 10px;
 }
 
 .photo-collage {
@@ -985,7 +1027,17 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .photo-collage {
-        grid-template-columns: repeat(6, calc((100% - 15px) / 2));
+        grid-template-columns: repeat(12, calc((100% - 15px) / 2));
+        grid-template-rows: 1fr;
+    }
+
+    .scroll-btn {
+        width: 45px;
+        height: 80px;
+    }
+
+    .scroll-btn span {
+        font-size: 1.5rem;
     }
 
     .involvement-item {
