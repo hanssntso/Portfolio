@@ -621,78 +621,41 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--deep-navy);
 }
 
-/* Photo Collage Carousel */
-.collage-carousel {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
+/* Photo Collage with Horizontal Scroll */
+.photo-collage-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-bottom: 40px;
+    padding-bottom: 10px;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    scrollbar-width: thin;
+    scrollbar-color: var(--warm-brown) var(--light-gray);
 }
 
-.carousel-container {
-    overflow: hidden;
-    flex: 1;
+.photo-collage-wrapper::-webkit-scrollbar {
+    height: 8px;
 }
 
-.carousel-track {
-    display: flex;
-    transition: transform 0.5s ease;
+.photo-collage-wrapper::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 4px;
+}
+
+.photo-collage-wrapper::-webkit-scrollbar-thumb {
+    background: var(--warm-brown);
+    border-radius: 4px;
+}
+
+.photo-collage-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--bronze);
 }
 
 .photo-collage {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, calc((100% - 30px) / 3));
+    grid-template-rows: repeat(2, 1fr);
     gap: 15px;
-    min-width: 100%;
-    flex-shrink: 0;
-}
-
-.carousel-btn {
-    background: var(--warm-brown);
-    color: var(--cream);
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    z-index: 10;
-}
-
-.carousel-btn:hover {
-    background: var(--bronze);
-    transform: scale(1.1);
-}
-
-.carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 40px;
-}
-
-.indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--light-gray);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.indicator.active {
-    background: var(--warm-brown);
-    transform: scale(1.2);
-}
-
-.indicator:hover {
-    background: var(--bronze);
+    width: max-content;
 }
 
 .collage-item {
@@ -972,7 +935,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .photo-collage {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(6, calc((100% - 30px) / 3));
     }
 }
 
@@ -1022,13 +985,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .photo-collage {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .carousel-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
+        grid-template-columns: repeat(6, calc((100% - 15px) / 2));
     }
 
     .involvement-item {
