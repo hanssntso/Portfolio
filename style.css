@@ -694,14 +694,16 @@ h1, h2, h3, h4, h5, h6 {
 
 .photo-collage {
     display: grid;
-    grid-template-columns: repeat(6, calc((100% - 30px) / 3));
-    grid-template-rows: repeat(2, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(6, 180px);
+    grid-template-rows: repeat(2, 180px);
+    gap: 12px;
     width: max-content;
+    padding: 10px 0;
 }
 
 .collage-item {
-    aspect-ratio: 1;
+    width: 180px;
+    height: 180px;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
@@ -977,7 +979,13 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .photo-collage {
-        grid-template-columns: repeat(6, calc((100% - 30px) / 3));
+        grid-template-columns: repeat(6, 150px);
+        grid-template-rows: repeat(2, 150px);
+    }
+
+    .collage-item {
+        width: 150px;
+        height: 150px;
     }
 }
 
@@ -1027,13 +1035,19 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .photo-collage {
-        grid-template-columns: repeat(12, calc((100% - 15px) / 2));
-        grid-template-rows: 1fr;
+        grid-template-columns: repeat(12, 140px);
+        grid-template-rows: 140px;
+        gap: 10px;
+    }
+
+    .collage-item {
+        width: 140px;
+        height: 140px;
     }
 
     .scroll-btn {
-        width: 45px;
-        height: 80px;
+        width: 40px;
+        height: 140px;
     }
 
     .scroll-btn span {
