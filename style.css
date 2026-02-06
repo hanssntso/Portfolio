@@ -862,8 +862,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .contact-details {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
     margin-bottom: 40px;
 }
 
@@ -871,12 +873,14 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    padding: 15px 30px;
+    gap: 10px;
+    padding: 12px 20px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 30px;
-    font-size: 1.1rem;
+    font-size: 1rem;
     transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
 }
 
 .contact-item:hover {
@@ -886,6 +890,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .contact-icon {
     font-size: 1.5rem;
+}
+
+.contact-text {
+    white-space: nowrap;
 }
 
 .cv-download-btn {
@@ -1004,9 +1012,40 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .hero-contact {
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
         align-items: center;
         gap: 15px;
+    }
+
+    .hero-contact .contact-text,
+    .contact-details .contact-text {
+        display: none;
+    }
+
+    .contact-link,
+    .contact-item {
+        padding: 12px;
+        min-width: 50px;
+        min-height: 50px;
+        justify-content: center;
+    }
+
+    .contact-link .icon,
+    .contact-icon {
+        font-size: 1.8rem;
+    }
+
+    .contact-details {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .contact-location {
+        display: none;
     }
 
     .section-title {
