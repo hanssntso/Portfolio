@@ -4,6 +4,20 @@
    Civil Engineer & Doctoral Researcher
    =================================== */
 
+// ===================================
+// PHOTO GALLERY SCROLL
+// ===================================
+function scrollPhotos(direction) {
+    const wrapper = document.getElementById('photoCollage');
+    if (wrapper) {
+        const scrollAmount = wrapper.clientWidth * 0.8;
+        wrapper.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+}
+
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
 

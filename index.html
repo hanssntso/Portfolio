@@ -420,15 +420,32 @@
         <div class="container">
             <h2 class="section-title">Leadership & Community Engagement</h2>
 
-            <!-- Photo Collage Grid -->
-            <div class="photo-collage">
-                <!-- REPLACE WITH YOUR EVENT PHOTOS (6-9 photos) -->
-                <div class="collage-item"><img src="images/event-1.jpg" alt="Conference committee work"></div>
-                <div class="collage-item"><img src="images/event-2.jpg" alt="HMS Project community work"></div>
-                <div class="collage-item"><img src="images/event-3.jpg" alt="Student association events"></div>
-                <div class="collage-item"><img src="images/event-4.jpg" alt="Workshop participation"></div>
-                <div class="collage-item"><img src="images/event-5.jpg" alt="Team leadership"></div>
-                <div class="collage-item"><img src="images/event-6.jpg" alt="Community engagement"></div>
+            <!-- Photo Collage with Horizontal Scroll -->
+            <div class="photo-collage-container">
+                <button class="scroll-btn scroll-btn-left" onclick="scrollPhotos(-1)" aria-label="Scroll left">
+                    <span>&#10094;</span>
+                </button>
+
+                <div class="photo-collage-wrapper" id="photoCollage">
+                    <div class="photo-collage">
+                        <div class="collage-item"><img src="images/event-1.jpg" alt="Conference committee work"></div>
+                        <div class="collage-item"><img src="images/event-2.jpg" alt="HMS Project community work"></div>
+                        <div class="collage-item"><img src="images/event-3.jpg" alt="Student association events"></div>
+                        <div class="collage-item"><img src="images/event-7.jpg" alt="Event photo 7"></div>
+                        <div class="collage-item"><img src="images/event-8.jpg" alt="Event photo 8"></div>
+                        <div class="collage-item"><img src="images/event-9.jpg" alt="Event photo 9"></div>
+                        <div class="collage-item"><img src="images/event-4.jpg" alt="Workshop participation"></div>
+                        <div class="collage-item"><img src="images/event-5.jpg" alt="Team leadership"></div>
+                        <div class="collage-item"><img src="images/event-6.jpg" alt="Community engagement"></div>
+                        <div class="collage-item"><img src="images/event-10.jpg" alt="Event photo 10"></div>
+                        <div class="collage-item"><img src="images/event-11.jpg" alt="Event photo 11"></div>
+                        <div class="collage-item"><img src="images/event-12.jpg" alt="Event photo 12"></div>
+                    </div>
+                </div>
+
+                <button class="scroll-btn scroll-btn-right" onclick="scrollPhotos(1)" aria-label="Scroll right">
+                    <span>&#10095;</span>
+                </button>
             </div>
 
             <!-- Event Descriptions -->

@@ -568,6 +568,7 @@ h1, h2, h3, h4, h5, h6 {
 .skills-section {
     background: var(--navy-accent);
     color: var(--cream);
+    padding: 50px 0;
 }
 
 .skills-section .section-title {
@@ -575,13 +576,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .skills-category {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .skills-category-title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: var(--bronze);
-    margin-bottom: 25px;
+    margin-bottom: 12px;
     text-align: center;
 }
 
@@ -589,15 +590,15 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    gap: 8px;
 }
 
 .skill-tag {
-    padding: 12px 24px;
+    padding: 6px 14px;
     background: var(--warm-brown);
     color: var(--cream);
-    border-radius: 25px;
-    font-size: 0.95rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
     font-weight: 600;
     transition: all 0.3s ease;
     cursor: default;
@@ -620,12 +621,83 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--deep-navy);
 }
 
-/* Photo Collage */
+/* Photo Collage with Horizontal Scroll */
+.photo-collage-container {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.photo-collage-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 10px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--warm-brown) var(--light-gray);
+}
+
+.photo-collage-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.photo-collage-wrapper::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 4px;
+}
+
+.photo-collage-wrapper::-webkit-scrollbar-thumb {
+    background: var(--warm-brown);
+    border-radius: 4px;
+}
+
+.photo-collage-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--bronze);
+}
+
+/* Scroll Buttons */
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 120px;
+    background: rgba(139, 111, 71, 0.3);
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.scroll-btn span {
+    font-size: 2rem;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-btn:hover {
+    background: rgba(139, 111, 71, 0.6);
+}
+
+.scroll-btn-left {
+    left: 0;
+    border-radius: 0 10px 10px 0;
+}
+
+.scroll-btn-right {
+    right: 0;
+    border-radius: 10px 0 0 10px;
+}
+
 .photo-collage {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, calc((100% - 30px) / 3));
+    grid-template-rows: repeat(2, 1fr);
     gap: 15px;
-    margin-bottom: 60px;
+    width: max-content;
 }
 
 .collage-item {
@@ -905,7 +977,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .photo-collage {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(6, calc((100% - 30px) / 3));
     }
 }
 
@@ -955,7 +1027,17 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .photo-collage {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(12, calc((100% - 15px) / 2));
+        grid-template-rows: 1fr;
+    }
+
+    .scroll-btn {
+        width: 45px;
+        height: 80px;
+    }
+
+    .scroll-btn span {
+        font-size: 1.5rem;
     }
 
     .involvement-item {
