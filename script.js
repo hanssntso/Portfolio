@@ -4,6 +4,48 @@
    Civil Engineer & Doctoral Researcher
    =================================== */
 
+// ===================================
+// PHOTO CAROUSEL
+// ===================================
+let currentSlide = 0;
+const totalSlides = 2;
+
+function moveCarousel(direction) {
+    currentSlide += direction;
+
+    // Loop around
+    if (currentSlide < 0) {
+        currentSlide = totalSlides - 1;
+    } else if (currentSlide >= totalSlides) {
+        currentSlide = 0;
+    }
+
+    updateCarousel();
+}
+
+function goToSlide(slideIndex) {
+    currentSlide = slideIndex;
+    updateCarousel();
+}
+
+function updateCarousel() {
+    const track = document.querySelector('.carousel-track');
+    const indicators = document.querySelectorAll('.indicator');
+
+    if (track) {
+        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
+    // Update indicators
+    indicators.forEach((indicator, index) => {
+        if (index === currentSlide) {
+            indicator.classList.add('active');
+        } else {
+            indicator.classList.remove('active');
+        }
+    });
+}
+
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
 
