@@ -19,17 +19,38 @@ function scrollPhotos(direction) {
 }
 
 // ===================================
-// PROJECT PHOTO GALLERY SCROLL
+// PROJECT PHOTO GALLERY CAROUSEL (1x1)
 // ===================================
+const projectCarouselState = {};
+
 function scrollProjectPhotos(wrapperId, direction) {
     const wrapper = document.getElementById(wrapperId);
-    if (wrapper) {
-        const scrollAmount = wrapper.clientWidth * 0.8;
-        wrapper.scrollBy({
-            left: direction * scrollAmount,
-            behavior: 'smooth'
-        });
+    if (!wrapper) return;
+
+    const items = wrapper.querySelectorAll('.project-collage-item');
+    if (items.length === 0) return;
+
+    if (!(wrapperId in projectCarouselState)) {
+        projectCarouselState[wrapperId] = 0;
     }
+
+    projectCarouselState[wrapperId] += direction;
+
+    // Wrap around
+    if (projectCarouselState[wrapperId] < 0) {
+        projectCarouselState[wrapperId] = items.length - 1;
+    }
+    if (projectCarouselState[wrapperId] >= items.length) {
+        projectCarouselState[wrapperId] = 0;
+    }
+
+    const currentIndex = projectCarouselState[wrapperId];
+    const itemWidth = items[0].offsetWidth;
+
+    wrapper.scrollTo({
+        left: currentIndex * itemWidth,
+        behavior: 'smooth'
+    });
 }
 
 // Wait for DOM to be fully loaded

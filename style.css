@@ -490,35 +490,52 @@ h1, h2, h3, h4, h5, h6 {
     background: rgba(0, 0, 0, 0.05);
 }
 
-/* Project Photo Gallery (half-size horizontal scroll) */
+/* Project Photo Gallery - 1x1 Carousel */
 .project-gallery {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     margin: 40px 0;
 }
 
 .project-gallery .scroll-btn {
-    height: 90px;
+    position: static;
+    transform: none;
+    height: 250px;
     width: 40px;
+    flex-shrink: 0;
+    border-radius: 10px;
 }
 
 .project-gallery .scroll-btn span {
     font-size: 1.5rem;
 }
 
+.project-gallery .photo-collage-wrapper {
+    width: 250px;
+    overflow: hidden;
+    padding-bottom: 0;
+    scrollbar-width: none;
+}
+
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
 .project-photo-collage {
-    display: grid;
-    grid-template-columns: repeat(2, 90px);
-    grid-template-rows: 90px;
-    gap: 12px;
+    display: flex;
     width: max-content;
     padding: 10px 0;
 }
 
 .project-collage-item {
-    width: 90px;
-    height: 90px;
+    width: 250px;
+    height: 250px;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
 }
 
 .project-collage-item img {
@@ -1044,18 +1061,17 @@ h1, h2, h3, h4, h5, h6 {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .project-photo-collage {
-        grid-template-columns: repeat(2, 75px);
-        grid-template-rows: 75px;
+    .project-gallery .photo-collage-wrapper {
+        width: 200px;
     }
 
     .project-collage-item {
-        width: 75px;
-        height: 75px;
+        width: 200px;
+        height: 200px;
     }
 
     .project-gallery .scroll-btn {
-        height: 75px;
+        height: 200px;
         width: 35px;
     }
 
@@ -1146,19 +1162,17 @@ h1, h2, h3, h4, h5, h6 {
         grid-template-columns: 1fr;
     }
 
-    .project-photo-collage {
-        grid-template-columns: repeat(2, 70px);
-        grid-template-rows: 70px;
-        gap: 10px;
+    .project-gallery .photo-collage-wrapper {
+        width: 180px;
     }
 
     .project-collage-item {
-        width: 70px;
-        height: 70px;
+        width: 180px;
+        height: 180px;
     }
 
     .project-gallery .scroll-btn {
-        height: 70px;
+        height: 180px;
         width: 30px;
     }
 
