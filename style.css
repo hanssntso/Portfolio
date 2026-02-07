@@ -90,6 +90,42 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ===================================
+   CONTACT LOGO STYLES
+   =================================== */
+.contact-logo {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+/* Dark background sections */
+.project-dark .contact-logo,
+.contact-section .contact-logo,
+.hero-section .contact-logo {
+    filter: brightness(0) invert(1);
+}
+
+/* Light background sections */
+.project-light .contact-logo,
+.research-section .contact-logo,
+.experience-section .contact-logo,
+.involvement-section .contact-logo {
+    filter: brightness(0);
+}
+
+/* Specific adjustment for location icon */
+.contact-location .contact-icon {
+    font-size: 1.5rem;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===================================
    SECTION 1: HERO / PROFILE
    =================================== */
 .hero-section {
@@ -158,7 +194,7 @@ h1, h2, h3, h4, h5, h6 {
 .contact-link {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
     padding: 10px 20px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 25px;
@@ -171,8 +207,8 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateY(-2px);
 }
 
-.contact-link .icon {
-    font-size: 1.2rem;
+.contact-link:hover .contact-logo {
+    transform: scale(1.1);
 }
 
 .scroll-indicator {
@@ -462,32 +498,6 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 0.95rem;
     font-weight: 600;
     line-height: 1.4;
-}
-
-/* Project Images */
-.project-image {
-    margin: 40px 0;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-}
-
-.project-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.image-caption {
-    padding: 15px;
-    font-size: 0.9rem;
-    font-style: italic;
-    text-align: center;
-    background: rgba(0, 0, 0, 0.1);
-}
-
-.project-light .image-caption {
-    background: rgba(0, 0, 0, 0.05);
 }
 
 /* Project Photo Gallery - 1x1 Carousel */
@@ -950,7 +960,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
     padding: 12px 20px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 30px;
@@ -965,8 +975,8 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateY(-2px);
 }
 
-.contact-icon {
-    font-size: 1.5rem;
+.contact-item:hover .contact-logo {
+    transform: scale(1.1);
 }
 
 .contact-text {
@@ -1116,11 +1126,6 @@ h1, h2, h3, h4, h5, h6 {
         gap: 15px;
     }
 
-    .hero-contact .contact-text,
-    .contact-details .contact-text {
-        display: none;
-    }
-
     .contact-link,
     .contact-item {
         padding: 12px;
@@ -1129,9 +1134,13 @@ h1, h2, h3, h4, h5, h6 {
         justify-content: center;
     }
 
-    .contact-link .icon,
-    .contact-icon {
-        font-size: 1.8rem;
+    .contact-logo {
+        width: 22px;
+        height: 22px;
+    }
+
+    .contact-text {
+        display: none; /* Hide text on mobile, show only logos */
     }
 
     .contact-details {
@@ -1225,13 +1234,24 @@ h1, h2, h3, h4, h5, h6 {
         height: 150px;
     }
 
-    .contact-link {
-        font-size: 0.85rem;
-        padding: 8px 15px;
+    .contact-logo {
+        width: 20px;
+        height: 20px;
+    }
+
+    .contact-link,
+    .contact-item {
+        padding: 10px;
+        min-width: 45px;
+        min-height: 45px;
     }
 
     .section-title {
         font-size: 1.5rem;
+    }
+
+    .hero-contact {
+        gap: 10px;
     }
 }
 
