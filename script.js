@@ -5,7 +5,7 @@
    =================================== */
 
 // ===================================
-// PHOTO GALLERY SCROLL (Main Involvement Section)
+// PHOTO GALLERY SCROLL
 // ===================================
 function scrollPhotos(direction) {
     const wrapper = document.getElementById('photoCollage');
@@ -19,98 +19,42 @@ function scrollPhotos(direction) {
 }
 
 // ===================================
-// PROJECT PHOTO GALLERY (1x3 Horizontal Grid)
+// PROJECT PHOTO GALLERY CAROUSEL (1x1)
 // ===================================
-const projectGalleryState = {};
+const projectCarouselState = {};
 
 function scrollProjectPhotos(wrapperId, direction) {
     const wrapper = document.getElementById(wrapperId);
     if (!wrapper) return;
 
-    const isMobile = window.innerWidth <= 768;
-    const containerWidth = wrapper.clientWidth;
-    
-    if (isMobile) {
-        // Mobile: Scroll by 1 item (100% width)
-        const itemWidth = wrapper.querySelector('.project-collage-item')?.offsetWidth || containerWidth;
-        const scrollAmount = itemWidth + 20; // Add gap/margin
-        wrapper.scrollLeft += direction * scrollAmount;
-    } else {
-        // Desktop/Tablet: Scroll by 3 items (100% width of visible area)
-        wrapper.scrollLeft += direction * containerWidth;
-    }
-    
-    // Update button visibility after scroll
-    setTimeout(() => updateProjectScrollButtons(wrapperId), 300);
-}
+    const items = wrapper.querySelectorAll('.project-collage-item');
+    if (items.length === 0) return;
 
-// Update scroll button visibility for project galleries
-function updateProjectScrollButtons(wrapperId) {
-    const wrapper = document.getElementById(wrapperId);
-    if (!wrapper) return;
-    
-    const leftBtn = wrapper.parentElement.querySelector('.scroll-btn-left');
-    const rightBtn = wrapper.parentElement.querySelector('.scroll-btn-right');
-    
-    if (!leftBtn || !rightBtn) return;
-    
-    const currentScroll = wrapper.scrollLeft;
-    const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-    
-    // Show/hide left button
-    if (currentScroll <= 10) {
-        leftBtn.style.opacity = '0.3';
-        leftBtn.style.pointerEvents = 'none';
-    } else {
-        leftBtn.style.opacity = '1';
-        leftBtn.style.pointerEvents = 'auto';
+    if (!(wrapperId in projectCarouselState)) {
+        projectCarouselState[wrapperId] = 0;
     }
-    
-    // Show/hide right button
-    if (currentScroll >= maxScroll - 10) {
-        rightBtn.style.opacity = '0.3';
-        rightBtn.style.pointerEvents = 'none';
-    } else {
-        rightBtn.style.opacity = '1';
-        rightBtn.style.pointerEvents = 'auto';
-    }
-}
 
-// Initialize all project galleries
-function initializeProjectGalleries() {
-    const galleries = document.querySelectorAll('.project-gallery .photo-collage-wrapper');
-    
-    galleries.forEach(wrapper => {
-        const wrapperId = wrapper.id;
-        
-        // Set initial scroll position
-        wrapper.scrollLeft = 0;
-        
-        // Update button visibility
-        updateProjectScrollButtons(wrapperId);
-        
-        // Add scroll event listener
-        wrapper.addEventListener('scroll', () => {
-            updateProjectScrollButtons(wrapperId);
-        });
+    projectCarouselState[wrapperId] += direction;
+
+    // Wrap around
+    if (projectCarouselState[wrapperId] < 0) {
+        projectCarouselState[wrapperId] = items.length - 1;
+    }
+    if (projectCarouselState[wrapperId] >= items.length) {
+        projectCarouselState[wrapperId] = 0;
+    }
+
+    const currentIndex = projectCarouselState[wrapperId];
+    const itemWidth = items[0].offsetWidth;
+
+    wrapper.scrollTo({
+        left: currentIndex * itemWidth,
+        behavior: 'smooth'
     });
 }
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // ===================================
-    // INITIALIZE PROJECT GALLERIES
-    // ===================================
-    initializeProjectGalleries();
-    
-    // Update galleries on window resize
-    let resizeTimeout;
-    window.addEventListener('resize', function() {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(function() {
-            initializeProjectGalleries();
-        }, 250);
-    });
 
     // ===================================
     // SMOOTH SCROLLING FOR ANCHOR LINKS
@@ -185,6 +129,37 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===================================
+    // TYPING EFFECT FOR HERO TAGLINE (Optional Enhancement)
+    // ===================================
+    function typeWriter(element, text, speed = 50) {
+        let i = 0;
+        element.textContent = '';
+        element.style.opacity = '1';
+
+        function type() {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            }
+        }
+
+        type();
+    }
+
+    // Uncomment below to enable typing effect on hero tagline
+    /*
+    const heroTagline = document.querySelector('.hero-tagline');
+    if (heroTagline) {
+        const originalText = heroTagline.textContent;
+        heroTagline.style.opacity = '0';
+        setTimeout(() => {
+            typeWriter(heroTagline, originalText, 30);
+        }, 500);
+    }
+    */
+
+    // ===================================
     // COUNTER ANIMATION FOR RESULTS
     // ===================================
     function animateCounter(element, target, duration = 2000) {
@@ -246,6 +221,54 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===================================
+    // PARALLAX EFFECT (Subtle)
+    // ===================================
+    window.addEventListener('scroll', function() {
+        const scrolled = window.scrollY;
+        const parallaxElements = document.querySelectorAll('.project-image img');
+
+        parallaxElements.forEach(element => {
+            const speed = 0.3;
+            const yPos = -(scrolled * speed);
+            // Only apply if element is in viewport
+            const rect = element.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                element.style.transform = `translateY(${yPos}px)`;
+            }
+        });
+    });
+
+    // ===================================
+    // NAVIGATION HIGHLIGHT (if you add a navbar)
+    // ===================================
+    function highlightNavigation() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    }
+
+    // Uncomment if you add navigation menu
+    // highlightNavigation();
+
+    // ===================================
     // SKILLS TAG ANIMATION
     // ===================================
     const skillTags = document.querySelectorAll('.skill-tag');
@@ -272,11 +295,94 @@ document.addEventListener('DOMContentLoaded', function() {
     document.head.appendChild(style);
 
     // ===================================
+    // MOBILE MENU TOGGLE (if you add mobile nav)
+    // ===================================
+    function setupMobileMenu() {
+        const menuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        if (menuButton && mobileMenu) {
+            menuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('active');
+                this.classList.toggle('active');
+            });
+
+            // Close menu when clicking a link
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('active');
+                    menuButton.classList.remove('active');
+                });
+            });
+        }
+    }
+
+    // setupMobileMenu(); // Uncomment if you add mobile navigation
+
+    // ===================================
     // CONSOLE MESSAGE
     // ===================================
     console.log('%c Portfolio Website ', 'background: #1A2332; color: #F5F5F0; font-size: 16px; padding: 10px;');
     console.log('%c Alan Timothy Lie Hans Santoso ', 'background: #8B6F47; color: #F5F5F0; font-size: 14px; padding: 8px;');
     console.log('%c Civil Engineer & Doctoral Researcher ', 'color: #2C3E50; font-size: 12px;');
+
+    // ===================================
+    // PERFORMANCE OPTIMIZATION
+    // ===================================
+    // Debounce scroll events
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Apply debounce to scroll-heavy functions if needed
+    // Example: window.addEventListener('scroll', debounce(yourFunction, 100));
+
+    // ===================================
+    // FORM VALIDATION (if you add contact form)
+    // ===================================
+    function setupFormValidation() {
+        const form = document.querySelector('.contact-form');
+
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Get form fields
+                const name = form.querySelector('input[name="name"]').value.trim();
+                const email = form.querySelector('input[name="email"]').value.trim();
+                const message = form.querySelector('textarea[name="message"]').value.trim();
+
+                // Simple validation
+                if (!name || !email || !message) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+
+                // Email validation
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('Please enter a valid email address');
+                    return;
+                }
+
+                // If validation passes, submit form or send via AJAX
+                console.log('Form submitted:', { name, email, message });
+                alert('Thank you for your message! I will get back to you soon.');
+                form.reset();
+            });
+        }
+    }
+
+    // setupFormValidation(); // Uncomment if you add a contact form
 
     // ===================================
     // LOADING STATE MANAGEMENT
@@ -320,6 +426,34 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     document.body.insertBefore(skipLink, document.body.firstChild);
 
+    // ===================================
+    // DARK MODE TOGGLE (Optional)
+    // ===================================
+    function setupDarkModeToggle() {
+        const darkModeToggle = document.querySelector('.dark-mode-toggle');
+
+        if (darkModeToggle) {
+            // Check for saved preference
+            const darkMode = localStorage.getItem('darkMode');
+            if (darkMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+            }
+
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+
+                // Save preference
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', null);
+                }
+            });
+        }
+    }
+
+    // setupDarkModeToggle(); // Uncomment if you add dark mode toggle
+
 });
 
 // ===================================
@@ -352,4 +486,13 @@ function copyToClipboard(text) {
     }).catch(err => {
         console.error('Failed to copy text: ', err);
     });
+}
+
+// Export functions if needed
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        isInViewport,
+        scrollToTop,
+        copyToClipboard
+    };
 }
