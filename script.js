@@ -19,78 +19,29 @@ function scrollPhotos(direction) {
 }
 
 // ===================================
-// PROJECT PHOTO GALLERY (1x3 Grid System)
+// PROJECT PHOTO GALLERY (1x3 Horizontal Grid)
 // ===================================
-const projectCarouselState = {};
+const projectGalleryState = {};
 
 function scrollProjectPhotos(wrapperId, direction) {
     const wrapper = document.getElementById(wrapperId);
     if (!wrapper) return;
 
-    const items = wrapper.querySelectorAll('.project-collage-item');
-    if (items.length === 0) return;
-
     const isMobile = window.innerWidth <= 768;
+    const containerWidth = wrapper.clientWidth;
     
-    if (!projectCarouselState[wrapperId]) {
-        projectCarouselState[wrapperId] = {
-            currentIndex: 0,
-            itemWidth: items[0].offsetWidth
-        };
-    }
-
-    let currentIndex = projectCarouselState[wrapperId].currentIndex;
-    let itemWidth = projectCarouselState[wrapperId].itemWidth;
-    
-    // Update item width in case of window resize
-    itemWidth = items[0].offsetWidth;
-    projectCarouselState[wrapperId].itemWidth = itemWidth;
-
     if (isMobile) {
-        // Mobile: Scroll by 1 item
-        currentIndex += direction;
-        
-        // Wrap around for mobile
-        if (currentIndex < 0) {
-            currentIndex = items.length - 1;
-        } else if (currentIndex >= items.length) {
-            currentIndex = 0;
-        }
-        
-        wrapper.scrollTo({
-            left: currentIndex * itemWidth,
-            behavior: 'smooth'
-        });
+        // Mobile: Scroll by 1 item (100% width)
+        const itemWidth = wrapper.querySelector('.project-collage-item')?.offsetWidth || containerWidth;
+        const scrollAmount = itemWidth + 20; // Add gap/margin
+        wrapper.scrollLeft += direction * scrollAmount;
     } else {
-        // Desktop/Tablet: Scroll by 3 items (one column)
-        const containerWidth = wrapper.clientWidth;
-        const itemsPerView = 3;
-        const maxColumns = Math.ceil(items.length / itemsPerView);
-        
-        // Calculate current column
-        let currentColumn = Math.round(wrapper.scrollLeft / containerWidth);
-        currentColumn += direction;
-        
-        // Wrap around for desktop/tablet
-        if (currentColumn < 0) {
-            currentColumn = maxColumns - 1;
-        } else if (currentColumn >= maxColumns) {
-            currentColumn = 0;
-        }
-        
-        wrapper.scrollTo({
-            left: currentColumn * containerWidth,
-            behavior: 'smooth'
-        });
-        
-        // Update state with current column
-        projectCarouselState[wrapperId].currentColumn = currentColumn;
+        // Desktop/Tablet: Scroll by 3 items (100% width of visible area)
+        wrapper.scrollLeft += direction * containerWidth;
     }
-
-    projectCarouselState[wrapperId].currentIndex = currentIndex;
     
-    // Update button visibility
-    updateProjectScrollButtons(wrapperId);
+    // Update button visibility after scroll
+    setTimeout(() => updateProjectScrollButtons(wrapperId), 300);
 }
 
 // Update scroll button visibility for project galleries
@@ -100,59 +51,28 @@ function updateProjectScrollButtons(wrapperId) {
     
     const leftBtn = wrapper.parentElement.querySelector('.scroll-btn-left');
     const rightBtn = wrapper.parentElement.querySelector('.scroll-btn-right');
-    const items = wrapper.querySelectorAll('.project-collage-item');
     
     if (!leftBtn || !rightBtn) return;
     
-    const isMobile = window.innerWidth <= 768;
+    const currentScroll = wrapper.scrollLeft;
+    const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
     
-    if (isMobile) {
-        // Mobile logic
-        const currentIndex = projectCarouselState[wrapperId]?.currentIndex || 0;
-        const maxIndex = items.length - 1;
-        
-        // Show/hide left button
-        if (currentIndex <= 0) {
-            leftBtn.style.opacity = '0.3';
-            leftBtn.style.pointerEvents = 'none';
-        } else {
-            leftBtn.style.opacity = '1';
-            leftBtn.style.pointerEvents = 'auto';
-        }
-        
-        // Show/hide right button
-        if (currentIndex >= maxIndex) {
-            rightBtn.style.opacity = '0.3';
-            rightBtn.style.pointerEvents = 'none';
-        } else {
-            rightBtn.style.opacity = '1';
-            rightBtn.style.pointerEvents = 'auto';
-        }
+    // Show/hide left button
+    if (currentScroll <= 10) {
+        leftBtn.style.opacity = '0.3';
+        leftBtn.style.pointerEvents = 'none';
     } else {
-        // Desktop/Tablet logic
-        const containerWidth = wrapper.clientWidth;
-        const itemsPerView = 3;
-        const maxColumns = Math.ceil(items.length / itemsPerView);
-        const currentScroll = wrapper.scrollLeft;
-        const maxScroll = wrapper.scrollWidth - containerWidth;
-        
-        // Show/hide left button
-        if (currentScroll <= 10) {
-            leftBtn.style.opacity = '0.3';
-            leftBtn.style.pointerEvents = 'none';
-        } else {
-            leftBtn.style.opacity = '1';
-            leftBtn.style.pointerEvents = 'auto';
-        }
-        
-        // Show/hide right button
-        if (currentScroll >= maxScroll - 10) {
-            rightBtn.style.opacity = '0.3';
-            rightBtn.style.pointerEvents = 'none';
-        } else {
-            rightBtn.style.opacity = '1';
-            rightBtn.style.pointerEvents = 'auto';
-        }
+        leftBtn.style.opacity = '1';
+        leftBtn.style.pointerEvents = 'auto';
+    }
+    
+    // Show/hide right button
+    if (currentScroll >= maxScroll - 10) {
+        rightBtn.style.opacity = '0.3';
+        rightBtn.style.pointerEvents = 'none';
+    } else {
+        rightBtn.style.opacity = '1';
+        rightBtn.style.pointerEvents = 'auto';
     }
 }
 
@@ -162,16 +82,6 @@ function initializeProjectGalleries() {
     
     galleries.forEach(wrapper => {
         const wrapperId = wrapper.id;
-        const items = wrapper.querySelectorAll('.project-collage-item');
-        
-        // Initialize state for this gallery
-        if (!projectCarouselState[wrapperId]) {
-            projectCarouselState[wrapperId] = {
-                currentIndex: 0,
-                currentColumn: 0,
-                itemWidth: items[0]?.offsetWidth || 250
-            };
-        }
         
         // Set initial scroll position
         wrapper.scrollLeft = 0;
@@ -336,24 +246,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===================================
-    // PARALLAX EFFECT (Subtle)
-    // ===================================
-    window.addEventListener('scroll', function() {
-        const scrolled = window.scrollY;
-        const parallaxElements = document.querySelectorAll('.project-image img');
-
-        parallaxElements.forEach(element => {
-            const speed = 0.3;
-            const yPos = -(scrolled * speed);
-            // Only apply if element is in viewport
-            const rect = element.getBoundingClientRect();
-            if (rect.top < window.innerHeight && rect.bottom > 0) {
-                element.style.transform = `translateY(${yPos}px)`;
-            }
-        });
-    });
-
-    // ===================================
     // SKILLS TAG ANIMATION
     // ===================================
     const skillTags = document.querySelectorAll('.skill-tag');
@@ -385,22 +277,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('%c Portfolio Website ', 'background: #1A2332; color: #F5F5F0; font-size: 16px; padding: 10px;');
     console.log('%c Alan Timothy Lie Hans Santoso ', 'background: #8B6F47; color: #F5F5F0; font-size: 14px; padding: 8px;');
     console.log('%c Civil Engineer & Doctoral Researcher ', 'color: #2C3E50; font-size: 12px;');
-
-    // ===================================
-    // PERFORMANCE OPTIMIZATION
-    // ===================================
-    // Debounce scroll events
-    function debounce(func, wait) {
-        let timeout;
-        return function executedFunction(...args) {
-            const later = () => {
-                clearTimeout(timeout);
-                func(...args);
-            };
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-        };
-    }
 
     // ===================================
     // LOADING STATE MANAGEMENT
@@ -476,15 +352,4 @@ function copyToClipboard(text) {
     }).catch(err => {
         console.error('Failed to copy text: ', err);
     });
-}
-
-// Export functions if needed
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        isInViewport,
-        scrollToTop,
-        copyToClipboard,
-        scrollProjectPhotos,
-        updateProjectScrollButtons
-    };
 }
