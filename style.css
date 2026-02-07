@@ -369,7 +369,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .scroll-btn {
     width: 40px;
-    height: 300px;
+    align-self: stretch;
     background: rgba(139, 111, 71, 0.3);
     border: none;
     cursor: pointer;
@@ -407,9 +407,6 @@ h1, h2, h3, h4, h5, h6 {
     width: 500px;
 }
 
-.research-image .scroll-btn {
-    height: 500px;
-}
 
 /* ===================================
    SECTION 3-5: PROJECT SECTIONS
@@ -1048,20 +1045,15 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .scroll-btn {
-        height: 250px;
         width: 35px;
     }
 
     .research-image .photo-collage {
         height: 400px;
     }
-    
+
     .research-image .collage-item {
         width: 400px;
-    }
-    
-    .research-image .scroll-btn {
-        height: 400px;
     }
 
     .involvement-section .photo-collage,
@@ -1153,20 +1145,15 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .scroll-btn {
-        height: 200px;
         width: 30px;
     }
 
     .research-image .photo-collage {
         height: 300px;
     }
-    
+
     .research-image .collage-item {
         width: 300px;
-    }
-    
-    .research-image .scroll-btn {
-        height: 300px;
     }
 
     .involvement-section .photo-collage,
@@ -1226,20 +1213,15 @@ h1, h2, h3, h4, h5, h6 {
     }
     
     .scroll-btn {
-        height: 150px;
         width: 25px;
     }
 
     .research-image .photo-collage {
         height: 250px;
     }
-    
+
     .research-image .collage-item {
         width: 250px;
-    }
-    
-    .research-image .scroll-btn {
-        height: 250px;
     }
 
     .involvement-section .photo-collage,
