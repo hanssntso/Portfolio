@@ -308,7 +308,130 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 20px;
     line-height: 1.8;
 }
+/* ===================================
+   RESEARCH CAROUSEL STYLES
+   =================================== */
+.research-image .photo-collage-container {
+    position: relative;
+    width: 100%;
+    margin: 0;
+}
 
+.research-image .project-gallery {
+    margin: 0;
+}
+
+.research-image .photo-collage-wrapper {
+    width: 500px;
+    height: 500px;
+    overflow: hidden;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.research-image .project-photo-collage {
+    display: flex;
+    height: 500px;
+    transition: transform 0.5s ease;
+}
+
+.research-image .project-collage-item {
+    width: 500px;
+    height: 500px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.research-image .project-collage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Research Carousel Buttons */
+.research-image .scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(139, 111, 71, 0.8);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.research-image .scroll-btn:hover {
+    background: var(--warm-brown);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.research-image .scroll-btn-left {
+    left: -25px;
+}
+
+.research-image .scroll-btn-right {
+    right: -25px;
+}
+
+.research-image .scroll-btn span {
+    color: var(--cream);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .research-image .photo-collage-wrapper {
+        width: 350px;
+        height: 350px;
+    }
+    
+    .research-image .project-photo-collage {
+        height: 350px;
+    }
+    
+    .research-image .project-collage-item {
+        width: 350px;
+        height: 350px;
+    }
+    
+    .research-image .scroll-btn {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .research-image .scroll-btn-left {
+        left: -20px;
+    }
+    
+    .research-image .scroll-btn-right {
+        right: -20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .research-image .photo-collage-wrapper {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .research-image .project-photo-collage {
+        height: 280px;
+    }
+    
+    .research-image .project-collage-item {
+        width: 280px;
+        height: 280px;
+    }
+}
 /* ===================================
    SECTION 3-5: PROJECT SECTIONS
    =================================== */
