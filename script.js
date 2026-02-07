@@ -62,8 +62,9 @@ function scrollResearchPhotos(direction) {
     const wrapper = document.getElementById('research-photos');
     if (!wrapper) return;
 
+    const strip = wrapper.querySelector('.project-photo-collage');
     const items = wrapper.querySelectorAll('.project-collage-item');
-    if (items.length === 0) return;
+    if (!strip || items.length === 0) return;
 
     researchCurrentIndex += direction;
 
@@ -76,11 +77,7 @@ function scrollResearchPhotos(direction) {
     }
 
     const itemWidth = items[0].offsetWidth;
-
-    wrapper.scrollTo({
-        left: researchCurrentIndex * itemWidth,
-        behavior: 'smooth'
-    });
+    strip.style.transform = 'translateX(-' + (researchCurrentIndex * itemWidth) + 'px)';
 }
 
 // Wait for DOM to be fully loaded
