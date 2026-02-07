@@ -144,8 +144,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .profile-photo {
-    width: 200px;
-    height: 200px;
+    width: 500px;
+    height: 500px;
     margin: 0 auto 30px;
     border-radius: 50%;
     overflow: hidden;
