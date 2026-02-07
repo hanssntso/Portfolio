@@ -310,6 +310,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 /* ===================================
    RESEARCH CAROUSEL STYLES
+   Uses project-gallery base styles for buttons.
+   Higher specificity selectors override the
+   project-gallery wrapper width (1500px -> 500px)
+   so only 1 photo shows at a time.
    =================================== */
 .research-image .photo-collage-container {
     position: relative;
@@ -321,7 +325,7 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
-.research-image .photo-collage-wrapper {
+.research-image .project-gallery .photo-collage-wrapper {
     width: 500px;
     height: 500px;
     overflow: hidden;
@@ -333,7 +337,6 @@ h1, h2, h3, h4, h5, h6 {
 .research-image .project-photo-collage {
     display: flex;
     height: 500px;
-    transition: transform 0.5s ease;
 }
 
 .research-image .project-collage-item {
@@ -350,85 +353,48 @@ h1, h2, h3, h4, h5, h6 {
     object-fit: cover;
 }
 
-/* Research Carousel Buttons */
-.research-image .scroll-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 50px;
-    background: rgba(139, 111, 71, 0.8);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 10;
-    display: fix;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.research-image .scroll-btn:hover {
-    background: var(--warm-brown);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.research-image .scroll-btn-left {
-    left: -25px;
-}
-
-.research-image .scroll-btn-right {
-    right: -25px;
-}
-
-.research-image .scroll-btn span {
-    color: var(--cream);
-    font-size: 1.5rem;
-    font-weight: bold;
+/* Research buttons - use project-gallery static style, match photo height */
+.research-image .project-gallery .scroll-btn {
+    height: 500px;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .research-image .photo-collage-wrapper {
+    .research-image .project-gallery .photo-collage-wrapper {
         width: 350px;
         height: 350px;
     }
-    
+
     .research-image .project-photo-collage {
         height: 350px;
     }
-    
+
     .research-image .project-collage-item {
         width: 350px;
         height: 350px;
     }
-    
-    .research-image .scroll-btn {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .research-image .scroll-btn-left {
-        left: -20px;
-    }
-    
-    .research-image .scroll-btn-right {
-        right: -20px;
+
+    .research-image .project-gallery .scroll-btn {
+        height: 350px;
     }
 }
 
 @media (max-width: 480px) {
-    .research-image .photo-collage-wrapper {
+    .research-image .project-gallery .photo-collage-wrapper {
         width: 280px;
         height: 280px;
     }
-    
+
     .research-image .project-photo-collage {
         height: 280px;
     }
-    
+
     .research-image .project-collage-item {
         width: 280px;
+        height: 280px;
+    }
+
+    .research-image .project-gallery .scroll-btn {
         height: 280px;
     }
 }
