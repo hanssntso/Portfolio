@@ -314,16 +314,41 @@ h1, h2, h3, h4, h5, h6 {
 
 .research-image .project-gallery .photo-collage-wrapper {
     width: 100%;
+    max-width: 500px;
     height: 500px;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--warm-brown) var(--light-gray);
     border-radius: 10px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.research-image .project-gallery .photo-collage-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.research-image .project-gallery .photo-collage-wrapper::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 4px;
+}
+
+.research-image .project-gallery .photo-collage-wrapper::-webkit-scrollbar-thumb {
+    background: var(--warm-brown);
+    border-radius: 4px;
+}
+
+.research-image .project-gallery .photo-collage-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--bronze);
 }
 
 .research-image .research-photo-collage {
     display: flex;
     height: 100%;
-    transition: transform 0.5s ease;
+    gap: 0;
+    width: max-content;
 }
 
 .research-image .collage-item {
@@ -340,12 +365,193 @@ h1, h2, h3, h4, h5, h6 {
     object-fit: cover;
 }
 
-/* Research buttons - FIXED FOR SMALL DEVICES */
+/* Research buttons - Adjusted to match project sections */
 .research-image .project-gallery .scroll-btn {
     height: 500px;
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    width: 40px;
+    background: rgba(139, 111, 71, 0.3);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.research-image .project-gallery .scroll-btn:hover {
+    background: rgba(139, 111, 71, 0.6);
+}
+
+/* Project Photo Gallery - Updated button sizes */
+.project-gallery .scroll-btn {
+    position: static;
+    transform: none;
+    height: 500px;
+    width: 40px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: rgba(139, 111, 71, 0.3);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.project-gallery .scroll-btn:hover {
+    background: rgba(139, 111, 71, 0.6);
+}
+
+.project-gallery .scroll-btn span {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.project-gallery .photo-collage-wrapper {
+    width: 100%;
+    max-width: 500px;
+    height: 500px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--warm-brown) var(--light-gray);
+    border-radius: 10px;
+}
+
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 4px;
+}
+
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar-thumb {
+    background: var(--warm-brown);
+    border-radius: 4px;
+}
+
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--bronze);
+}
+
+.photo-collage {
+    display: flex;
+    height: 100%;
+    gap: 0;
+    width: max-content;
+}
+
+.collage-item {
+    width: 500px;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.collage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.collage-item:hover img {
+    transform: scale(1.1);
+}
+
+.project-dark .photo-collage-wrapper {
+    scrollbar-color: var(--bronze) rgba(255, 255, 255, 0.1);
+}
+
+/* ===================================
+   RESPONSIVE DESIGN - UPDATED BUTTON SIZES
+   =================================== */
+
+/* Tablets and below (max-width: 992px) */
+@media (max-width: 992px) {
+    .project-gallery .photo-collage-wrapper,
+    .research-image .project-gallery .photo-collage-wrapper {
+        max-width: 400px;
+        height: 400px;
+    }
+
+    .collage-item,
+    .research-image .collage-item {
+        width: 400px;
+        height: 400px;
+    }
+
+    .project-gallery .scroll-btn,
+    .research-image .project-gallery .scroll-btn {
+        height: 400px;
+        width: 35px;
+    }
+
+    .project-gallery .scroll-btn span,
+    .research-image .project-gallery .scroll-btn span {
+        font-size: 1.3rem;
+    }
+}
+
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+    .project-gallery .photo-collage-wrapper,
+    .research-image .project-gallery .photo-collage-wrapper {
+        max-width: 300px;
+        height: 300px;
+    }
+
+    .collage-item,
+    .research-image .collage-item {
+        width: 300px;
+        height: 300px;
+    }
+
+    .project-gallery .scroll-btn,
+    .research-image .project-gallery .scroll-btn {
+        height: 300px;
+        width: 30px;
+    }
+
+    .project-gallery .scroll-btn span,
+    .research-image .project-gallery .scroll-btn span {
+        font-size: 1.2rem;
+    }
+}
+
+/* Small mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    .project-gallery .photo-collage-wrapper,
+    .research-image .project-gallery .photo-collage-wrapper {
+        max-width: 250px;
+        height: 250px;
+    }
+
+    .collage-item,
+    .research-image .collage-item {
+        width: 250px;
+        height: 250px;
+    }
+
+    .project-gallery .scroll-btn,
+    .research-image .project-gallery .scroll-btn {
+        height: 250px;
+        width: 25px;
+    }
+
+    .project-gallery .scroll-btn span,
+    .research-image .project-gallery .scroll-btn span {
+        font-size: 1rem;
+    }
 }
 
 /* ===================================
