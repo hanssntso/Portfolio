@@ -57,7 +57,6 @@ img {
 a {
     text-decoration: none;
     color: inherit;
-    transition: all 0.3s ease;
 }
 
 /* ===================================
@@ -112,9 +111,7 @@ h1, h2, h3, h4, h5, h6 {
 .project-light .contact-logo,
 .research-section .contact-logo,
 .experience-section .contact-logo,
-.involvement-section .contact-logo,
-.achievements-section .contact-logo,
-.skills-section .contact-logo {
+.involvement-section .contact-logo {
     filter: brightness(0);
 }
 
@@ -238,7 +235,7 @@ h1, h2, h3, h4, h5, h6 {
 .research-image {
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
 .research-image img {
@@ -303,17 +300,120 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ===================================
-   PROJECT & RESEARCH GALLERY STYLES
+   RESEARCH CAROUSEL STYLES
    =================================== */
-.photo-collage-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 30px 0;
+.research-image .photo-collage-container {
+    position: relative;
+    width: 100%;
+    margin: 0;
 }
 
-.photo-collage-wrapper {
-    flex: 1;
+.research-image .project-gallery {
+    margin: 0;
+}
+
+.research-image .project-gallery .photo-collage-wrapper {
+    width: 100%;
+    max-width: 500px;
+    height: 500px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--warm-brown) var(--light-gray);
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.research-image .project-gallery .photo-collage-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.research-image .project-gallery .photo-collage-wrapper::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 4px;
+}
+
+.research-image .project-gallery .photo-collage-wrapper::-webkit-scrollbar-thumb {
+    background: var(--warm-brown);
+    border-radius: 4px;
+}
+
+.research-image .project-gallery .photo-collage-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--bronze);
+}
+
+.research-image .research-photo-collage {
+    display: flex;
+    height: 100%;
+    gap: 0;
+    width: max-content;
+}
+
+.research-image .collage-item {
+    width: 500px;
+    height: 500px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.research-image .collage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Research buttons - Adjusted to match project sections */
+.research-image .project-gallery .scroll-btn {
+    height: 250px;
+    width: 40px;
+    background: rgba(139, 111, 71, 0.3);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.research-image .project-gallery .scroll-btn:hover {
+    background: rgba(139, 111, 71, 0.6);
+}
+
+/* Project Photo Gallery - Updated button sizes */
+.project-gallery .scroll-btn {
+    position: static;
+    transform: none;
+    height: 250px;
+    width: 40px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: rgba(139, 111, 71, 0.3);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.project-gallery .scroll-btn:hover {
+    background: rgba(139, 111, 71, 0.6);
+}
+
+.project-gallery .scroll-btn span {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.project-gallery .photo-collage-wrapper {
+    width: 100%;
+    max-width: 500px;
+    height: 250px;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-behavior: smooth;
@@ -323,36 +423,37 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 10px;
 }
 
-.photo-collage-wrapper::-webkit-scrollbar {
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar {
     height: 8px;
 }
 
-.photo-collage-wrapper::-webkit-scrollbar-track {
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar-track {
     background: var(--light-gray);
     border-radius: 4px;
 }
 
-.photo-collage-wrapper::-webkit-scrollbar-thumb {
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar-thumb {
     background: var(--warm-brown);
     border-radius: 4px;
 }
 
-.photo-collage-wrapper::-webkit-scrollbar-thumb:hover {
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar-thumb:hover {
     background: var(--bronze);
 }
 
 .photo-collage {
     display: flex;
-    height: 300px;
-    gap: 40;
+    height: 100%;
+    gap: 0;
     width: max-content;
 }
 
 .collage-item {
-    width: 300px;
-    height: 100%;
+    width: 500px;
+    height: 500px;
     overflow: hidden;
     border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     flex-shrink: 0;
 }
 
@@ -364,51 +465,93 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .collage-item:hover img {
-    transform: scale(1.05);
-}
-
-.scroll-btn {
-    width: 40px;
-    height: 300px;
-    background: rgba(139, 111, 71, 0.3);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-    border-radius: 5px;
-}
-
-.scroll-btn:hover {
-    background: rgba(139, 111, 71, 0.6);
-}
-
-.scroll-btn span {
-    font-size: 1.5rem;
-    color: white;
+    transform: scale(1.1);
 }
 
 .project-dark .photo-collage-wrapper {
     scrollbar-color: var(--bronze) rgba(255, 255, 255, 0.1);
 }
 
-/* Research Gallery Specific Styles */
-.research-image .photo-collage-container {
-    margin: 0;
+/* ===================================
+   RESPONSIVE DESIGN - UPDATED BUTTON SIZES
+   =================================== */
+
+/* Tablets and below (max-width: 992px) */
+@media (max-width: 992px) {
+    .project-gallery .photo-collage-wrapper,
+    .research-image .project-gallery .photo-collage-wrapper {
+        max-width: 400px;
+        height: 400px;
+    }
+
+    .collage-item,
+    .research-image .collage-item {
+        width: 400px;
+        height: 400px;
+    }
+
+    .project-gallery .scroll-btn,
+    .research-image .project-gallery .scroll-btn {
+        height: 400px;
+        width: 35px;
+    }
+
+    .project-gallery .scroll-btn span,
+    .research-image .project-gallery .scroll-btn span {
+        font-size: 1.3rem;
+    }
 }
 
-.research-image .photo-collage {
-    height: 500px;
+/* Mobile (max-width: 768px) */
+@media (max-width: 768px) {
+    .project-gallery .photo-collage-wrapper,
+    .research-image .project-gallery .photo-collage-wrapper {
+        max-width: 300px;
+        height: 300px;
+    }
+
+    .collage-item,
+    .research-image .collage-item {
+        width: 300px;
+        height: 300px;
+    }
+
+    .project-gallery .scroll-btn,
+    .research-image .project-gallery .scroll-btn {
+        height: 300px;
+        width: 30px;
+    }
+
+    .project-gallery .scroll-btn span,
+    .research-image .project-gallery .scroll-btn span {
+        font-size: 1.2rem;
+    }
 }
 
-.research-image .collage-item {
-    width: 500px;
-}
+/* Small mobile (max-width: 480px) */
+@media (max-width: 480px) {
+    .project-gallery .photo-collage-wrapper,
+    .research-image .project-gallery .photo-collage-wrapper {
+        max-width: 250px;
+        height: 250px;
+    }
 
-.research-image .scroll-btn {
-    height: 500px;
+    .collage-item,
+    .research-image .collage-item {
+        width: 250px;
+        height: 250px;
+    }
+
+    .project-gallery .scroll-btn,
+    .research-image .project-gallery .scroll-btn {
+        height: 250px;
+        width: 25px;
+    }
+
+    .project-gallery .scroll-btn span,
+    .research-image .project-gallery .scroll-btn span {
+        font-size: 1rem;
+    }
 }
 
 /* ===================================
@@ -602,6 +745,103 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.4;
 }
 
+/* Project Photo Gallery - Updated for horizontal scroll */
+.project-gallery {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 40px 0;
+}
+
+.project-gallery .scroll-btn {
+    position: static;
+    transform: none;
+    height: 500px;
+    width: 40px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: rgba(139, 111, 71, 0.3);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.project-gallery .scroll-btn:hover {
+    background: rgba(139, 111, 71, 0.6);
+}
+
+.project-gallery .scroll-btn span {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.project-gallery .photo-collage-wrapper {
+    width: 100%;
+    max-width: max-content;
+    height: 300px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--warm-brown) var(--light-gray);
+    border-radius: 10px;
+}
+
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 4px;
+}
+
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar-thumb {
+    background: var(--warm-brown);
+    border-radius: 4px;
+}
+
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--bronze);
+}
+
+.photo-collage {
+    display: flex;
+    height: 100%;
+    gap: 0;
+    width: max-content;
+}
+
+.collage-item {
+    width: 500px;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.collage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.collage-item:hover img {
+    transform: scale(1.1);
+}
+
+.project-dark .photo-collage-wrapper {
+    scrollbar-color: var(--bronze) rgba(255, 255, 255, 0.1);
+}
+
 /* ===================================
    SECTION 6: OTHER EXPERIENCES
    =================================== */
@@ -680,7 +920,7 @@ h1, h2, h3, h4, h5, h6 {
 .skills-section {
     background: var(--navy-accent);
     color: var(--cream);
-    padding: 80px 0;
+    padding: 50px 0;
 }
 
 .skills-section .section-title {
@@ -688,13 +928,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .skills-category {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 
 .skills-category-title {
     font-size: 1.2rem;
     color: var(--bronze);
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     text-align: center;
 }
 
@@ -702,15 +942,15 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    gap: 8px;
 }
 
 .skill-tag {
-    padding: 10px 20px;
+    padding: 6px 14px;
     background: var(--warm-brown);
     color: var(--cream);
     border-radius: 20px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
     transition: all 0.3s ease;
     cursor: default;
@@ -727,25 +967,108 @@ h1, h2, h3, h4, h5, h6 {
 .involvement-section {
     background: var(--cream);
     color: var(--dark-gray);
-    padding: 80px 0;
 }
 
 .involvement-section .section-title {
     color: var(--deep-navy);
-    margin-bottom: 30px;
 }
 
-/* Involvement Photo Collage */
-.involvement-section .photo-collage-container {
-    margin-bottom: 60px;
+/* Photo Collage with Horizontal Scroll */
+.photo-collage-container {
+    position: relative;
+    margin-bottom: 40px;
 }
 
-.involvement-section .photo-collage {
-    height: 250px;
+.photo-collage-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 10px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--warm-brown) var(--light-gray);
 }
 
-.involvement-section .collage-item {
+.photo-collage-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.photo-collage-wrapper::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 4px;
+}
+
+.photo-collage-wrapper::-webkit-scrollbar-thumb {
+    background: var(--warm-brown);
+    border-radius: 4px;
+}
+
+.photo-collage-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--bronze);
+}
+
+/* Scroll Buttons */
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 200px;
+    background: rgba(139, 111, 71, 0.3);
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.scroll-btn span {
+    font-size: 2rem;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-btn:hover {
+    background: rgba(139, 111, 71, 0.6);
+}
+
+.scroll-btn-left {
+    left: 0;
+    border-radius: 0 10px 10px 0;
+}
+
+.scroll-btn-right {
+    right: 0;
+    border-radius: 10px 0 0 10px;
+}
+
+.photo-collage {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+    padding: 10px 0;
+}
+ 
+.collage-item {
     width: 250px;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+.collage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.collage-item:hover img {
+    transform: scale(1.1);
 }
 
 /* Involvement List */
@@ -823,25 +1146,10 @@ h1, h2, h3, h4, h5, h6 {
 .achievements-section {
     background: var(--deep-navy);
     color: var(--cream);
-    padding: 80px 0;
 }
 
 .achievements-section .section-title {
     color: var(--cream);
-    margin-bottom: 30px;
-}
-
-/* Achievements Photo Collage */
-.achievements-section .photo-collage-container {
-    margin-bottom: 60px;
-}
-
-.achievements-section .photo-collage {
-    height: 250px;
-}
-
-.achievements-section .collage-item {
-    width: 250px;
 }
 
 .achievements-grid {
@@ -881,6 +1189,7 @@ h1, h2, h3, h4, h5, h6 {
 .achievement-card .achievement-icon {
     font-size: 3.5rem;
     line-height: 1;
+    filter: drop-shadow(0 4px 8px rgba(201, 169, 97, 0.3));
 }
 
 .achievement-card h3 {
@@ -929,9 +1238,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .contact-subtitle {
     font-size: 1.2rem;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     opacity: 0.9;
-    line-height: 1.6;
 }
 
 .contact-section .hero-contact {
@@ -939,7 +1247,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-wrap: wrap;
     justify-content: center;
     gap: 25px;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
 }
 
 .contact-section .contact-link {
@@ -960,6 +1268,24 @@ h1, h2, h3, h4, h5, h6 {
 
 .contact-section .contact-logo {
     filter: brightness(0) invert(1);
+}
+
+.cv-download-btn {
+    display: inline-block;
+    padding: 15px 40px;
+    background: var(--deep-navy);
+    color: var(--cream);
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.cv-download-btn:hover {
+    background: var(--navy-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .footer {
@@ -1017,11 +1343,7 @@ h1, h2, h3, h4, h5, h6 {
 
     .research-grid {
         grid-template-columns: 1fr;
-        gap: 40px;
-    }
-
-    .research-section .section-title {
-        text-align: center;
+        gap: 30px;
     }
 
     .approach-grid {
@@ -1038,40 +1360,34 @@ h1, h2, h3, h4, h5, h6 {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    /* Gallery adjustments */
-    .photo-collage {
-        height: 250px;
+    .project-gallery .photo-collage-wrapper {
+        max-width: 400px;
     }
-    
+
     .collage-item {
-        width: 350px;
+        width: 400px;
+        height: 400px;
     }
-    
-    .scroll-btn {
-        height: 250px;
+
+    .project-gallery .scroll-btn {
+        height: 400px;
         width: 35px;
     }
 
-    .research-image .photo-collage {
-        height: 400px;
-    }
-    
-    .research-image .collage-item {
-        width: 400px;
-    }
-    
-    .research-image .scroll-btn {
+    /* Research section adjustments for tablet */
+    .research-image .project-gallery .photo-collage-wrapper {
         height: 400px;
     }
 
-    .involvement-section .photo-collage,
-    .achievements-section .photo-collage {
-        height: 200px;
+    .research-image .collage-item {
+        width: 400px;
+        height: 400px;
     }
-    
-    .involvement-section .collage-item,
-    .achievements-section .collage-item {
-        width: 200px;
+
+    .research-image .project-gallery .scroll-btn {
+        height: 400px;
+        display: flex !important;
+        visibility: visible !important;
     }
 }
 
@@ -1099,13 +1415,20 @@ h1, h2, h3, h4, h5, h6 {
 
     .hero-contact,
     .contact-section .hero-contact {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
         gap: 15px;
     }
 
     .contact-link,
     .contact-section .contact-link {
-        padding: 8px 16px;
+        padding: 8px 12px;
         font-size: 0.85rem;
+    }
+
+    .contact-text {
+        display: inline;
     }
 
     .section-title {
@@ -1119,11 +1442,68 @@ h1, h2, h3, h4, h5, h6 {
 
     .results-grid {
         grid-template-columns: 1fr;
-        gap: 15px;
     }
 
     .achievements-grid {
         grid-template-columns: 1fr;
+    }
+
+    .project-gallery .photo-collage-wrapper {
+        max-width: 300px;
+        height: 300px;
+    }
+
+    .collage-item {
+        width: 300px;
+        height: 300px;
+    }
+
+    .project-gallery .scroll-btn {
+        height: 300px;
+        width: 30px;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .project-gallery .scroll-btn span {
+        font-size: 1.2rem;
+    }
+
+    /* Leadership and achievements sections */
+    .collage-item {
+        width: 180px;
+        height: 180px;
+    }
+
+    .scroll-btn {
+        width: 40px;
+        height: 150px;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .scroll-btn span {
+        font-size: 1.5rem;
+    }
+
+    /* Research section adjustments for mobile */
+    .research-image .project-gallery .photo-collage-wrapper {
+        height: 300px;
+    }
+
+    .research-image .collage-item {
+        width: 300px;
+        height: 300px;
+    }
+
+    .research-image .project-gallery .scroll-btn {
+        height: 300px;
+        width: 30px;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 
     .involvement-item {
@@ -1136,47 +1516,26 @@ h1, h2, h3, h4, h5, h6 {
     .involvement-item .involvement-icon {
         width: 56px;
         height: 56px;
-        margin-bottom: 15px;
+        margin: 0 auto 15px;
     }
 
     .involvement-item .involvement-icon {
         font-size: 3rem;
     }
 
-    /* Gallery adjustments */
-    .photo-collage {
-        height: 200px;
-    }
-    
-    .collage-item {
-        width: 300px;
-    }
-    
-    .scroll-btn {
-        height: 200px;
-        width: 30px;
+    .achievement-card img,
+    .achievement-card .achievement-icon {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 15px;
     }
 
-    .research-image .photo-collage {
-        height: 300px;
-    }
-    
-    .research-image .collage-item {
-        width: 300px;
-    }
-    
-    .research-image .scroll-btn {
-        height: 300px;
+    .achievement-card .achievement-icon {
+        font-size: 3rem;
     }
 
-    .involvement-section .photo-collage,
-    .achievements-section .photo-collage {
-        height: 150px;
-    }
-    
-    .involvement-section .collage-item,
-    .achievements-section .collage-item {
-        width: 150px;
+    .block-title {
+        font-size: 1.3rem;
     }
 }
 
@@ -1193,7 +1552,7 @@ h1, h2, h3, h4, h5, h6 {
 
     .contact-link,
     .contact-section .contact-link {
-        padding: 6px 12px;
+        padding: 6px 10px;
         font-size: 0.8rem;
         gap: 8px;
     }
@@ -1212,43 +1571,77 @@ h1, h2, h3, h4, h5, h6 {
         gap: 10px;
     }
 
-    .block-title {
-        font-size: 1.3rem;
+    .project-gallery .photo-collage-wrapper {
+        max-width: 250px;
+        height: 250px;
     }
 
-    /* Gallery adjustments */
-    .photo-collage {
-        height: 150px;
-    }
-    
     .collage-item {
         width: 250px;
-    }
-    
-    .scroll-btn {
-        height: 150px;
-        width: 25px;
-    }
-
-    .research-image .photo-collage {
         height: 250px;
     }
-    
+
+    .project-gallery .scroll-btn {
+        height: 250px;
+        width: 25px;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* Research section adjustments for small mobile */
+    .research-image .project-gallery .photo-collage-wrapper {
+        height: 250px;
+    }
+
     .research-image .collage-item {
         width: 250px;
-    }
-    
-    .research-image .scroll-btn {
         height: 250px;
     }
 
-    .involvement-section .photo-collage,
-    .achievements-section .photo-collage {
-        height: 120px;
+    .research-image .project-gallery .scroll-btn {
+        height: 250px;
+        width: 25px;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
-    
-    .involvement-section .collage-item,
-    .achievements-section .collage-item {
-        width: 120px;
+
+    .collage-item {
+        width: 150px;
+        height: 150px;
+    }
+
+    .involvement-item img,
+    .involvement-item .involvement-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .involvement-item .involvement-icon {
+        font-size: 2.5rem;
+    }
+
+    .achievement-card img,
+    .achievement-card .achievement-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .achievement-card .achievement-icon {
+        font-size: 2.5rem;
+    }
+}
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+@media print {
+    .scroll-indicator {
+        display: none;
+    }
+
+    section {
+        page-break-inside: avoid;
     }
 }
