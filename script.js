@@ -35,7 +35,40 @@ function scrollProjectPhotos(wrapperId, direction) {
     }
 
     projectCarouselState[wrapperId] += direction;
+// ===================================
+// RESEARCH PHOTO CAROUSEL (1x1)
+// ===================================
+const researchCarouselState = {};
 
+function scrollResearchPhotos(direction) {
+    const wrapper = document.getElementById('research-photos');
+    if (!wrapper) return;
+
+    const items = wrapper.querySelectorAll('.project-collage-item');
+    if (items.length === 0) return;
+
+    if (!('research-photos' in researchCarouselState)) {
+        researchCarouselState['research-photos'] = 0;
+    }
+
+    researchCarouselState['research-photos'] += direction;
+
+    // Wrap around
+    if (researchCarouselState['research-photos'] < 0) {
+        researchCarouselState['research-photos'] = items.length - 1;
+    }
+    if (researchCarouselState['research-photos'] >= items.length) {
+        researchCarouselState['research-photos'] = 0;
+    }
+
+    const currentIndex = researchCarouselState['research-photos'];
+    const itemWidth = items[0].offsetWidth;
+
+    wrapper.scrollTo({
+        left: currentIndex * itemWidth,
+        behavior: 'smooth'
+    });
+}
     // Wrap around
     if (projectCarouselState[wrapperId] < 0) {
         projectCarouselState[wrapperId] = items.length - 1;
