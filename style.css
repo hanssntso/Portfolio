@@ -549,7 +549,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .project-collage-item img {
-    width: 33.33333%;
+    width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
@@ -782,12 +782,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .photo-collage {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(12, 250px);
     gap: 12px;
     width: max-content;
     padding: 10px 0;
 }
-
+ 
 .collage-item {
     width: 250px;
     height: 250px;
@@ -797,7 +797,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .collage-item img {
-    width: 16.66667%;
+    width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
