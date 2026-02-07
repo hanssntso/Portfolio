@@ -523,7 +523,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .project-gallery .photo-collage-wrapper {
-    width: 750px;
+    width: 1500px;
     overflow: hidden;
     padding-bottom: 0;
     scrollbar-width: none;
@@ -540,8 +540,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .project-collage-item {
-    width: 250px;
-    height: 250px;
+    width: 500px;
+    height: 500px;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
@@ -723,7 +723,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .photo-collage-wrapper::-webkit-scrollbar {
-    height: 8px;
+    width: 1500px;
+    overflow: hidden;
+    padding-bottom: 0;
+    scrollbar-width: none;
 }
 
 .photo-collage-wrapper::-webkit-scrollbar-track {
@@ -779,16 +782,15 @@ h1, h2, h3, h4, h5, h6 {
 
 .photo-collage {
     display: grid;
-    grid-template-columns: repeat(6, 180px);
-    grid-template-rows: repeat(1, 180px);
+    grid-template-columns: repeat(6, 250px);
     gap: 12px;
     width: max-content;
     padding: 10px 0;
 }
 
 .collage-item {
-    width: 180px;
-    height: 180px;
+    width: 250px;
+    height: 250px;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
