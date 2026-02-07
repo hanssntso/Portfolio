@@ -313,21 +313,20 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .research-image .project-gallery .photo-collage-wrapper {
-    flex: 0 0 500px;
-    width: 500px;
+    width: 100%;
     height: 500px;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
-.research-image .project-photo-collage {
+.research-image .research-photo-collage {
     display: flex;
-    height: 500px;
+    height: 100%;
     transition: transform 0.5s ease;
 }
 
-.research-image .project-collage-item {
+.research-image .collage-item {
     width: 500px;
     height: 500px;
     flex-shrink: 0;
@@ -335,15 +334,18 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
 }
 
-.research-image .project-collage-item img {
+.research-image .collage-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-/* Research buttons */
+/* Research buttons - FIXED FOR SMALL DEVICES */
 .research-image .project-gallery .scroll-btn {
     height: 500px;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* ===================================
@@ -537,7 +539,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.4;
 }
 
-/* Project Photo Gallery - Carousel dengan jarak 10px */
+/* Project Photo Gallery - Updated for horizontal scroll */
 .project-gallery {
     display: flex;
     align-items: center;
@@ -549,7 +551,7 @@ h1, h2, h3, h4, h5, h6 {
 .project-gallery .scroll-btn {
     position: static;
     transform: none;
-    height: 300px;
+    height: 500px;
     width: 40px;
     flex-shrink: 0;
     border-radius: 10px;
@@ -560,6 +562,7 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    z-index: 2;
 }
 
 .project-gallery .scroll-btn:hover {
@@ -572,24 +575,44 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .project-gallery .photo-collage-wrapper {
-    width: 1500px;
-    overflow: hidden;
-    padding-bottom: 0;
-    scrollbar-width: none;
+    width: 100%;
+    max-width: 500px;
+    height: 500px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--warm-brown) var(--light-gray);
+    border-radius: 10px;
 }
 
 .project-gallery .photo-collage-wrapper::-webkit-scrollbar {
-    display: none;
+    height: 8px;
 }
 
-.project-photo-collage {
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: 4px;
+}
+
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar-thumb {
+    background: var(--warm-brown);
+    border-radius: 4px;
+}
+
+.project-gallery .photo-collage-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--bronze);
+}
+
+.photo-collage {
     display: flex;
+    height: 100%;
+    gap: 0;
     width: max-content;
-    gap: 10px; /* Jarak antar photo */
-    padding: 10px 0;
 }
 
-.project-collage-item {
+.collage-item {
     width: 500px;
     height: 500px;
     overflow: hidden;
@@ -598,14 +621,14 @@ h1, h2, h3, h4, h5, h6 {
     flex-shrink: 0;
 }
 
-.project-collage-item img {
+.collage-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
 }
 
-.project-collage-item:hover img {
+.collage-item:hover img {
     transform: scale(1.1);
 }
 
@@ -1132,22 +1155,33 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .project-gallery .photo-collage-wrapper {
-        width: 1000px;
-    }
-
-    .project-collage-item {
-        width: 300px;
-        height: 300px;
-    }
-
-    .project-gallery .scroll-btn {
-        height: 300px;
-        width: 35px;
+        max-width: 400px;
     }
 
     .collage-item {
-        width: 200px;
-        height: 200px;
+        width: 400px;
+        height: 400px;
+    }
+
+    .project-gallery .scroll-btn {
+        height: 400px;
+        width: 35px;
+    }
+
+    /* Research section adjustments for tablet */
+    .research-image .project-gallery .photo-collage-wrapper {
+        height: 400px;
+    }
+
+    .research-image .collage-item {
+        width: 400px;
+        height: 400px;
+    }
+
+    .research-image .project-gallery .scroll-btn {
+        height: 400px;
+        display: flex !important;
+        visibility: visible !important;
     }
 }
 
@@ -1209,23 +1243,28 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .project-gallery .photo-collage-wrapper {
-        width: 800px;
+        max-width: 300px;
+        height: 300px;
     }
 
-    .project-collage-item {
-        width: 250px;
-        height: 250px;
+    .collage-item {
+        width: 300px;
+        height: 300px;
     }
 
     .project-gallery .scroll-btn {
-        height: 250px;
+        height: 300px;
         width: 30px;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 
     .project-gallery .scroll-btn span {
         font-size: 1.2rem;
     }
 
+    /* Leadership and achievements sections */
     .collage-item {
         width: 180px;
         height: 180px;
@@ -1234,10 +1273,31 @@ h1, h2, h3, h4, h5, h6 {
     .scroll-btn {
         width: 40px;
         height: 150px;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 
     .scroll-btn span {
         font-size: 1.5rem;
+    }
+
+    /* Research section adjustments for mobile */
+    .research-image .project-gallery .photo-collage-wrapper {
+        height: 300px;
+    }
+
+    .research-image .collage-item {
+        width: 300px;
+        height: 300px;
+    }
+
+    .research-image .project-gallery .scroll-btn {
+        height: 300px;
+        width: 30px;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 
     .involvement-item {
@@ -1305,9 +1365,40 @@ h1, h2, h3, h4, h5, h6 {
         gap: 10px;
     }
 
-    .project-collage-item {
-        width: 200px;
-        height: 200px;
+    .project-gallery .photo-collage-wrapper {
+        max-width: 250px;
+        height: 250px;
+    }
+
+    .collage-item {
+        width: 250px;
+        height: 250px;
+    }
+
+    .project-gallery .scroll-btn {
+        height: 250px;
+        width: 25px;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* Research section adjustments for small mobile */
+    .research-image .project-gallery .photo-collage-wrapper {
+        height: 250px;
+    }
+
+    .research-image .collage-item {
+        width: 250px;
+        height: 250px;
+    }
+
+    .research-image .project-gallery .scroll-btn {
+        height: 250px;
+        width: 25px;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 
     .collage-item {
