@@ -7,14 +7,52 @@
 // ===================================
 // GLOBAL VARIABLES
 // ===================================
-const projectCarouselState = {};
-let researchCurrentIndex = 0;
+let researchCarouselIndex = 0;
 
 // ===================================
-// PHOTO GALLERY SCROLL FUNCTIONS
+// UNIVERSAL CAROUSEL SCROLL FUNCTIONS
+// Untuk semua carousel: research, ministry, transport, highway, involvement, achievements
 // ===================================
-function scrollPhotos(direction) {
-    const wrapper = document.getElementById('photoCollage');
+
+// Function untuk research carousel (KMITL)
+function scrollResearchCarousel(direction) {
+    const wrapper = document.getElementById('research-photoCollage');
+    if (wrapper) {
+        const scrollAmount = wrapper.clientWidth * 0.8;
+        wrapper.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+}
+
+// Function untuk project carousels (ministry, transport, highway)
+function scrollProjectCarousel(wrapperId, direction) {
+    const wrapper = document.getElementById(wrapperId);
+    if (wrapper) {
+        const scrollAmount = wrapper.clientWidth * 0.8;
+        wrapper.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+}
+
+// Function untuk leadership section (involvement)
+function scrollInvolvementPhotos(direction) {
+    const wrapper = document.getElementById('involvement-photoCollage');
+    if (wrapper) {
+        const scrollAmount = wrapper.clientWidth * 0.8;
+        wrapper.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+}
+
+// Function untuk achievement section
+function scrollAchievementPhotos(direction) {
+    const wrapper = document.getElementById('achievement-photoCollage');
     if (wrapper) {
         const scrollAmount = wrapper.clientWidth * 0.8;
         wrapper.scrollBy({
@@ -25,68 +63,10 @@ function scrollPhotos(direction) {
 }
 
 // ===================================
-// PROJECT PHOTO GALLERY CAROUSEL (1x1)
-// ===================================
-function scrollProjectPhotos(wrapperId, direction) {
-    const wrapper = document.getElementById(wrapperId);
-    if (!wrapper) return;
-
-    const items = wrapper.querySelectorAll('.project-collage-item');
-    if (items.length === 0) return;
-
-    if (!(wrapperId in projectCarouselState)) {
-        projectCarouselState[wrapperId] = 0;
-    }
-
-    projectCarouselState[wrapperId] += direction;
-
-    // Wrap around
-    if (projectCarouselState[wrapperId] < 0) {
-        projectCarouselState[wrapperId] = items.length - 1;
-    }
-    if (projectCarouselState[wrapperId] >= items.length) {
-        projectCarouselState[wrapperId] = 0;
-    }
-
-    const currentIndex = projectCarouselState[wrapperId];
-    const itemWidth = items[0].offsetWidth + 10; // Include 10px gap
-
-    wrapper.scrollTo({
-        left: currentIndex * itemWidth,
-        behavior: 'smooth'
-    });
-}
-
-// ===================================
-// RESEARCH PHOTO CAROUSEL (1x1)
-// ===================================
-function scrollResearchPhotos(direction) {
-    const wrapper = document.getElementById('research-photos');
-    if (!wrapper) return;
-
-    const strip = wrapper.querySelector('.project-photo-collage');
-    const items = wrapper.querySelectorAll('.project-collage-item');
-    if (!strip || items.length === 0) return;
-
-    researchCurrentIndex += direction;
-
-    // Wrap around
-    if (researchCurrentIndex < 0) {
-        researchCurrentIndex = items.length - 1;
-    }
-    if (researchCurrentIndex >= items.length) {
-        researchCurrentIndex = 0;
-    }
-
-    const itemWidth = items[0].offsetWidth;
-    strip.style.transform = 'translateX(-' + (researchCurrentIndex * itemWidth) + 'px)';
-}
-
-// ===================================
-// DOM CONTENT LOADED
+// DOM CONTENT LOADED - INITIALIZATION
 // ===================================
 document.addEventListener('DOMContentLoaded', function() {
-
+    
     // ===================================
     // SMOOTH SCROLLING FOR ANCHOR LINKS
     // ===================================
@@ -112,6 +92,47 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // ===================================
+    // INITIALIZE ALL CAROUSELS
+    // ===================================
+    
+    // Initialize semua carousel dengan smooth scrolling
+    const allCarousels = document.querySelectorAll('.photo-collage-wrapper');
+    
+    allCarousels.forEach(carousel => {
+        // Pastikan carousel bisa discroll dengan smooth
+        carousel.style.scrollBehavior = 'smooth';
+        
+        // Tambahkan event listener untuk mouse wheel
+        carousel.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            this.scrollLeft += e.deltaY;
+        });
+        
+        // Tambahkan touch event untuk mobile
+        let isDragging = false;
+        let startX;
+        let scrollLeft;
+        
+        carousel.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].pageX - carousel.offsetLeft;
+            scrollLeft = carousel.scrollLeft;
+        });
+        
+        carousel.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.touches[0].pageX - carousel.offsetLeft;
+            const walk = (x - startX) * 2;
+            carousel.scrollLeft = scrollLeft - walk;
+        });
+        
+        carousel.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+    });
+    
     // ===================================
     // SCROLL ANIMATIONS
     // ===================================
@@ -244,19 +265,98 @@ document.addEventListener('DOMContentLoaded', function() {
                 transform: scale(1);
             }
         }
+        
+        /* Loading state untuk images */
+        .collage-item img {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Fokus state untuk carousels */
+        .photo-collage-wrapper:focus {
+            outline: 2px solid var(--warm-brown);
+            outline-offset: 2px;
+        }
     `;
     document.head.appendChild(style);
 
     // ===================================
-    // INITIALIZE PROJECT CAROUSELS
+    // KEYBOARD NAVIGATION FOR CAROUSELS
     // ===================================
-    // Initialize all project carousels to start at first image
-    const projectWrappers = document.querySelectorAll('[id$="-challenge-photos"]');
-    projectWrappers.forEach(wrapper => {
-        const wrapperId = wrapper.id;
-        projectCarouselState[wrapperId] = 0;
-        wrapper.scrollLeft = 0;
+    document.addEventListener('keydown', function(e) {
+        const activeCarousel = document.querySelector('.photo-collage-wrapper:focus-within');
+        if (activeCarousel) {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                activeCarousel.scrollBy({ left: -300, behavior: 'smooth' });
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                activeCarousel.scrollBy({ left: 300, behavior: 'smooth' });
+            }
+        }
     });
+
+    // ===================================
+    // CAROUSEL BUTTON VISIBILITY
+    // ===================================
+    
+    // Show scroll buttons on hover untuk desktop
+    if (window.innerWidth > 768) {
+        const carouselContainers = document.querySelectorAll('.photo-collage-container');
+        
+        carouselContainers.forEach(container => {
+            const scrollButtons = container.querySelectorAll('.scroll-btn');
+            
+            container.addEventListener('mouseenter', function() {
+                scrollButtons.forEach(btn => btn.style.opacity = '1');
+            });
+            
+            container.addEventListener('mouseleave', function() {
+                scrollButtons.forEach(btn => btn.style.opacity = '0.7');
+            });
+            
+            // Set initial opacity
+            scrollButtons.forEach(btn => btn.style.opacity = '0.7');
+        });
+    }
+    
+    // Auto-hide scroll buttons untuk mobile setelah 3 detik
+    if (window.innerWidth <= 768) {
+        const mobileScrollButtons = document.querySelectorAll('.scroll-btn');
+        
+        // Show buttons initially
+        mobileScrollButtons.forEach(btn => btn.style.opacity = '1');
+        
+        // Set timeout untuk hide buttons
+        setTimeout(() => {
+            mobileScrollButtons.forEach(btn => {
+                if (!btn.matches(':hover')) {
+                    btn.style.opacity = '0.7';
+                }
+            });
+        }, 3000);
+        
+        // Show buttons on tap/hover
+        mobileScrollButtons.forEach(btn => {
+            btn.addEventListener('touchstart', function() {
+                this.style.opacity = '1';
+            });
+            
+            btn.addEventListener('mouseenter', function() {
+                this.style.opacity = '1';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.opacity = '0.7';
+            });
+        });
+    }
 
     // ===================================
     // ACCESSIBILITY IMPROVEMENTS
