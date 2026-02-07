@@ -1,1350 +1,449 @@
 /* ===================================
-   PORTFOLIO WEBSITE - CSS STYLESHEET
+   PORTFOLIO WEBSITE - JAVASCRIPT
    Alan Timothy Lie Hans Santoso
    Civil Engineer & Doctoral Researcher
    =================================== */
 
-/* ===================================
-   COLOR PALETTE
-   =================================== */
-:root {
-    /* Primary Navy Colors */
-    --deep-navy: #1A2332;
-    --navy-accent: #2C3E50;
-
-    /* Secondary Brown Colors */
-    --warm-brown: #8B6F47;
-    --bronze: #B8956A;
-
-    /* Supporting Colors */
-    --cream: #F5F5F0;
-    --light-gray: #E8E8E8;
-    --dark-gray: #4A4A4A;
-    --accent-gold: #C9A961;
-
-    /* Typography */
-    --font-heading: 'Inter', sans-serif;
-    --font-body: 'Open Sans', sans-serif;
-}
-
-/* ===================================
-   RESET & BASE STYLES
-   =================================== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-    font-size: 16px;
-}
-
-body {
-    font-family: var(--font-body);
-    line-height: 1.6;
-    color: var(--dark-gray);
-    overflow-x: hidden;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-/* ===================================
-   CONTAINER & LAYOUT
-   =================================== */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 30px;
-}
-
-section {
-    padding: 80px 0;
-    min-height: auto;
-}
-
-/* ===================================
-   TYPOGRAPHY
-   =================================== */
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
-    font-weight: 600;
-    line-height: 1.2;
-}
-
-.section-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 50px;
-    text-align: center;
-}
-
-/* ===================================
-   CONTACT LOGO STYLES
-   =================================== */
-.contact-logo {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-    flex-shrink: 0;
-    transition: transform 0.3s ease;
-}
-
-/* Dark background sections */
-.project-dark .contact-logo,
-.contact-section .contact-logo,
-.hero-section .contact-logo {
-    filter: brightness(0) invert(1);
-}
-
-/* Light background sections */
-.project-light .contact-logo,
-.research-section .contact-logo,
-.experience-section .contact-logo,
-.involvement-section .contact-logo {
-    filter: brightness(0);
-}
-
-/* ===================================
-   SECTION 1: HERO / PROFILE
-   =================================== */
-.hero-section {
-    background: linear-gradient(135deg, var(--deep-navy) 0%, var(--navy-accent) 100%);
-    color: var(--cream);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 100px 0;
-}
-
-.hero-content {
-    animation: fadeIn 1s ease-in;
-}
-
-.profile-photo {
-    width: 300px;
-    height: 300px;
-    margin: 0 auto 30px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 5px solid var(--warm-brown);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.profile-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.hero-name {
-    font-size: 3rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin-bottom: 15px;
-    color: var(--cream);
-}
-
-.hero-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--bronze);
-    margin-bottom: 20px;
-}
-
-.hero-tagline {
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto 40px;
-    color: var(--cream);
-    opacity: 0.9;
-    line-height: 1.7;
-}
-
-.hero-contact {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-    margin-bottom: 60px;
-}
-
-.contact-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    font-size: 0.95rem;
-}
-
-.contact-link:hover {
-    background: var(--warm-brown);
-    transform: translateY(-2px);
-}
-
-.contact-link:hover .contact-logo {
-    transform: scale(1.1);
-}
-
-.scroll-indicator {
-    margin-top: 50px;
-    opacity: 0.7;
-}
-
-.scroll-indicator span {
-    display: block;
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-}
-
-.scroll-arrow {
-    font-size: 2rem;
-    animation: bounce 2s infinite;
-}
-
-/* ===================================
-   SECTION 2: RESEARCH AFFILIATION
-   =================================== */
-.research-section {
-    background: var(--cream);
-    color: var(--dark-gray);
-}
-
-.research-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 50px;
-    align-items: center;
-}
-
-.research-image {
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-}
-
-.research-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.research-image:hover img {
-    transform: scale(1.05);
-}
-
-.research-content {
-    padding: 20px;
-}
-
-.research-section .section-title {
-    text-align: left;
-    margin-bottom: 30px;
-    color: var(--deep-navy);
-}
-
-.research-position h3 {
-    font-size: 1.8rem;
-    color: var(--deep-navy);
-    margin-bottom: 10px;
-}
-
-.institution {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--warm-brown);
-    margin-bottom: 5px;
-}
-
-.location, .duration {
-    font-size: 1rem;
-    color: var(--dark-gray);
-    margin-bottom: 3px;
-}
-
-.research-focus {
-    margin-top: 25px;
-    margin-bottom: 20px;
-}
-
-.research-focus h4 {
-    font-size: 1.2rem;
-    color: var(--warm-brown);
-    margin-bottom: 10px;
-}
-
-.research-focus p {
-    font-weight: 600;
-    color: var(--deep-navy);
-}
-
-.research-description {
-    margin-top: 20px;
-    line-height: 1.8;
-}
-
-/* ===================================
-   RESEARCH CAROUSEL STYLES
-   =================================== */
-.research-image .photo-collage-container {
-    position: relative;
-    width: 100%;
-    margin: 0;
-}
-
-.research-image .project-gallery {
-    margin: 0;
-}
-
-.research-image .project-gallery .photo-collage-wrapper {
-    flex: 0 0 500px;
-    width: 500px;
-    height: 500px;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-}
-
-.research-image .project-photo-collage {
-    display: flex;
-    height: 500px;
-    transition: transform 0.5s ease;
-}
-
-.research-image .project-collage-item {
-    width: 500px;
-    height: 500px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.research-image .project-collage-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Research buttons */
-.research-image .project-gallery .scroll-btn {
-    height: 500px;
-}
-
-/* ===================================
-   SECTION 3-5: PROJECT SECTIONS
-   =================================== */
-.project-section {
-    padding: 100px 0;
-}
-
-.project-dark {
-    background: var(--navy-accent);
-    color: var(--cream);
-}
-
-.project-light {
-    background: var(--cream);
-    color: var(--dark-gray);
-}
-
-.project-dark .section-title {
-    color: var(--cream);
-}
-
-.project-light .section-title {
-    color: var(--deep-navy);
-}
-
-.project-header {
-    text-align: center;
-    margin-bottom: 60px;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.project-title {
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 15px;
-}
-
-.project-dark .project-title {
-    color: var(--cream);
-}
-
-.project-light .project-title {
-    color: var(--deep-navy);
-}
-
-.project-role {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.project-dark .project-role {
-    color: var(--bronze);
-}
-
-.project-light .project-role {
-    color: var(--warm-brown);
-}
-
-.project-date {
-    font-size: 1rem;
-    opacity: 0.8;
-}
-
-/* Project Block Structure */
-.project-block {
-    margin-bottom: 60px;
-}
-
-.block-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    position: relative;
-}
-
-.project-dark .block-title {
-    color: var(--bronze);
-}
-
-.project-light .block-title {
-    color: var(--warm-brown);
-}
-
-.block-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background: var(--warm-brown);
-}
-
-.block-content p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 30px;
-}
-
-/* Approach Grid */
-.approach-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-bottom: 40px;
-}
-
-.approach-item {
-    padding: 30px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-}
-
-.project-light .approach-item {
-    background: rgba(0, 0, 0, 0.03);
-}
-
-.approach-item:hover {
-    transform: translateY(-5px);
-}
-
-.approach-icon {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.approach-item h5 {
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-    text-align: center;
-}
-
-.project-dark .approach-item h5 {
-    color: var(--cream);
-}
-
-.project-light .approach-item h5 {
-    color: var(--deep-navy);
-}
-
-.approach-item p {
-    font-size: 0.95rem;
-    line-height: 1.7;
-    text-align: center;
-}
-
-/* Results Grid */
-.results-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-    margin-bottom: 40px;
-}
-
-.result-item {
-    text-align: center;
-    padding: 30px 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-}
-
-.project-light .result-item {
-    background: rgba(0, 0, 0, 0.03);
-}
-
-.result-number {
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 15px;
-}
-
-.project-dark .result-number {
-    color: var(--accent-gold);
-}
-
-.project-light .result-number {
-    color: var(--warm-brown);
-}
-
-.result-label {
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1.4;
-}
-
-/* Project Photo Gallery - Carousel dengan jarak 10px */
-.project-gallery {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin: 40px 0;
-}
-
-.project-gallery .scroll-btn {
-    position: static;
-    transform: none;
-    height: 300px;
-    width: 40px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    background: rgba(139, 111, 71, 0.3);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.project-gallery .scroll-btn:hover {
-    background: rgba(139, 111, 71, 0.6);
-}
-
-.project-gallery .scroll-btn span {
-    font-size: 1.5rem;
-    color: white;
-}
-
-.project-gallery .photo-collage-wrapper {
-    width: 1500px;
-    overflow: hidden;
-    padding-bottom: 0;
-    scrollbar-width: none;
-}
-
-.project-gallery .photo-collage-wrapper::-webkit-scrollbar {
-    display: none;
-}
-
-.project-photo-collage {
-    display: flex;
-    width: max-content;
-    gap: 10px; /* Jarak antar photo */
-    padding: 10px 0;
-}
-
-.project-collage-item {
-    width: 500px;
-    height: 500px;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0;
-}
-
-.project-collage-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.project-collage-item:hover img {
-    transform: scale(1.1);
-}
-
-.project-dark .photo-collage-wrapper {
-    scrollbar-color: var(--bronze) rgba(255, 255, 255, 0.1);
-}
-
-/* ===================================
-   SECTION 6: OTHER EXPERIENCES
-   =================================== */
-.experience-section {
-    background: var(--cream);
-    color: var(--dark-gray);
-}
-
-.experience-section .section-title {
-    color: var(--deep-navy);
-}
-
-.experience-list {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.experience-item {
-    margin-bottom: 40px;
-    padding: 30px;
-    background: white;
-    border-radius: 10px;
-    border-left: 4px solid var(--warm-brown);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.experience-item:hover {
-    transform: translateX(5px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-}
-
-.experience-header h3 {
-    font-size: 1.4rem;
-    color: var(--deep-navy);
-    margin-bottom: 8px;
-}
-
-.experience-role {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--warm-brown);
-    margin-bottom: 5px;
-}
-
-.experience-date {
-    font-size: 0.95rem;
-    color: var(--dark-gray);
-    opacity: 0.8;
-    margin-bottom: 15px;
-}
-
-.experience-details {
-    list-style: none;
-    padding-left: 0;
-}
-
-.experience-details li {
-    padding-left: 25px;
-    margin-bottom: 10px;
-    position: relative;
-    line-height: 1.7;
-}
-
-.experience-details li::before {
-    content: '▹';
-    position: absolute;
-    left: 0;
-    color: var(--warm-brown);
-    font-weight: bold;
-}
-
-/* ===================================
-   SECTION 7: TECHNICAL SKILLS
-   =================================== */
-.skills-section {
-    background: var(--navy-accent);
-    color: var(--cream);
-    padding: 50px 0;
-}
-
-.skills-section .section-title {
-    color: var(--cream);
-}
-
-.skills-category {
-    margin-bottom: 20px;
-}
-
-.skills-category-title {
-    font-size: 1.2rem;
-    color: var(--bronze);
-    margin-bottom: 12px;
-    text-align: center;
-}
-
-.skills-tags {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
-}
-
-.skill-tag {
-    padding: 6px 14px;
-    background: var(--warm-brown);
-    color: var(--cream);
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    cursor: default;
-}
-
-.skill-tag:hover {
-    background: var(--bronze);
-    transform: translateY(-2px);
-}
-
-/* ===================================
-   SECTION 8: INVOLVEMENT
-   =================================== */
-.involvement-section {
-    background: var(--cream);
-    color: var(--dark-gray);
-}
-
-.involvement-section .section-title {
-    color: var(--deep-navy);
-}
-
-/* Photo Collage with Horizontal Scroll */
-.photo-collage-container {
-    position: relative;
-    margin-bottom: 40px;
-}
-
-.photo-collage-wrapper {
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 10px;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: var(--warm-brown) var(--light-gray);
-}
-
-.photo-collage-wrapper::-webkit-scrollbar {
-    height: 8px;
-}
-
-.photo-collage-wrapper::-webkit-scrollbar-track {
-    background: var(--light-gray);
-    border-radius: 4px;
-}
-
-.photo-collage-wrapper::-webkit-scrollbar-thumb {
-    background: var(--warm-brown);
-    border-radius: 4px;
-}
-
-.photo-collage-wrapper::-webkit-scrollbar-thumb:hover {
-    background: var(--bronze);
-}
-
-/* Scroll Buttons */
-.scroll-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 60px;
-    height: 200px;
-    background: rgba(139, 111, 71, 0.3);
-    border: none;
-    cursor: pointer;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.scroll-btn span {
-    font-size: 2rem;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.scroll-btn:hover {
-    background: rgba(139, 111, 71, 0.6);
-}
-
-.scroll-btn-left {
-    left: 0;
-    border-radius: 0 10px 10px 0;
-}
-
-.scroll-btn-right {
-    right: 0;
-    border-radius: 10px 0 0 10px;
-}
-
-.photo-collage {
-    display: flex;
-    gap: 12px;
-    width: max-content;
-    padding: 10px 0;
-}
- 
-.collage-item {
-    width: 250px;
-    height: 250px;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    flex-shrink: 0;
-}
-
-.collage-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.collage-item:hover img {
-    transform: scale(1.1);
-}
-
-/* Involvement List */
-.involvement-list {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.involvement-item {
-    display: flex;
-    gap: 25px;
-    margin-bottom: 40px;
-    padding: 30px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-    align-items: flex-start;
-}
-
-/* Logo Styling untuk Involvement */
-.involvement-item img,
-.involvement-item .involvement-icon {
-    width: 64px;
-    height: 64px;
-    object-fit: contain;
-    flex-shrink: 0;
-}
-
-.involvement-item .involvement-icon {
-    font-size: 3.5rem;
-    line-height: 1;
-    text-align: center;
-}
-
-.involvement-content {
-    flex: 1;
-}
-
-.involvement-content h3 {
-    font-size: 1.3rem;
-    color: var(--deep-navy);
-    margin-bottom: 8px;
-}
-
-.involvement-role {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--warm-brown);
-    margin-bottom: 15px;
-}
-
-.involvement-content ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.involvement-content li {
-    padding-left: 20px;
-    margin-bottom: 10px;
-    position: relative;
-    line-height: 1.7;
-}
-
-.involvement-content li::before {
-    content: '•';
-    position: absolute;
-    left: 0;
-    color: var(--warm-brown);
-    font-weight: bold;
-}
-
-/* ===================================
-   SECTION 9: ACHIEVEMENTS
-   =================================== */
-.achievements-section {
-    background: var(--deep-navy);
-    color: var(--cream);
-}
-
-.achievements-section .section-title {
-    color: var(--cream);
-}
-
-.achievements-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-}
-
-.achievement-card {
-    padding: 40px 30px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    text-align: center;
-    transition: transform 0.3s ease, background 0.3s ease;
-    border: 2px solid transparent;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.achievement-card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--warm-brown);
-}
-
-/* Logo dan Icon Styling untuk Achievements */
-.achievement-card img,
-.achievement-card .achievement-icon {
-    width: 64px;
-    height: 64px;
-    object-fit: contain;
-    margin-bottom: 20px;
-    flex-shrink: 0;
-}
-
-.achievement-card .achievement-icon {
-    font-size: 3.5rem;
-    line-height: 1;
-    filter: drop-shadow(0 4px 8px rgba(201, 169, 97, 0.3));
-}
-
-.achievement-card h3 {
-    font-size: 1.3rem;
-    color: var(--accent-gold);
-    margin-bottom: 15px;
-}
-
-.achievement-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.achievement-event {
-    font-size: 0.95rem;
-    opacity: 0.8;
-    margin-bottom: 8px;
-}
-
-.achievement-date {
-    font-size: 0.9rem;
-    color: var(--bronze);
-}
-
-/* ===================================
-   SECTION 10: CONTACT & FOOTER
-   =================================== */
-.contact-section {
-    background: var(--warm-brown);
-    color: var(--cream);
-    text-align: center;
-    padding: 80px 0;
-}
-
-.contact-content {
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.contact-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-}
-
-.contact-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 50px;
-    opacity: 0.9;
-}
-
-.contact-section .hero-contact {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 25px;
-    margin-bottom: 40px;
-}
-
-.contact-section .contact-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    font-size: 0.95rem;
-}
-
-.contact-section .contact-link:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-}
-
-.contact-section .contact-logo {
-    filter: brightness(0) invert(1);
-}
-
-.cv-download-btn {
-    display: inline-block;
-    padding: 15px 40px;
-    background: var(--deep-navy);
-    color: var(--cream);
-    border-radius: 30px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    margin-top: 20px;
-}
-
-.cv-download-btn:hover {
-    background: var(--navy-accent);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-
-.footer {
-    margin-top: 60px;
-    padding-top: 30px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    width: 100%;
-    text-align: center;
-}
-
-.footer p {
-    font-size: 0.9rem;
-    opacity: 0.7;
-}
-
-/* ===================================
-   ANIMATIONS
-   =================================== */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+// ===================================
+// GLOBAL VARIABLES
+// ===================================
+let researchCarouselIndex = 0;
+
+// ===================================
+// UNIVERSAL CAROUSEL SCROLL FUNCTIONS
+// Untuk semua carousel: research, ministry, transport, highway, involvement, achievements
+// ===================================
+
+// Function untuk research carousel (KMITL)
+function scrollResearchCarousel(direction) {
+    const wrapper = document.getElementById('research-photoCollage');
+    if (wrapper) {
+        const scrollAmount = wrapper.clientWidth * 0.8;
+        wrapper.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
     }
 }
 
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-10px);
-    }
-    60% {
-        transform: translateY(-5px);
-    }
-}
-
-/* ===================================
-   RESPONSIVE DESIGN
-   =================================== */
-
-/* Tablets and below (max-width: 992px) */
-@media (max-width: 992px) {
-    .hero-name {
-        font-size: 2.5rem;
-    }
-
-    .section-title {
-        font-size: 2rem;
-    }
-
-    .research-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .approach-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .results-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-
-    .achievements-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .project-gallery .photo-collage-wrapper {
-        width: 1000px;
-    }
-
-    .project-collage-item {
-        width: 300px;
-        height: 300px;
-    }
-
-    .project-gallery .scroll-btn {
-        height: 300px;
-        width: 35px;
-    }
-
-    .collage-item {
-        width: 200px;
-        height: 200px;
+// Function untuk project carousels (ministry, transport, highway)
+function scrollProjectCarousel(wrapperId, direction) {
+    const wrapper = document.getElementById(wrapperId);
+    if (wrapper) {
+        const scrollAmount = wrapper.clientWidth * 0.8;
+        wrapper.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
     }
 }
 
-/* Mobile (max-width: 768px) */
-@media (max-width: 768px) {
-    section {
-        padding: 60px 0;
-    }
-
-    .container {
-        padding: 0 20px;
-    }
-
-    .hero-name {
-        font-size: 2rem;
-    }
-
-    .hero-title {
-        font-size: 1.1rem;
-    }
-
-    .hero-tagline {
-        font-size: 1rem;
-    }
-
-    .hero-contact,
-    .contact-section .hero-contact {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-    }
-
-    .contact-link,
-    .contact-section .contact-link {
-        padding: 8px 12px;
-        font-size: 0.85rem;
-    }
-
-    .contact-text {
-        display: inline;
-    }
-
-    .section-title {
-        font-size: 1.8rem;
-        margin-bottom: 30px;
-    }
-
-    .project-title {
-        font-size: 1.6rem;
-    }
-
-    .results-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .achievements-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .project-gallery .photo-collage-wrapper {
-        width: 800px;
-    }
-
-    .project-collage-item {
-        width: 250px;
-        height: 250px;
-    }
-
-    .project-gallery .scroll-btn {
-        height: 250px;
-        width: 30px;
-    }
-
-    .project-gallery .scroll-btn span {
-        font-size: 1.2rem;
-    }
-
-    .collage-item {
-        width: 180px;
-        height: 180px;
-    }
-
-    .scroll-btn {
-        width: 40px;
-        height: 150px;
-    }
-
-    .scroll-btn span {
-        font-size: 1.5rem;
-    }
-
-    .involvement-item {
-        flex-direction: column;
-        text-align: center;
-        align-items: center;
-    }
-
-    .involvement-item img,
-    .involvement-item .involvement-icon {
-        width: 56px;
-        height: 56px;
-        margin: 0 auto 15px;
-    }
-
-    .involvement-item .involvement-icon {
-        font-size: 3rem;
-    }
-
-    .achievement-card img,
-    .achievement-card .achievement-icon {
-        width: 56px;
-        height: 56px;
-        margin-bottom: 15px;
-    }
-
-    .achievement-card .achievement-icon {
-        font-size: 3rem;
-    }
-
-    .block-title {
-        font-size: 1.3rem;
+// Function untuk leadership section (involvement)
+function scrollInvolvementPhotos(direction) {
+    const wrapper = document.getElementById('involvement-photoCollage');
+    if (wrapper) {
+        const scrollAmount = wrapper.clientWidth * 0.8;
+        wrapper.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
     }
 }
 
-/* Small mobile (max-width: 480px) */
-@media (max-width: 480px) {
-    .hero-name {
-        font-size: 1.6rem;
-    }
-
-    .profile-photo {
-        width: 200px;
-        height: 200px;
-    }
-
-    .contact-link,
-    .contact-section .contact-link {
-        padding: 6px 10px;
-        font-size: 0.8rem;
-        gap: 8px;
-    }
-
-    .contact-logo {
-        width: 20px;
-        height: 20px;
-    }
-
-    .section-title {
-        font-size: 1.5rem;
-    }
-
-    .hero-contact,
-    .contact-section .hero-contact {
-        gap: 10px;
-    }
-
-    .project-collage-item {
-        width: 200px;
-        height: 200px;
-    }
-
-    .collage-item {
-        width: 150px;
-        height: 150px;
-    }
-
-    .involvement-item img,
-    .involvement-item .involvement-icon {
-        width: 48px;
-        height: 48px;
-    }
-
-    .involvement-item .involvement-icon {
-        font-size: 2.5rem;
-    }
-
-    .achievement-card img,
-    .achievement-card .achievement-icon {
-        width: 48px;
-        height: 48px;
-    }
-
-    .achievement-card .achievement-icon {
-        font-size: 2.5rem;
+// Function untuk achievement section
+function scrollAchievementPhotos(direction) {
+    const wrapper = document.getElementById('achievement-photoCollage');
+    if (wrapper) {
+        const scrollAmount = wrapper.clientWidth * 0.8;
+        wrapper.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
     }
 }
 
-/* ===================================
-   PRINT STYLES
-   =================================== */
-@media print {
-    .scroll-indicator {
-        display: none;
+// ===================================
+// DOM CONTENT LOADED - INITIALIZATION
+// ===================================
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // ===================================
+    // SMOOTH SCROLLING FOR ANCHOR LINKS
+    // ===================================
+    const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
+
+    smoothScrollLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+
+            // Only handle internal links (not just "#")
+            if (href !== '#' && href.length > 1) {
+                e.preventDefault();
+                const targetId = href.substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+    });
+
+    // ===================================
+    // INITIALIZE ALL CAROUSELS
+    // ===================================
+    
+    // Initialize semua carousel dengan smooth scrolling
+    const allCarousels = document.querySelectorAll('.photo-collage-wrapper');
+    
+    allCarousels.forEach(carousel => {
+        // Pastikan carousel bisa discroll dengan smooth
+        carousel.style.scrollBehavior = 'smooth';
+        
+        // Tambahkan event listener untuk mouse wheel
+        carousel.addEventListener('wheel', function(e) {
+            e.preventDefault();
+            this.scrollLeft += e.deltaY;
+        });
+        
+        // Tambahkan touch event untuk mobile
+        let isDragging = false;
+        let startX;
+        let scrollLeft;
+        
+        carousel.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].pageX - carousel.offsetLeft;
+            scrollLeft = carousel.scrollLeft;
+        });
+        
+        carousel.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.touches[0].pageX - carousel.offsetLeft;
+            const walk = (x - startX) * 2;
+            carousel.scrollLeft = scrollLeft - walk;
+        });
+        
+        carousel.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+    });
+    
+    // ===================================
+    // SCROLL ANIMATIONS
+    // ===================================
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observerCallback = (entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Elements to animate on scroll
+    const animateElements = document.querySelectorAll(
+        '.project-block, .experience-item, .involvement-item, .achievement-card, .research-grid'
+    );
+
+    animateElements.forEach(element => {
+        // Set initial state
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(30px)';
+        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+
+        // Observe element
+        observer.observe(element);
+    });
+
+    // ===================================
+    // SCROLL INDICATOR FADE
+    // ===================================
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+
+    if (scrollIndicator) {
+        window.addEventListener('scroll', function() {
+            const scrollPosition = window.scrollY;
+            const opacity = Math.max(1 - scrollPosition / 500, 0);
+            scrollIndicator.style.opacity = opacity;
+        });
     }
 
-    section {
-        page-break-inside: avoid;
+    // ===================================
+    // COUNTER ANIMATION FOR RESULTS
+    // ===================================
+    function animateCounter(element, target, suffix = '', duration = 2000) {
+        const start = 0;
+        const increment = target / (duration / 16); // 60 FPS
+        let current = start;
+
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                element.textContent = target + suffix;
+                clearInterval(timer);
+            } else {
+                element.textContent = Math.floor(current) + suffix;
+            }
+        }, 16);
     }
+
+    // Animate counters when they come into view
+    const resultNumbers = document.querySelectorAll('.result-number');
+
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
+                entry.target.classList.add('counted');
+                const text = entry.target.textContent.trim();
+                const number = parseInt(text);
+                const suffix = text.includes('%') ? '%' : '';
+
+                if (!isNaN(number) && number > 0) {
+                    entry.target.textContent = '0' + suffix;
+                    animateCounter(entry.target, number, suffix);
+                }
+            }
+        });
+    }, { threshold: 0.5 });
+
+    resultNumbers.forEach(number => {
+        counterObserver.observe(number);
+    });
+
+    // ===================================
+    // LAZY LOADING IMAGES
+    // ===================================
+    const images = document.querySelectorAll('img[data-src]');
+
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+
+    images.forEach(img => {
+        imageObserver.observe(img);
+    });
+
+    // ===================================
+    // SKILLS TAG ANIMATION
+    // ===================================
+    const skillTags = document.querySelectorAll('.skill-tag');
+
+    skillTags.forEach((tag, index) => {
+        tag.style.animationDelay = `${index * 0.05}s`;
+        tag.style.animation = 'fadeInScale 0.5s ease forwards';
+    });
+
+    // Add CSS animation dynamically
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Loading state untuk images */
+        .collage-item img {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Fokus state untuk carousels */
+        .photo-collage-wrapper:focus {
+            outline: 2px solid var(--warm-brown);
+            outline-offset: 2px;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // ===================================
+    // KEYBOARD NAVIGATION FOR CAROUSELS
+    // ===================================
+    document.addEventListener('keydown', function(e) {
+        const activeCarousel = document.querySelector('.photo-collage-wrapper:focus-within');
+        if (activeCarousel) {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                activeCarousel.scrollBy({ left: -300, behavior: 'smooth' });
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                activeCarousel.scrollBy({ left: 300, behavior: 'smooth' });
+            }
+        }
+    });
+
+    // ===================================
+    // CAROUSEL BUTTON VISIBILITY
+    // ===================================
+    
+    // Show scroll buttons on hover untuk desktop
+    if (window.innerWidth > 768) {
+        const carouselContainers = document.querySelectorAll('.photo-collage-container');
+        
+        carouselContainers.forEach(container => {
+            const scrollButtons = container.querySelectorAll('.scroll-btn');
+            
+            container.addEventListener('mouseenter', function() {
+                scrollButtons.forEach(btn => btn.style.opacity = '1');
+            });
+            
+            container.addEventListener('mouseleave', function() {
+                scrollButtons.forEach(btn => btn.style.opacity = '0.7');
+            });
+            
+            // Set initial opacity
+            scrollButtons.forEach(btn => btn.style.opacity = '0.7');
+        });
+    }
+    
+    // Auto-hide scroll buttons untuk mobile setelah 3 detik
+    if (window.innerWidth <= 768) {
+        const mobileScrollButtons = document.querySelectorAll('.scroll-btn');
+        
+        // Show buttons initially
+        mobileScrollButtons.forEach(btn => btn.style.opacity = '1');
+        
+        // Set timeout untuk hide buttons
+        setTimeout(() => {
+            mobileScrollButtons.forEach(btn => {
+                if (!btn.matches(':hover')) {
+                    btn.style.opacity = '0.7';
+                }
+            });
+        }, 3000);
+        
+        // Show buttons on tap/hover
+        mobileScrollButtons.forEach(btn => {
+            btn.addEventListener('touchstart', function() {
+                this.style.opacity = '1';
+            });
+            
+            btn.addEventListener('mouseenter', function() {
+                this.style.opacity = '1';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.opacity = '0.7';
+            });
+        });
+    }
+
+    // ===================================
+    // ACCESSIBILITY IMPROVEMENTS
+    // ===================================
+    // Add skip to main content link
+    const skipLink = document.createElement('a');
+    skipLink.href = '#hero';
+    skipLink.className = 'skip-link';
+    skipLink.textContent = 'Skip to main content';
+    skipLink.style.cssText = `
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--warm-brown);
+        color: white;
+        padding: 8px;
+        text-decoration: none;
+        z-index: 100;
+        transition: top 0.3s;
+    `;
+    skipLink.addEventListener('focus', function() {
+        this.style.top = '0';
+    });
+    skipLink.addEventListener('blur', function() {
+        this.style.top = '-40px';
+    });
+    document.body.insertBefore(skipLink, document.body.firstChild);
+
+    // ===================================
+    // CONSOLE MESSAGE
+    // ===================================
+    console.log('%c Portfolio Website ', 'background: #1A2332; color: #F5F5F0; font-size: 16px; padding: 10px;');
+    console.log('%c Alan Timothy Lie Hans Santoso ', 'background: #8B6F47; color: #F5F5F0; font-size: 14px; padding: 8px;');
+    console.log('%c Civil Engineer & Doctoral Researcher ', 'color: #2C3E50; font-size: 12px;');
+});
+
+// ===================================
+// UTILITY FUNCTIONS
+// ===================================
+
+// Check if element is in viewport
+function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+
+// Smooth scroll to top
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+// Copy text to clipboard
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        console.log('Text copied to clipboard');
+    }).catch(err => {
+        console.error('Failed to copy text: ', err);
+    });
+}
+
+// Debounce function for performance optimization
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Export functions if needed
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        isInViewport,
+        scrollToTop,
+        copyToClipboard,
+        debounce
+    };
 }
