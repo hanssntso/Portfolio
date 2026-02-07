@@ -115,16 +115,6 @@ h1, h2, h3, h4, h5, h6 {
     filter: brightness(0);
 }
 
-/* Specific adjustment for location icon */
-.contact-location .contact-icon {
-    font-size: 1.5rem;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 /* ===================================
    SECTION 1: HERO / PROFILE
    =================================== */
@@ -308,12 +298,9 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 20px;
     line-height: 1.8;
 }
+
 /* ===================================
    RESEARCH CAROUSEL STYLES
-   Uses project-gallery base styles for buttons.
-   Higher specificity selectors override the
-   project-gallery wrapper width (1500px -> 500px)
-   so only 1 photo shows at a time.
    =================================== */
 .research-image .photo-collage-container {
     position: relative;
@@ -354,53 +341,11 @@ h1, h2, h3, h4, h5, h6 {
     object-fit: cover;
 }
 
-/* Research buttons - use project-gallery static style, match photo height */
+/* Research buttons */
 .research-image .project-gallery .scroll-btn {
     height: 500px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .research-image .project-gallery .photo-collage-wrapper {
-        flex: 0 0 350px;
-        width: 350px;
-        height: 350px;
-    }
-
-    .research-image .project-photo-collage {
-        height: 350px;
-    }
-
-    .research-image .project-collage-item {
-        width: 350px;
-        height: 350px;
-    }
-
-    .research-image .project-gallery .scroll-btn {
-        height: 350px;
-    }
-}
-
-@media (max-width: 480px) {
-    .research-image .project-gallery .photo-collage-wrapper {
-        flex: 0 0 280px;
-        width: 280px;
-        height: 280px;
-    }
-
-    .research-image .project-photo-collage {
-        height: 280px;
-    }
-
-    .research-image .project-collage-item {
-        width: 280px;
-        height: 280px;
-    }
-
-    .research-image .project-gallery .scroll-btn {
-        height: 280px;
-    }
-}
 /* ===================================
    SECTION 3-5: PROJECT SECTIONS
    =================================== */
@@ -592,7 +537,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.4;
 }
 
-/* Project Photo Gallery - 3x1 Carousel */
+/* Project Photo Gallery - Carousel dengan jarak 10px */
 .project-gallery {
     display: flex;
     align-items: center;
@@ -608,10 +553,22 @@ h1, h2, h3, h4, h5, h6 {
     width: 40px;
     flex-shrink: 0;
     border-radius: 10px;
+    background: rgba(139, 111, 71, 0.3);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.project-gallery .scroll-btn:hover {
+    background: rgba(139, 111, 71, 0.6);
 }
 
 .project-gallery .scroll-btn span {
     font-size: 1.5rem;
+    color: white;
 }
 
 .project-gallery .photo-collage-wrapper {
@@ -628,6 +585,7 @@ h1, h2, h3, h4, h5, h6 {
 .project-photo-collage {
     display: flex;
     width: max-content;
+    gap: 10px; /* Jarak antar photo */
     padding: 10px 0;
 }
 
@@ -653,18 +611,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .project-dark .photo-collage-wrapper {
     scrollbar-color: var(--bronze) rgba(255, 255, 255, 0.1);
-}
-
-.project-dark .photo-collage-wrapper::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.project-dark .photo-collage-wrapper::-webkit-scrollbar-thumb {
-    background: var(--bronze);
-}
-
-.project-dark .photo-collage-wrapper::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-gold);
 }
 
 /* ===================================
@@ -815,10 +761,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .photo-collage-wrapper::-webkit-scrollbar {
-    width: 1500px;
-    overflow: hidden;
-    padding-bottom: 0;
-    scrollbar-width: none;
+    height: 8px;
 }
 
 .photo-collage-wrapper::-webkit-scrollbar-track {
@@ -873,8 +816,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .photo-collage {
-    display: grid;
-    grid-template-columns: repeat(12, 250px);
+    display: flex;
     gap: 12px;
     width: max-content;
     padding: 10px 0;
@@ -886,6 +828,7 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
 }
 
 .collage-item img {
@@ -913,11 +856,26 @@ h1, h2, h3, h4, h5, h6 {
     background: white;
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    align-items: flex-start;
 }
 
-.involvement-icon {
-    font-size: 3rem;
+/* Logo Styling untuk Involvement */
+.involvement-item img,
+.involvement-item .involvement-icon {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
     flex-shrink: 0;
+}
+
+.involvement-item .involvement-icon {
+    font-size: 3.5rem;
+    line-height: 1;
+    text-align: center;
+}
+
+.involvement-content {
+    flex: 1;
 }
 
 .involvement-content h3 {
@@ -978,6 +936,9 @@ h1, h2, h3, h4, h5, h6 {
     text-align: center;
     transition: transform 0.3s ease, background 0.3s ease;
     border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .achievement-card:hover {
@@ -986,9 +947,19 @@ h1, h2, h3, h4, h5, h6 {
     border-color: var(--warm-brown);
 }
 
-.achievement-icon {
-    font-size: 4rem;
+/* Logo dan Icon Styling untuk Achievements */
+.achievement-card img,
+.achievement-card .achievement-icon {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
     margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+.achievement-card .achievement-icon {
+    font-size: 3.5rem;
+    line-height: 1;
     filter: drop-shadow(0 4px 8px rgba(201, 169, 97, 0.3));
 }
 
@@ -1022,6 +993,7 @@ h1, h2, h3, h4, h5, h6 {
     background: var(--warm-brown);
     color: var(--cream);
     text-align: center;
+    padding: 80px 0;
 }
 
 .contact-content {
@@ -1041,40 +1013,32 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0.9;
 }
 
-.contact-details {
+.contact-section .hero-contact {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    gap: 25px;
     margin-bottom: 40px;
 }
 
-.contact-item {
+.contact-section .contact-link {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 12px;
-    padding: 12px 20px;
+    padding: 10px 20px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 30px;
-    font-size: 1rem;
+    border-radius: 25px;
     transition: all 0.3s ease;
-    text-decoration: none;
-    color: inherit;
+    font-size: 0.95rem;
 }
 
-.contact-item:hover {
+.contact-section .contact-link:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
 }
 
-.contact-item:hover .contact-logo {
-    transform: scale(1.1);
-}
-
-.contact-text {
-    white-space: nowrap;
+.contact-section .contact-logo {
+    filter: brightness(0) invert(1);
 }
 
 .cv-download-btn {
@@ -1099,6 +1063,8 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 60px;
     padding-top: 30px;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
+    width: 100%;
+    text-align: center;
 }
 
 .footer p {
@@ -1166,27 +1132,22 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .project-gallery .photo-collage-wrapper {
-        width: 200px;
+        width: 1000px;
     }
 
     .project-collage-item {
-        width: 200px;
-        height: 200px;
+        width: 300px;
+        height: 300px;
     }
 
     .project-gallery .scroll-btn {
-        height: 200px;
+        height: 300px;
         width: 35px;
     }
 
-    .photo-collage {
-        grid-template-columns: repeat(6, 150px);
-        grid-template-rows: repeat(1, 150px);
-    }
-
     .collage-item {
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
     }
 }
 
@@ -1212,40 +1173,22 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 1rem;
     }
 
-    .hero-contact {
+    .hero-contact,
+    .contact-section .hero-contact {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        align-items: center;
         gap: 15px;
     }
 
     .contact-link,
-    .contact-item {
-        padding: 12px;
-        min-width: 50px;
-        min-height: 50px;
-        justify-content: center;
-    }
-
-    .contact-logo {
-        width: 22px;
-        height: 22px;
+    .contact-section .contact-link {
+        padding: 8px 12px;
+        font-size: 0.85rem;
     }
 
     .contact-text {
-        display: none; /* Hide text on mobile, show only logos */
-    }
-
-    .contact-details {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-    }
-
-    .contact-location {
-        display: none;
+        display: inline;
     }
 
     .section-title {
@@ -1266,16 +1209,16 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .project-gallery .photo-collage-wrapper {
-        width: 180px;
+        width: 800px;
     }
 
     .project-collage-item {
-        width: 180px;
-        height: 180px;
+        width: 250px;
+        height: 250px;
     }
 
     .project-gallery .scroll-btn {
-        height: 180px;
+        height: 250px;
         width: 30px;
     }
 
@@ -1283,20 +1226,14 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 1.2rem;
     }
 
-    .photo-collage {
-        grid-template-columns: repeat(12, 140px);
-        grid-template-rows: 140px;
-        gap: 10px;
-    }
-
     .collage-item {
-        width: 140px;
-        height: 140px;
+        width: 180px;
+        height: 180px;
     }
 
     .scroll-btn {
         width: 40px;
-        height: 140px;
+        height: 150px;
     }
 
     .scroll-btn span {
@@ -1306,10 +1243,29 @@ h1, h2, h3, h4, h5, h6 {
     .involvement-item {
         flex-direction: column;
         text-align: center;
+        align-items: center;
     }
 
-    .involvement-icon {
-        margin: 0 auto;
+    .involvement-item img,
+    .involvement-item .involvement-icon {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto 15px;
+    }
+
+    .involvement-item .involvement-icon {
+        font-size: 3rem;
+    }
+
+    .achievement-card img,
+    .achievement-card .achievement-icon {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 15px;
+    }
+
+    .achievement-card .achievement-icon {
+        font-size: 3rem;
     }
 
     .block-title {
@@ -1324,8 +1280,15 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .profile-photo {
-        width: 150px;
-        height: 150px;
+        width: 200px;
+        height: 200px;
+    }
+
+    .contact-link,
+    .contact-section .contact-link {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+        gap: 8px;
     }
 
     .contact-logo {
@@ -1333,19 +1296,43 @@ h1, h2, h3, h4, h5, h6 {
         height: 20px;
     }
 
-    .contact-link,
-    .contact-item {
-        padding: 10px;
-        min-width: 45px;
-        min-height: 45px;
-    }
-
     .section-title {
         font-size: 1.5rem;
     }
 
-    .hero-contact {
+    .hero-contact,
+    .contact-section .hero-contact {
         gap: 10px;
+    }
+
+    .project-collage-item {
+        width: 200px;
+        height: 200px;
+    }
+
+    .collage-item {
+        width: 150px;
+        height: 150px;
+    }
+
+    .involvement-item img,
+    .involvement-item .involvement-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .involvement-item .involvement-icon {
+        font-size: 2.5rem;
+    }
+
+    .achievement-card img,
+    .achievement-card .achievement-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .achievement-card .achievement-icon {
+        font-size: 2.5rem;
     }
 }
 
