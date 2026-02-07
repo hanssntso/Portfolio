@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===================================
     // COUNTER ANIMATION FOR RESULTS
     // ===================================
-    function animateCounter(element, target, duration = 2000) {
+    function animateCounter(element, target, suffix = '', duration = 2000) {
         const start = 0;
         const increment = target / (duration / 16); // 60 FPS
         let current = start;
@@ -197,10 +197,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const timer = setInterval(() => {
             current += increment;
             if (current >= target) {
-                element.textContent = target;
+                element.textContent = target + suffix;
                 clearInterval(timer);
             } else {
-                element.textContent = Math.floor(current);
+                element.textContent = Math.floor(current) + suffix;
             }
         }, 16);
     }
@@ -214,10 +214,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 entry.target.classList.add('counted');
                 const text = entry.target.textContent.trim();
                 const number = parseInt(text);
+                const suffix = text.includes('%') ? '%' : '';
 
                 if (!isNaN(number) && number > 0) {
-                    entry.target.textContent = '0';
-                    animateCounter(entry.target, number);
+                    entry.target.textContent = '0' + suffix;
+                    animateCounter(entry.target, number, suffix);
                 }
             }
         });
