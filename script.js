@@ -7,40 +7,16 @@
 // ===================================
 // GLOBAL VARIABLES
 // ===================================
-let researchCarouselIndex = 0;
+let researchCurrentIndex = 0;
 
 // ===================================
-// UNIVERSAL CAROUSEL SCROLL FUNCTIONS
-// Untuk semua carousel: research, ministry, transport, highway, involvement, achievements
+// PHOTO GALLERY SCROLL FUNCTIONS
+// Untuk semua carousel: research, project sections, involvement, achievements
 // ===================================
-
-// Function untuk research carousel (KMITL)
-function scrollResearchCarousel(direction) {
-    const wrapper = document.getElementById('research-photoCollage');
-    if (wrapper) {
-        const scrollAmount = wrapper.clientWidth * 0.8;
-        wrapper.scrollBy({
-            left: direction * scrollAmount,
-            behavior: 'smooth'
-        });
-    }
-}
-
-// Function untuk project carousels (ministry, transport, highway)
-function scrollProjectCarousel(wrapperId, direction) {
-    const wrapper = document.getElementById(wrapperId);
-    if (wrapper) {
-        const scrollAmount = wrapper.clientWidth * 0.8;
-        wrapper.scrollBy({
-            left: direction * scrollAmount,
-            behavior: 'smooth'
-        });
-    }
-}
 
 // Function untuk leadership section (involvement)
-function scrollInvolvementPhotos(direction) {
-    const wrapper = document.getElementById('involvement-photoCollage');
+function scrollPhotos(direction) {
+    const wrapper = document.getElementById('photoCollage');
     if (wrapper) {
         const scrollAmount = wrapper.clientWidth * 0.8;
         wrapper.scrollBy({
@@ -48,6 +24,46 @@ function scrollInvolvementPhotos(direction) {
             behavior: 'smooth'
         });
     }
+}
+
+// Function untuk research carousel (KMITL) - transform based
+function scrollResearchPhotos(direction) {
+    const wrapper = document.getElementById('research-photos');
+    if (!wrapper) return;
+
+    const strip = wrapper.querySelector('.project-photo-collage');
+    const items = wrapper.querySelectorAll('.project-collage-item');
+    if (!strip || items.length === 0) return;
+
+    researchCurrentIndex += direction;
+
+    // Wrap around
+    if (researchCurrentIndex < 0) {
+        researchCurrentIndex = items.length - 1;
+    }
+    if (researchCurrentIndex >= items.length) {
+        researchCurrentIndex = 0;
+    }
+
+    const itemWidth = items[0].offsetWidth;
+    strip.style.transform = 'translateX(-' + (researchCurrentIndex * itemWidth) + 'px)';
+}
+
+// Function untuk project carousels (ministry, transport, highway) - scroll based
+function scrollProjectPhotos(wrapperId, direction) {
+    const wrapper = document.getElementById(wrapperId);
+    if (!wrapper) return;
+
+    const items = wrapper.querySelectorAll('.collage-item');
+    if (items.length === 0) return;
+
+    const itemWidth = items[0].offsetWidth + 10; // Include margin
+    const scrollAmount = itemWidth;
+
+    wrapper.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+    });
 }
 
 // Function untuk achievement section
