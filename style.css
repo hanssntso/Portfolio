@@ -549,7 +549,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .project-collage-item img {
-    width: 33.33%;
+    width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
@@ -782,7 +782,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .photo-collage {
     display: grid;
-    grid-template-columns: repeat(6, 250px);
+    grid-template-columns: repeat(12, 250px);
     gap: 12px;
     width: max-content;
     padding: 10px 0;
