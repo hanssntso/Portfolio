@@ -144,8 +144,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .profile-photo {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
     margin: 0 auto 30px;
     border-radius: 50%;
     overflow: hidden;
@@ -500,7 +500,7 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.4;
 }
 
-/* Project Photo Gallery - 1x1 Carousel */
+/* Project Photo Gallery - 3x1 Carousel */
 .project-gallery {
     display: flex;
     align-items: center;
@@ -523,7 +523,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .project-gallery .photo-collage-wrapper {
-    width: 250px;
+    width: 750px;
     overflow: hidden;
     padding-bottom: 0;
     scrollbar-width: none;
@@ -549,7 +549,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .project-collage-item img {
-    width: 100%;
+    width: 33.33%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.5s ease;
@@ -746,7 +746,7 @@ h1, h2, h3, h4, h5, h6 {
     top: 50%;
     transform: translateY(-50%);
     width: 60px;
-    height: 120px;
+    height: 200px;
     background: rgba(139, 111, 71, 0.3);
     border: none;
     cursor: pointer;
@@ -780,7 +780,7 @@ h1, h2, h3, h4, h5, h6 {
 .photo-collage {
     display: grid;
     grid-template-columns: repeat(6, 180px);
-    grid-template-rows: repeat(2, 180px);
+    grid-template-rows: repeat(1, 180px);
     gap: 12px;
     width: max-content;
     padding: 10px 0;
@@ -1087,7 +1087,7 @@ h1, h2, h3, h4, h5, h6 {
 
     .photo-collage {
         grid-template-columns: repeat(6, 150px);
-        grid-template-rows: repeat(2, 150px);
+        grid-template-rows: repeat(1, 150px);
     }
 
     .collage-item {
