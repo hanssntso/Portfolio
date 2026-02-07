@@ -13,8 +13,8 @@ let researchCurrentIndex = 0;
 // ===================================
 // PHOTO GALLERY SCROLL FUNCTIONS
 // ===================================
-function scrollPhotos(direction) {
-    const wrapper = document.getElementById('photoCollage');
+function scrollPhotos(wrapperId, direction) {
+    const wrapper = document.getElementById(wrapperId);
     if (wrapper) {
         const scrollAmount = wrapper.clientWidth * 0.8;
         wrapper.scrollBy({
@@ -25,13 +25,13 @@ function scrollPhotos(direction) {
 }
 
 // ===================================
-// PROJECT PHOTO GALLERY CAROUSEL (1x1)
+// PROJECT PHOTO GALLERY CAROUSEL
 // ===================================
 function scrollProjectPhotos(wrapperId, direction) {
     const wrapper = document.getElementById(wrapperId);
     if (!wrapper) return;
 
-    const items = wrapper.querySelectorAll('.project-collage-item');
+    const items = wrapper.querySelectorAll('.collage-item');
     if (items.length === 0) return;
 
     if (!(wrapperId in projectCarouselState)) {
@@ -49,7 +49,7 @@ function scrollProjectPhotos(wrapperId, direction) {
     }
 
     const currentIndex = projectCarouselState[wrapperId];
-    const itemWidth = items[0].offsetWidth + 10; // Include 10px gap
+    const itemWidth = items[0].offsetWidth;
 
     wrapper.scrollTo({
         left: currentIndex * itemWidth,
@@ -58,14 +58,14 @@ function scrollProjectPhotos(wrapperId, direction) {
 }
 
 // ===================================
-// RESEARCH PHOTO CAROUSEL (1x1)
+// RESEARCH PHOTO CAROUSEL
 // ===================================
 function scrollResearchPhotos(direction) {
     const wrapper = document.getElementById('research-photos');
     if (!wrapper) return;
 
-    const strip = wrapper.querySelector('.project-photo-collage');
-    const items = wrapper.querySelectorAll('.project-collage-item');
+    const strip = wrapper.querySelector('.research-photo-collage');
+    const items = wrapper.querySelectorAll('.collage-item');
     if (!strip || items.length === 0) return;
 
     researchCurrentIndex += direction;
@@ -258,6 +258,16 @@ document.addEventListener('DOMContentLoaded', function() {
         wrapper.scrollLeft = 0;
     });
 
+    // Initialize research carousel
+    const researchWrapper = document.getElementById('research-photos');
+    if (researchWrapper) {
+        researchCurrentIndex = 0;
+        const strip = researchWrapper.querySelector('.research-photo-collage');
+        if (strip) {
+            strip.style.transform = 'translateX(0)';
+        }
+    }
+
     // ===================================
     // ACCESSIBILITY IMPROVEMENTS
     // ===================================
@@ -284,6 +294,22 @@ document.addEventListener('DOMContentLoaded', function() {
         this.style.top = '-40px';
     });
     document.body.insertBefore(skipLink, document.body.firstChild);
+
+    // ===================================
+    // ENSURE BUTTONS ARE VISIBLE ON SMALL DEVICES
+    // ===================================
+    function ensureButtonsVisible() {
+        const allScrollButtons = document.querySelectorAll('.scroll-btn');
+        allScrollButtons.forEach(button => {
+            button.style.display = 'flex';
+            button.style.visibility = 'visible';
+            button.style.opacity = '1';
+        });
+    }
+
+    // Run on load and resize
+    ensureButtonsVisible();
+    window.addEventListener('resize', ensureButtonsVisible);
 
     // ===================================
     // CONSOLE MESSAGE
