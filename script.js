@@ -18,6 +18,20 @@ function scrollPhotos(direction) {
     }
 }
 
+// ===================================
+// PROJECT PHOTO GALLERY SCROLL
+// ===================================
+function scrollProjectPhotos(wrapperId, direction) {
+    const wrapper = document.getElementById(wrapperId);
+    if (wrapper) {
+        const scrollAmount = wrapper.clientWidth * 0.8;
+        wrapper.scrollBy({
+            left: direction * scrollAmount,
+            behavior: 'smooth'
+        });
+    }
+}
+
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
 
