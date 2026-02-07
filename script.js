@@ -8,7 +8,6 @@
 // GLOBAL VARIABLES
 // ===================================
 const projectCarouselState = {};
-let researchCurrentIndex = 0;
 
 // ===================================
 // PHOTO GALLERY SCROLL FUNCTIONS
@@ -25,7 +24,7 @@ function scrollPhotos(wrapperId, direction) {
 }
 
 // ===================================
-// PROJECT PHOTO GALLERY CAROUSEL
+// PROJECT & RESEARCH PHOTO GALLERY CAROUSEL
 // ===================================
 function scrollProjectPhotos(wrapperId, direction) {
     const wrapper = document.getElementById(wrapperId);
@@ -55,31 +54,6 @@ function scrollProjectPhotos(wrapperId, direction) {
         left: currentIndex * itemWidth,
         behavior: 'smooth'
     });
-}
-
-// ===================================
-// RESEARCH PHOTO CAROUSEL
-// ===================================
-function scrollResearchPhotos(direction) {
-    const wrapper = document.getElementById('research-photos');
-    if (!wrapper) return;
-
-    const strip = wrapper.querySelector('.research-photo-collage');
-    const items = wrapper.querySelectorAll('.collage-item');
-    if (!strip || items.length === 0) return;
-
-    researchCurrentIndex += direction;
-
-    // Wrap around
-    if (researchCurrentIndex < 0) {
-        researchCurrentIndex = items.length - 1;
-    }
-    if (researchCurrentIndex >= items.length) {
-        researchCurrentIndex = 0;
-    }
-
-    const itemWidth = items[0].offsetWidth;
-    strip.style.transform = 'translateX(-' + (researchCurrentIndex * itemWidth) + 'px)';
 }
 
 // ===================================
@@ -248,25 +222,18 @@ document.addEventListener('DOMContentLoaded', function() {
     document.head.appendChild(style);
 
     // ===================================
-    // INITIALIZE PROJECT CAROUSELS
+    // INITIALIZE ALL CAROUSELS
     // ===================================
-    // Initialize all project carousels to start at first image
-    const projectWrappers = document.querySelectorAll('[id$="-challenge-photos"]');
-    projectWrappers.forEach(wrapper => {
+    // Initialize project and research carousels to start at first image
+    const allCarousels = document.querySelectorAll(
+        '[id$="-challenge-photos"], #research-photos, #involvement-photos, #achievements-photos'
+    );
+    
+    allCarousels.forEach(wrapper => {
         const wrapperId = wrapper.id;
         projectCarouselState[wrapperId] = 0;
         wrapper.scrollLeft = 0;
     });
-
-    // Initialize research carousel
-    const researchWrapper = document.getElementById('research-photos');
-    if (researchWrapper) {
-        researchCurrentIndex = 0;
-        const strip = researchWrapper.querySelector('.research-photo-collage');
-        if (strip) {
-            strip.style.transform = 'translateX(0)';
-        }
-    }
 
     // ===================================
     // ACCESSIBILITY IMPROVEMENTS
@@ -294,22 +261,6 @@ document.addEventListener('DOMContentLoaded', function() {
         this.style.top = '-40px';
     });
     document.body.insertBefore(skipLink, document.body.firstChild);
-
-    // ===================================
-    // ENSURE BUTTONS ARE VISIBLE ON SMALL DEVICES
-    // ===================================
-    function ensureButtonsVisible() {
-        const allScrollButtons = document.querySelectorAll('.scroll-btn');
-        allScrollButtons.forEach(button => {
-            button.style.display = 'flex';
-            button.style.visibility = 'visible';
-            button.style.opacity = '1';
-        });
-    }
-
-    // Run on load and resize
-    ensureButtonsVisible();
-    window.addEventListener('resize', ensureButtonsVisible);
 
     // ===================================
     // CONSOLE MESSAGE
@@ -361,15 +312,5 @@ function debounce(func, wait) {
         };
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
-    };
-}
-
-// Export functions if needed
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        isInViewport,
-        scrollToTop,
-        copyToClipboard,
-        debounce
     };
 }
