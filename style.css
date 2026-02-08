@@ -358,8 +358,10 @@ h1, h2, h3, h4, h5, h6 {
    =================================== */
 .project-gallery {
     position: relative;
-    --gallery-size: 500px;
-    width: min(100%, var(--gallery-size));
+    --gallery-size: 300px;
+    --gallery-columns: 3;
+    width: min(100%, calc(var(--gallery-size) * var(--gallery-columns)));
+    max-width: calc(var(--gallery-size) * var(--gallery-columns));
     margin: 40px auto;
 }
 
@@ -410,6 +412,7 @@ h1, h2, h3, h4, h5, h6 {
     scrollbar-width: thin;
     scrollbar-color: var(--warm-brown) var(--light-gray);
     border-radius: 10px;
+    scroll-snap-type: x mandatory;
 }
 
 .project-gallery .photo-collage-wrapper::-webkit-scrollbar {
@@ -444,6 +447,7 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     flex-shrink: 0;
+    scroll-snap-align: start;
 }
 
 .project-gallery .collage-item img {
@@ -459,6 +463,18 @@ h1, h2, h3, h4, h5, h6 {
 
 .project-dark .photo-collage-wrapper {
     scrollbar-color: var(--bronze) rgba(255, 255, 255, 0.1);
+}
+
+.research-gallery {
+    --gallery-size: 500px;
+    --gallery-columns: 1;
+    width: min(100%, var(--gallery-size));
+    max-width: var(--gallery-size);
+}
+
+.research-gallery .photo-collage-wrapper {
+    width: 100%;
+    max-width: 100%;
 }
 
 /* ===================================
@@ -1172,7 +1188,14 @@ h1, h2, h3, h4, h5, h6 {
 
     /* Gallery responsive styles */
     .project-gallery {
-        --gallery-size: 400px;
+        --gallery-size: 260px;
+        --gallery-columns: 2;
+    }
+
+    .research-gallery {
+        --gallery-size: 420px;
+        --gallery-columns: 1;
+        max-width: var(--gallery-size);
     }
 
     .project-gallery .scroll-btn,
@@ -1245,7 +1268,14 @@ h1, h2, h3, h4, h5, h6 {
 
     /* Gallery responsive styles */
     .project-gallery {
-        --gallery-size: 300px;
+        --gallery-size: 220px;
+        --gallery-columns: 1;
+    }
+
+    .research-gallery {
+        --gallery-size: 320px;
+        --gallery-columns: 1;
+        max-width: var(--gallery-size);
     }
 
     .project-gallery .scroll-btn,
@@ -1340,7 +1370,14 @@ h1, h2, h3, h4, h5, h6 {
 
     /* Gallery responsive styles */
     .project-gallery {
-        --gallery-size: 250px;
+        --gallery-size: 200px;
+        --gallery-columns: 1;
+    }
+
+    .research-gallery {
+        --gallery-size: 260px;
+        --gallery-columns: 1;
+        max-width: var(--gallery-size);
     }
 
     .project-gallery .scroll-btn,
