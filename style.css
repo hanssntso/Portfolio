@@ -365,18 +365,10 @@ h1, h2, h3, h4, h5, h6 {
     object-fit: cover;
 }
 
-/* Research buttons - Adjusted to match project sections */
+/* Research buttons - use same absolute centered style as project sections */
 .research-image .project-gallery .scroll-btn {
-    height: 250px;
+    height: 200px;
     width: 40px;
-    background: rgba(139, 111, 71, 0.3);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
 }
 
 .research-image .project-gallery .scroll-btn:hover {
@@ -746,19 +738,16 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Project Photo Gallery - Updated for horizontal scroll */
 .project-gallery {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+    position: relative;
     margin: 40px 0;
 }
 
 .project-gallery .scroll-btn {
-    position: static;
-    transform: none;
-    height: 500px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 200px;
     width: 40px;
-    flex-shrink: 0;
     border-radius: 10px;
     background: rgba(139, 111, 71, 0.3);
     border: none;
@@ -767,7 +756,17 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
-    z-index: 2;
+    z-index: 10;
+}
+
+.project-gallery .scroll-btn-left {
+    left: 0;
+    border-radius: 0 10px 10px 0;
+}
+
+.project-gallery .scroll-btn-right {
+    right: 0;
+    border-radius: 10px 0 0 10px;
 }
 
 .project-gallery .scroll-btn:hover {
@@ -782,7 +781,7 @@ h1, h2, h3, h4, h5, h6 {
 .project-gallery .photo-collage-wrapper {
     width: 100%;
     max-width: max-content;
-    height: 300px;
+    height: 500px;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-behavior: smooth;
@@ -1361,15 +1360,16 @@ h1, h2, h3, h4, h5, h6 {
 
     .project-gallery .photo-collage-wrapper {
         max-width: 400px;
+        height: 400px;
     }
 
-    .collage-item {
+    .project-gallery .collage-item {
         width: 400px;
         height: 400px;
     }
 
     .project-gallery .scroll-btn {
-        height: 400px;
+        height: 160px;
         width: 35px;
     }
 
@@ -1384,9 +1384,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .research-image .project-gallery .scroll-btn {
-        height: 400px;
-        display: flex !important;
-        visibility: visible !important;
+        height: 160px;
     }
 }
 
@@ -1452,17 +1450,14 @@ h1, h2, h3, h4, h5, h6 {
         height: 300px;
     }
 
-    .collage-item {
+    .project-gallery .collage-item {
         width: 300px;
         height: 300px;
     }
 
     .project-gallery .scroll-btn {
-        height: 300px;
+        height: 120px;
         width: 30px;
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
     }
 
     .project-gallery .scroll-btn span {
@@ -1470,7 +1465,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     /* Leadership and achievements sections */
-    .collage-item {
+    .photo-collage-container .collage-item {
         width: 180px;
         height: 180px;
     }
@@ -1478,9 +1473,6 @@ h1, h2, h3, h4, h5, h6 {
     .scroll-btn {
         width: 40px;
         height: 150px;
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
     }
 
     .scroll-btn span {
@@ -1498,11 +1490,8 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .research-image .project-gallery .scroll-btn {
-        height: 300px;
+        height: 120px;
         width: 30px;
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
     }
 
     .involvement-item {
@@ -1575,17 +1564,14 @@ h1, h2, h3, h4, h5, h6 {
         height: 250px;
     }
 
-    .collage-item {
+    .project-gallery .collage-item {
         width: 250px;
         height: 250px;
     }
 
     .project-gallery .scroll-btn {
-        height: 250px;
+        height: 100px;
         width: 25px;
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
     }
 
     /* Research section adjustments for small mobile */
@@ -1599,14 +1585,11 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .research-image .project-gallery .scroll-btn {
-        height: 250px;
+        height: 100px;
         width: 25px;
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
     }
 
-    .collage-item {
+    .photo-collage-container .collage-item {
         width: 150px;
         height: 150px;
     }
