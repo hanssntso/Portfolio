@@ -1188,8 +1188,8 @@ h1, h2, h3, h4, h5, h6 {
 
     /* Gallery responsive styles */
     .project-gallery {
-        --gallery-size: 260px;
-        --gallery-columns: 2;
+        --gallery-size: 220px;
+        --gallery-columns: 3;
     }
 
     .research-gallery {
@@ -1268,8 +1268,8 @@ h1, h2, h3, h4, h5, h6 {
 
     /* Gallery responsive styles */
     .project-gallery {
-        --gallery-size: 220px;
-        --gallery-columns: 1;
+        --gallery-size: 180px;
+        --gallery-columns: 3;
     }
 
     .research-gallery {
@@ -1370,8 +1370,8 @@ h1, h2, h3, h4, h5, h6 {
 
     /* Gallery responsive styles */
     .project-gallery {
-        --gallery-size: 200px;
-        --gallery-columns: 1;
+        --gallery-size: 120px;
+        --gallery-columns: 3;
     }
 
     .research-gallery {
