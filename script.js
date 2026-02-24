@@ -62,6 +62,55 @@ function scrollProjectPhotos(wrapperId, direction) {
 document.addEventListener('DOMContentLoaded', function() {
 
     // ===================================
+    // NAVIGATION MENU
+    // ===================================
+    const mainNav = document.getElementById('main-nav');
+    const navLinks = document.querySelectorAll('.nav-link:not(.nav-link-disabled)');
+
+    // Navigation scroll background effect
+    function updateNavBackground() {
+        if (window.scrollY > 50) {
+            mainNav.classList.add('nav-scrolled');
+        } else {
+            mainNav.classList.remove('nav-scrolled');
+        }
+    }
+
+    // Track active section on scroll
+    const navSections = [
+        { id: 'hero', link: document.querySelector('.nav-link[href="#hero"]') },
+        { id: 'project-ministry', link: document.querySelector('.nav-link[href="#project-ministry"]') },
+        { id: 'skills', link: document.querySelector('.nav-link[href="#skills"]') },
+        { id: 'involvement', link: document.querySelector('.nav-link[href="#involvement"]') },
+        { id: 'contact', link: document.querySelector('.nav-link[href="#contact"]') }
+    ];
+
+    function updateActiveNav() {
+        const scrollPosition = window.scrollY + 100;
+
+        // Check from bottom to top to find the current section
+        for (let i = navSections.length - 1; i >= 0; i--) {
+            const section = document.getElementById(navSections[i].id);
+            if (section && section.offsetTop <= scrollPosition) {
+                navLinks.forEach(link => link.classList.remove('active'));
+                if (navSections[i].link) {
+                    navSections[i].link.classList.add('active');
+                }
+                break;
+            }
+        }
+    }
+
+    window.addEventListener('scroll', function() {
+        updateNavBackground();
+        updateActiveNav();
+    });
+
+    // Initialize nav state
+    updateNavBackground();
+    updateActiveNav();
+
+    // ===================================
     // SMOOTH SCROLLING FOR ANCHOR LINKS
     // ===================================
     const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
