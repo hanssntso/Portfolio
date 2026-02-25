@@ -97,18 +97,205 @@ var BLOGS_PER_PAGE = 10;
 // Add new entries here to publish blog posts
 var blogPosts = [
 
-    // =============================================
-    // TEMPLATE - Copy this block for each new post
-    // =============================================
-    // {
-    //     id: 1,                                          // Unique number (increment for each post)
-    //     slug: "my-first-blog-post",                     // URL-friendly name (lowercase, hyphens)
-    //     title: "My First Blog Post Title",              // Display title
-    //     date: "2026-03-01",                             // Publication date (YYYY-MM-DD)
-    //     summary: "A brief 1-2 sentence description of what this blog post covers.",
-    //     tags: ["engineering", "research"],               // Category tags (1-3 recommended)
-    //     thumbnail: "blogs/my-first-blog-post/cover.jpg", // Path to thumbnail image
-    //     contentFile: "blogs/my-first-blog-post/content.html"  // Path to content file
-    // },
+    {
+        id: 1,
+        slug: "blog-post-1",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Exciting content is on the way! This space will feature insights on civil engineering, sustainable infrastructure, and doctoral research.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-1.html"
+    },
+    {
+        id: 2,
+        slug: "blog-post-2",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "New articles about coastal engineering and climate resilience will be published here soon. Stay connected!",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-2.html"
+    },
+    {
+        id: 3,
+        slug: "blog-post-3",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Research updates and field experiences from doctoral studies at KMITL will be shared in upcoming posts.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-3.html"
+    },
+    {
+        id: 4,
+        slug: "blog-post-4",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Practical knowledge on construction management and quality control from real-world project experience coming soon.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-4.html"
+    },
+    {
+        id: 5,
+        slug: "blog-post-5",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Perspectives on sustainable development and infrastructure innovation will be explored in future articles.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-5.html"
+    },
+    {
+        id: 6,
+        slug: "blog-post-6",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Insights from public transportation optimization and urban planning projects will be featured here.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-6.html"
+    },
+    {
+        id: 7,
+        slug: "blog-post-7",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Discussions on data-driven engineering solutions and their real-world impact are coming soon.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-7.html"
+    },
+    {
+        id: 8,
+        slug: "blog-post-8",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Lessons learned from community engagement and infrastructure development projects will be shared.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-8.html"
+    },
+    {
+        id: 9,
+        slug: "blog-post-9",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Technical deep-dives into structural analysis and geotechnical engineering topics are on the way.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-9.html"
+    },
+    {
+        id: 10,
+        slug: "blog-post-10",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Reflections on international academic experiences and cross-cultural collaboration will be featured.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-10.html"
+    },
+    {
+        id: 11,
+        slug: "blog-post-11",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Analysis of emerging trends in climate-resilient infrastructure design is coming to this blog.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-11.html"
+    },
+    {
+        id: 12,
+        slug: "blog-post-12",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Case studies from school infrastructure revitalization projects across Central Java will be documented.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-12.html"
+    },
+    {
+        id: 13,
+        slug: "blog-post-13",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Guides on engineering software tools and technical methodologies will be published in future posts.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-13.html"
+    },
+    {
+        id: 14,
+        slug: "blog-post-14",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Discussions on highway construction quality control and national infrastructure development coming soon.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-14.html"
+    },
+    {
+        id: 15,
+        slug: "blog-post-15",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Thoughts on leadership, teamwork, and organizing large-scale academic conferences will be shared.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-15.html"
+    },
+    {
+        id: 16,
+        slug: "blog-post-16",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Exploration of environmental impact assessment methods and sustainable construction practices ahead.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-16.html"
+    },
+    {
+        id: 17,
+        slug: "blog-post-17",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Articles on research methodology and academic writing for engineering students are in preparation.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-17.html"
+    },
+    {
+        id: 18,
+        slug: "blog-post-18",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Updates on decarbonization pathways for Indonesia's transportation infrastructure will be covered.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-18.html"
+    },
+    {
+        id: 19,
+        slug: "blog-post-19",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Personal reflections on the journey from undergraduate studies to doctoral research will be featured.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-19.html"
+    },
+    {
+        id: 20,
+        slug: "blog-post-20",
+        title: "Stay Tuned for Upcoming Blog Posts",
+        date: "2026-03-01",
+        summary: "Collaborative research insights and interdisciplinary approaches to solving infrastructure challenges coming soon.",
+        tags: ["coming soon"],
+        thumbnail: "",
+        contentFile: "blogs/content-20.html"
+    }
 
 ];
