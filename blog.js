@@ -4,6 +4,8 @@
 
    Uses Firebase Realtime Database for
    global likes & views tracking.
+   Falls back to localStorage when
+   Firebase is unavailable.
 
    Supports multilingual blog content
    via i18n integration.
@@ -17,6 +19,7 @@ var currentBlogId = null;
 var searchQuery = '';
 var statsCache = {};
 var activeStatsListener = null;
+var firebaseConnected = false;
 
 // ===================================
 // i18n HELPER
@@ -53,6 +56,43 @@ function getBlogText(post, field) {
         return post[i18nField][lang];
     }
     return post[field];
+}
+
+// ===================================
+// LOCAL STATS (FALLBACK)
+// ===================================
+
+/**
+ * Get stats from localStorage (fallback when Firebase is unavailable).
+ */
+function getLocalStats(id) {
+    try {
+        var stored = localStorage.getItem('blog-local-stats-' + id);
+        if (stored) return JSON.parse(stored);
+    } catch (e) {}
+    return { views: 0, likes: 0 };
+}
+
+/**
+ * Save stats to localStorage.
+ */
+function saveLocalStats(id, stats) {
+    try {
+        localStorage.setItem('blog-local-stats-' + id, JSON.stringify(stats));
+    } catch (e) {}
+}
+
+/**
+ * Get the best available stats for a post.
+ * Uses Firebase stats when available, merges with local fallback.
+ */
+function getStats(id) {
+    var fb = statsCache[id] || { views: 0, likes: 0 };
+    var local = getLocalStats(id);
+    return {
+        views: Math.max(fb.views, local.views),
+        likes: Math.max(fb.likes, local.likes)
+    };
 }
 
 // ===================================
@@ -94,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
             renderBlogListing();
         }
     } else {
-        // Render immediately with 0 stats (no waiting)
+        // Render immediately with local stats (no waiting for Firebase)
         renderBlogListing();
     }
 
@@ -120,24 +160,30 @@ function isFirebaseReady() {
  */
 function loadAllStatsInBackground() {
     if (!isFirebaseReady()) {
-        console.warn('Firebase not ready — stats will show 0');
+        console.warn('[Blog] Firebase not initialized — using local stats only');
         return;
     }
 
-    // Safety timeout: give up after 5 seconds
+    // Safety timeout: give up after 8 seconds
     var done = false;
     var timeout = setTimeout(function() {
         if (!done) {
             done = true;
-            console.warn('Firebase stats load timed out after 5s — check your database rules and network connection');
+            console.warn('[Blog] Firebase timed out after 8s');
+            console.warn('[Blog] Possible causes:');
+            console.warn('  1. Firebase Realtime Database rules deny read access');
+            console.warn('  2. Test mode rules have expired (they expire after 30 days)');
+            console.warn('  3. Network/CORS issue');
+            console.warn('[Blog] Using local stats as fallback');
         }
-    }, 5000);
+    }, 8000);
 
     try {
         db.ref('blog-stats').once('value', function(snapshot) {
             if (done) return;
             done = true;
             clearTimeout(timeout);
+            firebaseConnected = true;
 
             var data = snapshot.val();
             if (data) {
@@ -161,15 +207,17 @@ function loadAllStatsInBackground() {
             if (done) return;
             done = true;
             clearTimeout(timeout);
-            console.warn('Firebase read failed:', error.message);
-            console.warn('Please check your Firebase Realtime Database rules. Ensure blog-stats path allows read/write.');
+            console.warn('[Blog] Firebase read failed:', error.message);
+            console.warn('[Blog] Go to Firebase Console > Realtime Database > Rules');
+            console.warn('[Blog] Set rules to allow read/write for blog-stats path');
+            console.warn('[Blog] Using local stats as fallback');
         });
     } catch (e) {
         if (!done) {
             done = true;
             clearTimeout(timeout);
         }
-        console.warn('Firebase error:', e.message);
+        console.warn('[Blog] Firebase error:', e.message);
     }
 }
 
@@ -200,14 +248,6 @@ function refreshCardStats() {
 }
 
 // ===================================
-// STATS CACHE
-// ===================================
-
-function getStats(id) {
-    return statsCache[id] || { views: 0, likes: 0 };
-}
-
-// ===================================
 // VIEW COUNT
 // ===================================
 
@@ -220,17 +260,26 @@ function incrementView(id) {
         // sessionStorage unavailable
     }
 
+    // Always update local stats (works without Firebase)
+    var local = getLocalStats(id);
+    local.views = local.views + 1;
+    saveLocalStats(id, local);
+
+    // Also try Firebase for global tracking
     if (isFirebaseReady()) {
         try {
             db.ref('blog-stats/' + id + '/views').transaction(function(currentViews) {
                 return (currentViews || 0) + 1;
             }, function(error, committed, snapshot) {
                 if (error) {
-                    console.warn('Firebase views transaction error:', error.message);
-                    console.warn('Check that your Firebase rules allow writes to blog-stats/' + id + '/views');
+                    console.warn('[Blog] Firebase views write failed:', error.message);
+                    // Local stats already updated above, so UI still works
+                    updateBlogStats(id);
+                    refreshCardStats();
                     return;
                 }
                 if (committed) {
+                    firebaseConnected = true;
                     if (!statsCache[id]) statsCache[id] = { views: 0, likes: 0 };
                     statsCache[id].views = snapshot.val();
                     updateBlogStats(id);
@@ -238,8 +287,12 @@ function incrementView(id) {
                 }
             });
         } catch (e) {
-            console.warn('Firebase views transaction failed:', e.message);
+            console.warn('[Blog] Firebase views transaction failed:', e.message);
         }
+    } else {
+        // No Firebase — just update UI with local stats
+        updateBlogStats(id);
+        refreshCardStats();
     }
 
     try {
@@ -267,6 +320,12 @@ function toggleLike() {
 
     var delta = isLiked ? -1 : 1;
 
+    // Always update local stats
+    var local = getLocalStats(currentBlogId);
+    local.likes = Math.max(0, local.likes + delta);
+    saveLocalStats(currentBlogId, local);
+
+    // Also try Firebase for global tracking
     if (isFirebaseReady()) {
         try {
             db.ref('blog-stats/' + currentBlogId + '/likes').transaction(function(currentLikes) {
@@ -274,11 +333,13 @@ function toggleLike() {
                 return newVal < 0 ? 0 : newVal;
             }, function(error, committed, snapshot) {
                 if (error) {
-                    console.warn('Firebase likes transaction error:', error.message);
-                    console.warn('Check that your Firebase rules allow writes to blog-stats/' + currentBlogId + '/likes');
+                    console.warn('[Blog] Firebase likes write failed:', error.message);
+                    updateBlogStats(currentBlogId);
+                    refreshCardStats();
                     return;
                 }
                 if (committed) {
+                    firebaseConnected = true;
                     if (!statsCache[currentBlogId]) statsCache[currentBlogId] = { views: 0, likes: 0 };
                     statsCache[currentBlogId].likes = snapshot.val();
                     updateBlogStats(currentBlogId);
@@ -286,8 +347,12 @@ function toggleLike() {
                 }
             });
         } catch (e) {
-            console.warn('Firebase likes transaction failed:', e.message);
+            console.warn('[Blog] Firebase likes transaction failed:', e.message);
         }
+    } else {
+        // No Firebase — update UI with local stats
+        updateBlogStats(currentBlogId);
+        refreshCardStats();
     }
 
     // Toggle local "has liked" state
@@ -315,16 +380,17 @@ function startStatsListener(id) {
 
         ref.on('value', function(snapshot) {
             var data = snapshot.val() || { views: 0, likes: 0 };
+            firebaseConnected = true;
             statsCache[id] = {
                 views: data.views || 0,
                 likes: data.likes || 0
             };
             updateBlogStats(id);
         }, function(error) {
-            console.warn('Firebase listener error for post ' + id + ':', error.message);
+            console.warn('[Blog] Firebase listener error for post ' + id + ':', error.message);
         });
     } catch (e) {
-        console.warn('Firebase listener failed:', e.message);
+        console.warn('[Blog] Firebase listener failed:', e.message);
     }
 }
 
@@ -452,8 +518,8 @@ function renderBlogListing() {
 function renderPaginationButtons(totalPages) {
     if (totalPages <= 1) return '';
 
-    var prevText = getI18nText('blog.prevBtn', '← Prev');
-    var nextText = getI18nText('blog.nextBtn', 'Next →');
+    var prevText = getI18nText('blog.prevBtn', '\u2190 Prev');
+    var nextText = getI18nText('blog.nextBtn', 'Next \u2192');
 
     var html = '';
 
@@ -615,7 +681,7 @@ function fetchBlogContent(post, article, headerHtml) {
     var basePath = post.contentFile;
 
     if (lang !== 'en') {
-        // Try language-specific file: blogs/content-1.html → blogs/content-1-id.html
+        // Try language-specific file: blogs/content-1.html -> blogs/content-1-id.html
         var langPath = basePath.replace('.html', '-' + lang + '.html');
         fetchContentFile(langPath, function(success, content) {
             if (success) {
@@ -657,7 +723,7 @@ function fetchContentFile(url, callback) {
     xhr.open('GET', url, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
-            if (xhr.status === 200 && xhr.responseText.trim()) {
+            if ((xhr.status === 200 || xhr.status === 0) && xhr.responseText.trim()) {
                 callback(true, xhr.responseText);
             } else {
                 callback(false, '');
