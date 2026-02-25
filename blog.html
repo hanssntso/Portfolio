@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Alan Timothy Lie Hans Santoso</title>
+    <meta name="description" content="Blog by Alan Timothy Lie Hans Santoso - Thoughts, research, and insights on civil engineering, sustainable infrastructure, and doctoral research.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="blog.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- NAVIGATION MENU -->
+    <nav id="main-nav" class="main-nav nav-scrolled">
+        <div class="nav-container">
+            <ul class="nav-links">
+                <li><a href="index.html#hero" class="nav-link">Profile</a></li>
+                <li><a href="index.html#project-ministry" class="nav-link">Project</a></li>
+                <li><a href="index.html#skills" class="nav-link">Skills</a></li>
+                <li><a href="index.html#involvement" class="nav-link">Activity</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                <li><a href="blog.html" class="nav-link active">Blog</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- BLOG LISTING VIEW -->
+    <div id="blog-listing" class="blog-page">
+        <div class="container">
+            <h1 class="blog-page-title">Blog</h1>
+            <p class="blog-page-subtitle">Thoughts, research, and insights on civil engineering and sustainable development</p>
+
+            <div id="blog-grid" class="blog-grid">
+                <!-- Blog cards rendered by JavaScript -->
+            </div>
+
+            <!-- Pagination -->
+            <div id="blog-pagination" class="blog-pagination">
+                <!-- Page buttons rendered by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- BLOG READING VIEW -->
+    <div id="blog-reader" class="blog-reader" style="display: none;">
+        <div class="container">
+            <button id="blog-back-btn" class="blog-back-btn">&larr; Back to Blog</button>
+
+            <article id="blog-content" class="blog-article">
+                <!-- Full blog content loaded by JavaScript -->
+            </article>
+
+            <div class="blog-engagement">
+                <div class="blog-stats">
+                    <span id="blog-views" class="blog-stat">
+                        <span class="stat-icon">&#128065;</span>
+                        <span class="stat-count">0</span> views
+                    </span>
+                    <span id="blog-likes-count" class="blog-stat">
+                        <span class="stat-icon">&#9829;</span>
+                        <span class="stat-count">0</span> likes
+                    </span>
+                </div>
+                <button id="blog-like-btn" class="blog-like-btn">
+                    &#9825; Like
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="blog-footer">
+        <div class="container">
+            <p>&copy; 2026 Alan Timothy Lie Hans Santoso. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script src="blog-data.js"></script>
+    <script src="blog.js"></script>
+</body>
+</html>
