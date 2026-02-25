@@ -17,12 +17,22 @@
     <nav id="main-nav" class="main-nav nav-scrolled">
         <div class="nav-container">
             <ul class="nav-links">
-                <li><a href="index.html#profile" class="nav-link">Profile</a></li>
-                <li><a href="index.html#project-ministry" class="nav-link">Project</a></li>
-                <li><a href="index.html#skills" class="nav-link">Skills</a></li>
-                <li><a href="index.html#involvement" class="nav-link">Involvement</a></li>
-                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
-                <li><a href="blog.html" class="nav-link active">Blog</a></li>
+                <li><a href="index.html#profile" class="nav-link" data-i18n="nav.profile">Profile</a></li>
+                <li><a href="index.html#project-ministry" class="nav-link" data-i18n="nav.project">Project</a></li>
+                <li><a href="index.html#skills" class="nav-link" data-i18n="nav.skills">Skills</a></li>
+                <li><a href="index.html#involvement" class="nav-link" data-i18n="nav.involvement">Involvement</a></li>
+                <li><a href="index.html#contact" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+                <li><a href="blog.html" class="nav-link active" data-i18n="nav.blog">Blog</a></li>
+                <li class="lang-switcher-wrapper">
+                    <button class="lang-switcher-btn" onclick="toggleLangDropdown(event)" aria-label="Change language">
+                        <span id="active-flag">🇺🇸</span>
+                    </button>
+                    <div class="lang-dropdown" id="lang-dropdown">
+                        <button class="lang-option" onclick="switchLanguage('en')"><span class="lang-flag-small">🇺🇸</span> English</button>
+                        <button class="lang-option" onclick="switchLanguage('id')"><span class="lang-flag-small">🇮🇩</span> Bahasa Indonesia</button>
+                        <button class="lang-option" onclick="switchLanguage('th')"><span class="lang-flag-small">🇹🇭</span> ภาษาไทย</button>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
@@ -30,8 +40,8 @@
     <!-- BLOG LISTING VIEW -->
     <div id="blog-listing" class="blog-page">
         <div class="container">
-            <h1 class="blog-page-title">BLOG</h1>
-            <p class="blog-page-subtitle">Thoughts, research, and insights on civil engineering and sustainable development</p>
+            <h1 class="blog-page-title" data-i18n="blog.pageTitle">BLOG</h1>
+            <p class="blog-page-subtitle" data-i18n="blog.pageSubtitle">Thoughts, research, and insights on civil engineering and sustainable development</p>
 
             <!-- Top Controls: Prev/Next (left) + Search (right) -->
             <div class="blog-top-controls">
@@ -39,7 +49,7 @@
                     <!-- Prev/Next buttons rendered by JavaScript -->
                 </div>
                 <div class="blog-search-container">
-                    <input type="text" id="blog-search" class="blog-search-input" placeholder="Search blog posts...">
+                    <input type="text" id="blog-search" class="blog-search-input" placeholder="Search blog posts..." data-i18n="blog.searchPlaceholder">
                 </div>
             </div>
 
@@ -60,7 +70,7 @@
     <!-- BLOG READING VIEW -->
     <div id="blog-reader" class="blog-reader" style="display: none;">
         <div class="container">
-            <button id="blog-back-btn" class="blog-back-btn">&larr; Back to Blog</button>
+            <button id="blog-back-btn" class="blog-back-btn" data-i18n="blog.backBtn">&larr; Back to Blog</button>
 
             <article id="blog-content" class="blog-article">
                 <!-- Full blog content loaded by JavaScript -->
@@ -87,7 +97,7 @@
     <!-- FOOTER -->
     <div class="blog-footer">
         <div class="container">
-            <p>&copy; 2026 Alan Timothy Lie Hans Santoso. All rights reserved.</p>
+            <p data-i18n="blog.footer">&copy; 2026 Alan Timothy Lie Hans Santoso. All rights reserved.</p>
         </div>
     </div>
 
@@ -96,6 +106,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
     <script src="firebase-config.js"></script>
 
+    <script src="i18n.js"></script>
     <script src="blog-data.js"></script>
     <script src="blog.js"></script>
 </body>
