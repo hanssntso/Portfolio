@@ -12,18 +12,16 @@
 var currentPage = 1;
 var currentBlogId = null;
 var searchQuery = '';
-var statsCache = {};          // Local cache of Firebase stats
-var activeStatsListener = null; // Active Firebase listener reference
+var statsCache = {};
+var activeStatsListener = null;
 
 // ===================================
 // INITIALIZATION
 // ===================================
 document.addEventListener('DOMContentLoaded', function() {
-    // Attach event listeners
     document.getElementById('blog-back-btn').addEventListener('click', closeBlogReader);
     document.getElementById('blog-like-btn').addEventListener('click', toggleLike);
 
-    // Search bar
     var searchInput = document.getElementById('blog-search');
     if (searchInput) {
         searchInput.addEventListener('input', function() {
@@ -33,69 +31,57 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Load all stats from Firebase, then render
-    loadAllStats(function() {
-        // Check URL hash for deep-linking to a specific blog post
-        var hash = window.location.hash;
-        if (hash && hash.startsWith('#post-')) {
-            var slug = hash.substring(6);
-            var post = blogPosts.find(function(p) { return p.slug === slug; });
-            if (post) {
-                openBlog(post.id);
-                return;
-            }
+    // Check URL hash for deep-linking
+    var hash = window.location.hash;
+    if (hash && hash.startsWith('#post-')) {
+        var slug = hash.substring(6);
+        var post = blogPosts.find(function(p) { return p.slug === slug; });
+        if (post) {
+            openBlog(post.id);
+        } else {
+            renderBlogListing();
         }
-
+    } else {
+        // Render immediately with 0 stats (no waiting)
         renderBlogListing();
-    });
+    }
+
+    // Then load Firebase stats in background and refresh numbers
+    loadAllStatsInBackground();
 });
 
 // ===================================
-// FIREBASE STATS FUNCTIONS
+// FIREBASE HELPER
+// ===================================
+
+function isFirebaseReady() {
+    return db !== null && db !== undefined;
+}
+
+// ===================================
+// FIREBASE STATS - BACKGROUND LOAD
 // ===================================
 
 /**
- * Check if Firebase is properly configured (not placeholder values).
+ * Load stats from Firebase in the background.
+ * Page is already rendered — this just updates the numbers.
  */
-function isFirebaseConfigured() {
-    try {
-        return typeof db !== 'undefined' &&
-               typeof firebaseConfig !== 'undefined' &&
-               firebaseConfig.apiKey &&
-               firebaseConfig.apiKey.indexOf('YOUR_') === -1 &&
-               firebaseConfig.databaseURL &&
-               firebaseConfig.databaseURL.indexOf('YOUR_') === -1;
-    } catch (e) {
-        return false;
-    }
-}
+function loadAllStatsInBackground() {
+    if (!isFirebaseReady()) return;
 
-/**
- * Load all blog stats from Firebase once, then call callback.
- * Falls back to empty stats if Firebase is unavailable or not configured.
- */
-function loadAllStats(callback) {
-    // Skip Firebase if not configured (placeholder values)
-    if (!isFirebaseConfigured()) {
-        console.warn('Firebase not configured yet. Using default stats (0). See firebase-config.js for setup instructions.');
-        if (callback) callback();
-        return;
-    }
-
-    // Safety timeout: if Firebase hasn't responded in 5 seconds, render anyway
-    var called = false;
+    // Safety timeout: give up after 2.5 seconds
+    var done = false;
     var timeout = setTimeout(function() {
-        if (!called) {
-            called = true;
-            console.warn('Firebase timed out, using default stats');
-            if (callback) callback();
+        if (!done) {
+            done = true;
+            console.warn('Firebase timed out after 2.5s');
         }
-    }, 5000);
+    }, 2500);
 
     try {
         db.ref('blog-stats').once('value', function(snapshot) {
-            if (called) return;
-            called = true;
+            if (done) return;
+            done = true;
             clearTimeout(timeout);
 
             var data = snapshot.val();
@@ -109,35 +95,66 @@ function loadAllStats(callback) {
                     }
                 }
             }
-            if (callback) callback();
+            // Refresh the card stats numbers on the page
+            refreshCardStats();
+
+            // If reading a blog post, update its stats too
+            if (currentBlogId) {
+                updateBlogStats(currentBlogId);
+            }
         }, function(error) {
-            if (called) return;
-            called = true;
+            if (done) return;
+            done = true;
             clearTimeout(timeout);
-            console.warn('Firebase read failed, using default stats:', error.message);
-            if (callback) callback();
+            console.warn('Firebase read failed:', error.message);
         });
     } catch (e) {
-        if (!called) {
-            called = true;
+        if (!done) {
+            done = true;
             clearTimeout(timeout);
-            console.warn('Firebase not available, using default stats');
-            if (callback) callback();
         }
+        console.warn('Firebase error:', e.message);
     }
 }
 
 /**
- * Get stats for a post (from local cache).
+ * Refresh the stats numbers shown on all visible blog cards
+ * without re-rendering the entire listing.
  */
+function refreshCardStats() {
+    var cards = document.querySelectorAll('.blog-card');
+    for (var i = 0; i < cards.length; i++) {
+        var card = cards[i];
+        var onclickAttr = card.getAttribute('onclick');
+        if (!onclickAttr) continue;
+
+        // Extract post ID from onclick="openBlog(5)"
+        var match = onclickAttr.match(/openBlog\((\d+)\)/);
+        if (!match) continue;
+
+        var postId = match[1];
+        var stats = getStats(postId);
+        var statsEl = card.querySelector('.blog-card-stats');
+        if (statsEl) {
+            statsEl.innerHTML =
+                '<span>&#128065; ' + stats.views + '</span>' +
+                '<span>&#9829; ' + stats.likes + '</span>';
+        }
+    }
+}
+
+// ===================================
+// STATS CACHE
+// ===================================
+
 function getStats(id) {
     return statsCache[id] || { views: 0, likes: 0 };
 }
 
-/**
- * Increment view count in Firebase using a transaction (atomic).
- * Only counts one view per browser session per post.
- */
+// ===================================
+// VIEW COUNT
+// ===================================
+
 function incrementView(id) {
     var sessionKey = 'blog-viewed-' + id;
 
@@ -147,7 +164,7 @@ function incrementView(id) {
         // sessionStorage unavailable
     }
 
-    if (isFirebaseConfigured()) {
+    if (isFirebaseReady()) {
         try {
             db.ref('blog-stats/' + id + '/views').transaction(function(currentViews) {
                 return (currentViews || 0) + 1;
@@ -156,10 +173,11 @@ function incrementView(id) {
                     if (!statsCache[id]) statsCache[id] = { views: 0, likes: 0 };
                     statsCache[id].views = snapshot.val();
                     updateBlogStats(id);
+                    refreshCardStats();
                 }
             });
         } catch (e) {
-            console.warn('Firebase transaction failed for views');
+            console.warn('Firebase views transaction failed:', e.message);
         }
     }
 
@@ -170,10 +188,10 @@ function incrementView(id) {
     }
 }
 
-/**
- * Toggle like in Firebase using a transaction (atomic).
- * Uses localStorage to track if this browser has already liked.
- */
+// ===================================
+// LIKE TOGGLE
+// ===================================
+
 function toggleLike() {
     if (!currentBlogId) return;
 
@@ -188,7 +206,7 @@ function toggleLike() {
 
     var delta = isLiked ? -1 : 1;
 
-    if (isFirebaseConfigured()) {
+    if (isFirebaseReady()) {
         try {
             db.ref('blog-stats/' + currentBlogId + '/likes').transaction(function(currentLikes) {
                 var newVal = (currentLikes || 0) + delta;
@@ -198,10 +216,11 @@ function toggleLike() {
                     if (!statsCache[currentBlogId]) statsCache[currentBlogId] = { views: 0, likes: 0 };
                     statsCache[currentBlogId].likes = snapshot.val();
                     updateBlogStats(currentBlogId);
+                    refreshCardStats();
                 }
             });
         } catch (e) {
-            console.warn('Firebase transaction failed for likes');
+            console.warn('Firebase likes transaction failed:', e.message);
         }
     }
 
@@ -215,13 +234,14 @@ function toggleLike() {
     updateLikeButton(currentBlogId);
 }
 
-/**
- * Start real-time listener for a specific post's stats.
- */
+// ===================================
+// REAL-TIME LISTENER (READER VIEW)
+// ===================================
+
 function startStatsListener(id) {
     stopStatsListener();
 
-    if (!isFirebaseConfigured()) return;
+    if (!isFirebaseReady()) return;
 
     try {
         var ref = db.ref('blog-stats/' + id);
@@ -236,13 +256,10 @@ function startStatsListener(id) {
             updateBlogStats(id);
         });
     } catch (e) {
-        console.warn('Firebase listener failed');
+        console.warn('Firebase listener failed:', e.message);
     }
 }
 
-/**
- * Stop the active real-time listener.
- */
 function stopStatsListener() {
     if (activeStatsListener) {
         try {
@@ -302,7 +319,6 @@ function getFilteredPosts() {
         });
     }
 
-    // Sort by date descending (newest first)
     filtered.sort(function(a, b) {
         return new Date(b.date) - new Date(a.date);
     });
@@ -320,7 +336,6 @@ function renderBlogListing() {
 
     var filtered = getFilteredPosts();
 
-    // Empty state when no blog posts match
     if (filtered.length === 0) {
         grid.innerHTML =
             '<div class="blog-empty">' +
@@ -333,38 +348,35 @@ function renderBlogListing() {
         return;
     }
 
-    // Pagination calculations
     var totalPages = Math.ceil(filtered.length / BLOGS_PER_PAGE);
     if (currentPage > totalPages) currentPage = totalPages;
     var startIndex = (currentPage - 1) * BLOGS_PER_PAGE;
     var endIndex = startIndex + BLOGS_PER_PAGE;
     var pageBlogs = filtered.slice(startIndex, endIndex);
 
-    // Render blog cards
     var cardsHtml = '';
     for (var i = 0; i < pageBlogs.length; i++) {
         cardsHtml += renderBlogCard(pageBlogs[i]);
     }
     grid.innerHTML = cardsHtml;
 
-    // Render top nav (Prev/Next only)
-    navTop.innerHTML = renderTopNav(totalPages);
+    // Top: full pagination, left-aligned
+    navTop.innerHTML = renderPaginationButtons(totalPages);
 
-    // Render bottom pagination (full, centered)
-    paginationBottom.innerHTML = renderPagination(totalPages);
+    // Bottom: full pagination, centered
+    paginationBottom.innerHTML = renderPaginationButtons(totalPages);
 
-    // Reset scroll area to top
     var scrollArea = document.getElementById('blog-scroll-area');
     if (scrollArea) scrollArea.scrollTop = 0;
 
-    // Animate cards on appear
     animateBlogCards();
 }
 
 /**
- * Top navigation: same format as bottom (Prev / 1 / 2 / Next), left-aligned.
+ * Pagination buttons: Prev / 1 / 2 / ... / Next
+ * Used for both top (left-aligned via CSS) and bottom (centered via CSS).
  */
-function renderTopNav(totalPages) {
+function renderPaginationButtons(totalPages) {
     if (totalPages <= 1) return '';
 
     var html = '';
@@ -375,28 +387,6 @@ function renderTopNav(totalPages) {
         html += '<button class="page-btn' + (p === currentPage ? ' active' : '') + '" onclick="goToPage(' + p + ')">' + p + '</button>';
     }
 
-    html += '<button class="page-btn' + (currentPage === totalPages ? ' disabled' : '') + '" onclick="goToPage(' + (currentPage + 1) + ')">Next &rarr;</button>';
-
-    return html;
-}
-
-/**
- * Bottom pagination: full page numbers (centered).
- */
-function renderPagination(totalPages) {
-    if (totalPages <= 1) return '';
-
-    var html = '';
-
-    // Previous button
-    html += '<button class="page-btn' + (currentPage === 1 ? ' disabled' : '') + '" onclick="goToPage(' + (currentPage - 1) + ')">&larr; Prev</button>';
-
-    // Page number buttons
-    for (var p = 1; p <= totalPages; p++) {
-        html += '<button class="page-btn' + (p === currentPage ? ' active' : '') + '" onclick="goToPage(' + p + ')">' + p + '</button>';
-    }
-
-    // Next button
     html += '<button class="page-btn' + (currentPage === totalPages ? ' disabled' : '') + '" onclick="goToPage(' + (currentPage + 1) + ')">Next &rarr;</button>';
 
     return html;
@@ -406,7 +396,6 @@ function renderBlogCard(post) {
     var stats = getStats(post.id);
     var dateFormatted = formatDate(post.date);
 
-    // Thumbnail: use specified thumbnail, or show placeholder
     var thumbnailHtml;
     if (post.thumbnail) {
         thumbnailHtml = '<img src="' + post.thumbnail + '" alt="' + escapeHtml(post.title || 'Blog post') + '">';
@@ -414,7 +403,6 @@ function renderBlogCard(post) {
         thumbnailHtml = '<div class="blog-card-placeholder">&#128196;</div>';
     }
 
-    // Tags
     var tagsHtml = '';
     if (post.tags && post.tags.length > 0) {
         for (var t = 0; t < post.tags.length; t++) {
@@ -471,7 +459,6 @@ function goToPage(page) {
     currentPage = page;
     renderBlogListing();
 
-    // Scroll the page to top of blog area
     var scrollArea = document.getElementById('blog-scroll-area');
     if (scrollArea) scrollArea.scrollTop = 0;
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -486,24 +473,17 @@ function openBlog(id) {
 
     currentBlogId = id;
 
-    // Increment view count (once per session per post)
     incrementView(id);
-
-    // Start real-time stats listener for this post
     startStatsListener(id);
 
-    // Update URL hash for deep-linking
     window.location.hash = 'post-' + post.slug;
 
-    // Toggle views
     document.getElementById('blog-listing').style.display = 'none';
     document.getElementById('blog-reader').style.display = 'block';
 
-    // Load blog content
     var article = document.getElementById('blog-content');
     var dateFormatted = formatDate(post.date);
 
-    // Build tags HTML
     var tagsHtml = '';
     if (post.tags && post.tags.length > 0) {
         tagsHtml = '<div class="blog-article-tags">';
@@ -513,7 +493,6 @@ function openBlog(id) {
         tagsHtml += '</div>';
     }
 
-    // Build header HTML
     var headerHtml =
         '<div class="blog-article-header">' +
             '<h1>' + escapeHtml(post.title || 'Untitled') + '</h1>' +
@@ -521,7 +500,6 @@ function openBlog(id) {
             tagsHtml +
         '</div>';
 
-    // Try to fetch blog content file
     if (post.contentFile) {
         fetchBlogContent(post, article, headerHtml);
     } else {
@@ -531,7 +509,6 @@ function openBlog(id) {
             '</div>';
     }
 
-    // Update engagement display
     updateBlogStats(id);
     updateLikeButton(id);
 
@@ -558,7 +535,6 @@ function fetchBlogContent(post, article, headerHtml) {
 }
 
 function closeBlogReader() {
-    // Stop real-time listener
     stopStatsListener();
 
     document.getElementById('blog-listing').style.display = 'block';
