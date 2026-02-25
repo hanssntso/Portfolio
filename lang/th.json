@@ -170,5 +170,16 @@
     "blog.pageSubtitle": "ความคิด งานวิจัย และข้อมูลเชิงลึกเกี่ยวกับวิศวกรรมโยธาและการพัฒนาที่ยั่งยืน",
     "blog.searchPlaceholder": "ค้นหาบทความ...",
     "blog.backBtn": "← กลับไปยังบล็อก",
-    "blog.footer": "© 2026 Alan Timothy Lie Hans Santoso. สงวนลิขสิทธิ์"
+    "blog.footer": "© 2026 Alan Timothy Lie Hans Santoso. สงวนลิขสิทธิ์",
+
+    "blog.prevBtn": "← ก่อนหน้า",
+    "blog.nextBtn": "ถัดไป →",
+    "blog.noPostsTitle": "ไม่พบบทความบล็อก",
+    "blog.noPostsSearch": "ไม่มีบทความที่ตรงกับการค้นหาของคุณ ลองใช้คำค้นหาอื่น",
+    "blog.noPostsDefault": "บทความบล็อกจะปรากฏที่นี่เมื่อเผยแพร่แล้ว โปรดติดตาม!",
+    "blog.views": "ดู",
+    "blog.likes": "ถูกใจ",
+    "blog.like": "ถูกใจ",
+    "blog.liked": "ถูกใจแล้ว",
+    "blog.contentPreparing": "บทความนี้อยู่ระหว่างการเตรียม กรุณากลับมาใหม่ภายหลัง"
 }

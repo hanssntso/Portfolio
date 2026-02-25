@@ -4,6 +4,9 @@
 
    Uses Firebase Realtime Database for
    global likes & views tracking.
+
+   Supports multilingual blog content
+   via i18n integration.
    =================================== */
 
 // ===================================
@@ -14,6 +17,43 @@ var currentBlogId = null;
 var searchQuery = '';
 var statsCache = {};
 var activeStatsListener = null;
+
+// ===================================
+// i18n HELPER
+// ===================================
+
+/**
+ * Get translated text for a given i18n key.
+ * Falls back to the provided default (English) text.
+ */
+function getI18nText(key, fallback) {
+    var lang = (typeof getCurrentLang === 'function') ? getCurrentLang() : 'en';
+    if (lang === 'en') return fallback;
+    if (typeof getLangData === 'function') {
+        var data = getLangData();
+        if (data[key] !== undefined) return data[key];
+    }
+    return fallback;
+}
+
+/**
+ * Get translated blog post metadata (title or summary).
+ * Checks for optional titleI18n/summaryI18n objects in blog data,
+ * then falls back to the English default.
+ *
+ * To add translations, add to blog-data.js entries:
+ *   titleI18n: { id: "Indonesian title", th: "Thai title" },
+ *   summaryI18n: { id: "Indonesian summary", th: "Thai summary" }
+ */
+function getBlogText(post, field) {
+    var lang = (typeof getCurrentLang === 'function') ? getCurrentLang() : 'en';
+    if (lang === 'en') return post[field];
+    var i18nField = field + 'I18n';
+    if (post[i18nField] && post[i18nField][lang]) {
+        return post[i18nField][lang];
+    }
+    return post[field];
+}
 
 // ===================================
 // INITIALIZATION
@@ -28,6 +68,18 @@ document.addEventListener('DOMContentLoaded', function() {
             searchQuery = this.value.trim().toLowerCase();
             currentPage = 1;
             renderBlogListing();
+        });
+    }
+
+    // Register language change callback to re-render blog content
+    if (typeof onLanguageChange === 'function') {
+        onLanguageChange(function(lang, data) {
+            if (currentBlogId) {
+                // Re-open the current blog post with the new language
+                openBlog(currentBlogId);
+            } else {
+                renderBlogListing();
+            }
         });
     }
 
@@ -55,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===================================
 
 function isFirebaseReady() {
-    return db !== null && db !== undefined;
+    return typeof db !== 'undefined' && db !== null;
 }
 
 // ===================================
@@ -67,16 +119,19 @@ function isFirebaseReady() {
  * Page is already rendered — this just updates the numbers.
  */
 function loadAllStatsInBackground() {
-    if (!isFirebaseReady()) return;
+    if (!isFirebaseReady()) {
+        console.warn('Firebase not ready — stats will show 0');
+        return;
+    }
 
-    // Safety timeout: give up after 2.5 seconds
+    // Safety timeout: give up after 5 seconds
     var done = false;
     var timeout = setTimeout(function() {
         if (!done) {
             done = true;
-            console.warn('Firebase timed out after 2.5s');
+            console.warn('Firebase stats load timed out after 5s — check your database rules and network connection');
         }
-    }, 2500);
+    }, 5000);
 
     try {
         db.ref('blog-stats').once('value', function(snapshot) {
@@ -107,6 +162,7 @@ function loadAllStatsInBackground() {
             done = true;
             clearTimeout(timeout);
             console.warn('Firebase read failed:', error.message);
+            console.warn('Please check your Firebase Realtime Database rules. Ensure blog-stats path allows read/write.');
         });
     } catch (e) {
         if (!done) {
@@ -169,7 +225,12 @@ function incrementView(id) {
             db.ref('blog-stats/' + id + '/views').transaction(function(currentViews) {
                 return (currentViews || 0) + 1;
             }, function(error, committed, snapshot) {
-                if (!error && committed) {
+                if (error) {
+                    console.warn('Firebase views transaction error:', error.message);
+                    console.warn('Check that your Firebase rules allow writes to blog-stats/' + id + '/views');
+                    return;
+                }
+                if (committed) {
                     if (!statsCache[id]) statsCache[id] = { views: 0, likes: 0 };
                     statsCache[id].views = snapshot.val();
                     updateBlogStats(id);
@@ -212,7 +273,12 @@ function toggleLike() {
                 var newVal = (currentLikes || 0) + delta;
                 return newVal < 0 ? 0 : newVal;
             }, function(error, committed, snapshot) {
-                if (!error && committed) {
+                if (error) {
+                    console.warn('Firebase likes transaction error:', error.message);
+                    console.warn('Check that your Firebase rules allow writes to blog-stats/' + currentBlogId + '/likes');
+                    return;
+                }
+                if (committed) {
                     if (!statsCache[currentBlogId]) statsCache[currentBlogId] = { views: 0, likes: 0 };
                     statsCache[currentBlogId].likes = snapshot.val();
                     updateBlogStats(currentBlogId);
@@ -254,6 +320,8 @@ function startStatsListener(id) {
                 likes: data.likes || 0
             };
             updateBlogStats(id);
+        }, function(error) {
+            console.warn('Firebase listener error for post ' + id + ':', error.message);
         });
     } catch (e) {
         console.warn('Firebase listener failed:', e.message);
@@ -295,10 +363,10 @@ function updateLikeButton(id) {
 
     if (isLiked) {
         btn.classList.add('liked');
-        btn.innerHTML = '&#9829; Liked';
+        btn.innerHTML = '&#9829; ' + getI18nText('blog.liked', 'Liked');
     } else {
         btn.classList.remove('liked');
-        btn.innerHTML = '&#9825; Like';
+        btn.innerHTML = '&#9825; ' + getI18nText('blog.like', 'Like');
     }
 }
 
@@ -310,8 +378,8 @@ function getFilteredPosts() {
 
     if (searchQuery) {
         filtered = filtered.filter(function(post) {
-            var title = (post.title || '').toLowerCase();
-            var summary = (post.summary || '').toLowerCase();
+            var title = (getBlogText(post, 'title') || '').toLowerCase();
+            var summary = (getBlogText(post, 'summary') || '').toLowerCase();
             var tags = (post.tags || []).join(' ').toLowerCase();
             return title.indexOf(searchQuery) !== -1 ||
                    summary.indexOf(searchQuery) !== -1 ||
@@ -337,11 +405,16 @@ function renderBlogListing() {
     var filtered = getFilteredPosts();
 
     if (filtered.length === 0) {
+        var noPostsTitle = getI18nText('blog.noPostsTitle', 'No Blog Posts Found');
+        var noPostsMsg = searchQuery
+            ? getI18nText('blog.noPostsSearch', 'No posts match your search. Try a different keyword.')
+            : getI18nText('blog.noPostsDefault', 'Blog posts will appear here once published. Stay tuned!');
+
         grid.innerHTML =
             '<div class="blog-empty">' +
                 '<div class="blog-empty-icon">&#128221;</div>' +
-                '<h3>No Blog Posts Found</h3>' +
-                '<p>' + (searchQuery ? 'No posts match your search. Try a different keyword.' : 'Blog posts will appear here once published. Stay tuned!') + '</p>' +
+                '<h3>' + noPostsTitle + '</h3>' +
+                '<p>' + noPostsMsg + '</p>' +
             '</div>';
         navTop.innerHTML = '';
         paginationBottom.innerHTML = '';
@@ -374,20 +447,23 @@ function renderBlogListing() {
 
 /**
  * Pagination buttons: Prev / 1 / 2 / ... / Next
- * Used for both top (left-aligned via CSS) and bottom (centered via CSS).
+ * Uses i18n translations for Prev/Next text.
  */
 function renderPaginationButtons(totalPages) {
     if (totalPages <= 1) return '';
 
+    var prevText = getI18nText('blog.prevBtn', '← Prev');
+    var nextText = getI18nText('blog.nextBtn', 'Next →');
+
     var html = '';
 
-    html += '<button class="page-btn' + (currentPage === 1 ? ' disabled' : '') + '" onclick="goToPage(' + (currentPage - 1) + ')">&larr; Prev</button>';
+    html += '<button class="page-btn' + (currentPage === 1 ? ' disabled' : '') + '" onclick="goToPage(' + (currentPage - 1) + ')">' + escapeHtml(prevText) + '</button>';
 
     for (var p = 1; p <= totalPages; p++) {
         html += '<button class="page-btn' + (p === currentPage ? ' active' : '') + '" onclick="goToPage(' + p + ')">' + p + '</button>';
     }
 
-    html += '<button class="page-btn' + (currentPage === totalPages ? ' disabled' : '') + '" onclick="goToPage(' + (currentPage + 1) + ')">Next &rarr;</button>';
+    html += '<button class="page-btn' + (currentPage === totalPages ? ' disabled' : '') + '" onclick="goToPage(' + (currentPage + 1) + ')">' + escapeHtml(nextText) + '</button>';
 
     return html;
 }
@@ -395,10 +471,12 @@ function renderPaginationButtons(totalPages) {
 function renderBlogCard(post) {
     var stats = getStats(post.id);
     var dateFormatted = formatDate(post.date);
+    var title = getBlogText(post, 'title');
+    var summary = getBlogText(post, 'summary');
 
     var thumbnailHtml;
     if (post.thumbnail) {
-        thumbnailHtml = '<img src="' + post.thumbnail + '" alt="' + escapeHtml(post.title || 'Blog post') + '">';
+        thumbnailHtml = '<img src="' + post.thumbnail + '" alt="' + escapeHtml(title || 'Blog post') + '">';
     } else {
         thumbnailHtml = '<div class="blog-card-placeholder">&#128196;</div>';
     }
@@ -415,8 +493,8 @@ function renderBlogCard(post) {
             '<div class="blog-card-thumbnail">' + thumbnailHtml + '</div>' +
             '<div class="blog-card-body">' +
                 '<div class="blog-card-date">' + dateFormatted + '</div>' +
-                '<h3 class="blog-card-title">' + escapeHtml(post.title || 'Untitled') + '</h3>' +
-                '<p class="blog-card-summary">' + escapeHtml(post.summary || '') + '</p>' +
+                '<h3 class="blog-card-title">' + escapeHtml(title || 'Untitled') + '</h3>' +
+                '<p class="blog-card-summary">' + escapeHtml(summary || '') + '</p>' +
                 '<div class="blog-card-footer">' +
                     '<div class="blog-card-tags">' + tagsHtml + '</div>' +
                     '<div class="blog-card-stats">' +
@@ -482,6 +560,7 @@ function openBlog(id) {
     document.getElementById('blog-reader').style.display = 'block';
 
     var article = document.getElementById('blog-content');
+    var title = getBlogText(post, 'title');
     var dateFormatted = formatDate(post.date);
 
     var tagsHtml = '';
@@ -495,7 +574,7 @@ function openBlog(id) {
 
     var headerHtml =
         '<div class="blog-article-header">' +
-            '<h1>' + escapeHtml(post.title || 'Untitled') + '</h1>' +
+            '<h1>' + escapeHtml(title || 'Untitled') + '</h1>' +
             '<p class="blog-article-date">' + dateFormatted + '</p>' +
             tagsHtml +
         '</div>';
@@ -505,7 +584,7 @@ function openBlog(id) {
     } else {
         article.innerHTML = headerHtml +
             '<div class="blog-article-body">' +
-                '<p>This blog post is being prepared. Please check back later.</p>' +
+                '<p>' + getI18nText('blog.contentPreparing', 'This blog post is being prepared. Please check back later.') + '</p>' +
             '</div>';
     }
 
@@ -515,19 +594,73 @@ function openBlog(id) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// ===================================
+// MULTILINGUAL CONTENT LOADING
+// ===================================
+
+/**
+ * Fetch blog content with multilingual support.
+ *
+ * For a post with contentFile "blogs/content-1.html":
+ *   - English: loads "blogs/content-1.html"
+ *   - Indonesian: tries "blogs/content-1-id.html", falls back to English
+ *   - Thai: tries "blogs/content-1-th.html", falls back to English
+ *
+ * To add a translation, simply create the file:
+ *   blogs/content-1-id.html   (Indonesian version)
+ *   blogs/content-1-th.html   (Thai version)
+ */
 function fetchBlogContent(post, article, headerHtml) {
+    var lang = (typeof getCurrentLang === 'function') ? getCurrentLang() : 'en';
+    var basePath = post.contentFile;
+
+    if (lang !== 'en') {
+        // Try language-specific file: blogs/content-1.html → blogs/content-1-id.html
+        var langPath = basePath.replace('.html', '-' + lang + '.html');
+        fetchContentFile(langPath, function(success, content) {
+            if (success) {
+                article.innerHTML = headerHtml +
+                    '<div class="blog-article-body">' + content + '</div>';
+            } else {
+                // Fallback to English
+                loadDefaultContent(post, article, headerHtml);
+            }
+        });
+    } else {
+        loadDefaultContent(post, article, headerHtml);
+    }
+}
+
+/**
+ * Load the default (English) content file.
+ */
+function loadDefaultContent(post, article, headerHtml) {
+    fetchContentFile(post.contentFile, function(success, content) {
+        if (success) {
+            article.innerHTML = headerHtml +
+                '<div class="blog-article-body">' + content + '</div>';
+        } else {
+            article.innerHTML = headerHtml +
+                '<div class="blog-article-body">' +
+                    '<p>' + getI18nText('blog.contentPreparing', 'This blog post is being prepared. Please check back later.') + '</p>' +
+                '</div>';
+        }
+    });
+}
+
+/**
+ * Fetch an HTML content file via XHR.
+ * Calls callback(success, responseText).
+ */
+function fetchContentFile(url, callback) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', post.contentFile, true);
+    xhr.open('GET', url, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                article.innerHTML = headerHtml +
-                    '<div class="blog-article-body">' + xhr.responseText + '</div>';
+            if (xhr.status === 200 && xhr.responseText.trim()) {
+                callback(true, xhr.responseText);
             } else {
-                article.innerHTML = headerHtml +
-                    '<div class="blog-article-body">' +
-                        '<p>Content is being prepared. Please check back later.</p>' +
-                    '</div>';
+                callback(false, '');
             }
         }
     };

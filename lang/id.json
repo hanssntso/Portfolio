@@ -170,5 +170,16 @@
     "blog.pageSubtitle": "Pemikiran, penelitian, dan wawasan tentang teknik sipil dan pembangunan berkelanjutan",
     "blog.searchPlaceholder": "Cari artikel blog...",
     "blog.backBtn": "← Kembali ke Blog",
-    "blog.footer": "© 2026 Alan Timothy Lie Hans Santoso. Hak cipta dilindungi undang-undang."
+    "blog.footer": "© 2026 Alan Timothy Lie Hans Santoso. Hak cipta dilindungi undang-undang.",
+
+    "blog.prevBtn": "← Sebelumnya",
+    "blog.nextBtn": "Selanjutnya →",
+    "blog.noPostsTitle": "Tidak Ada Postingan Blog Ditemukan",
+    "blog.noPostsSearch": "Tidak ada postingan yang cocok dengan pencarian Anda. Coba kata kunci lain.",
+    "blog.noPostsDefault": "Postingan blog akan muncul di sini setelah dipublikasikan. Nantikan!",
+    "blog.views": "dilihat",
+    "blog.likes": "suka",
+    "blog.like": "Suka",
+    "blog.liked": "Disukai",
+    "blog.contentPreparing": "Postingan blog ini sedang disiapkan. Silakan kembali lagi nanti."
 }
