@@ -123,7 +123,68 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Check URL hash for deep-linking
+    // Load Firebase stats first, then render with correct numbers
+    waitForStatsAndRender();
+});
+
+/**
+ * Wait for Firebase stats before rendering the blog listing.
+ * If Firebase responds within 2 seconds, render with Firebase data.
+ * If Firebase is slow or unavailable, render with local data after 2s.
+ * If Firebase arrives after the timeout, update cards in place.
+ */
+function waitForStatsAndRender() {
+    if (!isFirebaseReady()) {
+        handleHashAndRender();
+        return;
+    }
+
+    var rendered = false;
+
+    db.ref('blog-stats').once('value', function(snapshot) {
+        var data = snapshot.val();
+        if (data) {
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    statsCache[key] = {
+                        views: data[key].views || 0,
+                        likes: data[key].likes || 0
+                    };
+                }
+            }
+        }
+        firebaseConnected = true;
+
+        if (!rendered) {
+            rendered = true;
+            handleHashAndRender();
+        } else {
+            // Already rendered — just update card numbers in place
+            refreshCardStats();
+            if (currentBlogId) updateBlogStats(currentBlogId);
+        }
+    }, function(error) {
+        console.warn('[Blog] Firebase read failed:', error.message);
+        if (!rendered) {
+            rendered = true;
+            handleHashAndRender();
+        }
+    });
+
+    // Fallback: render with local stats after 2 seconds if Firebase is slow
+    setTimeout(function() {
+        if (!rendered) {
+            rendered = true;
+            console.warn('[Blog] Firebase slow — rendering with local stats');
+            handleHashAndRender();
+        }
+    }, 2000);
+}
+
+/**
+ * Check URL hash for deep-linking and render the appropriate view.
+ */
+function handleHashAndRender() {
     var hash = window.location.hash;
     if (hash && hash.startsWith('#post-')) {
         var slug = hash.substring(6);
@@ -134,13 +195,9 @@ document.addEventListener('DOMContentLoaded', function() {
             renderBlogListing();
         }
     } else {
-        // Render immediately with local stats (no waiting for Firebase)
         renderBlogListing();
     }
-
-    // Then load Firebase stats in background and refresh numbers
-    loadAllStatsInBackground();
-});
+}
 
 // ===================================
 // FIREBASE HELPER
@@ -741,6 +798,10 @@ function closeBlogReader() {
     window.location.hash = '';
     currentBlogId = null;
     renderBlogListing();
+
+    // Refresh stats from Firebase so listing matches reader values
+    loadAllStatsInBackground();
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 

@@ -576,7 +576,10 @@
     }
 
     .blog-nav-top {
-        align-self: flex-start;
+        align-self: center;
+        justify-content: center;
+        width: 100%;
+        flex-wrap: wrap;
     }
 
     .blog-scroll-area {
