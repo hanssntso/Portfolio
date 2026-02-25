@@ -6,8 +6,9 @@
 // ===================================
 // STATE
 // ===================================
-let currentPage = 1;
-let currentBlogId = null;
+var currentPage = 1;
+var currentBlogId = null;
+var searchQuery = '';
 
 // ===================================
 // INITIALIZATION
@@ -17,11 +18,21 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('blog-back-btn').addEventListener('click', closeBlogReader);
     document.getElementById('blog-like-btn').addEventListener('click', toggleLike);
 
+    // Search bar
+    var searchInput = document.getElementById('blog-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            searchQuery = this.value.trim().toLowerCase();
+            currentPage = 1;
+            renderBlogListing();
+        });
+    }
+
     // Check URL hash for deep-linking to a specific blog post
-    const hash = window.location.hash;
+    var hash = window.location.hash;
     if (hash && hash.startsWith('#post-')) {
-        const slug = hash.substring(6);
-        const post = blogPosts.find(function(p) { return p.slug === slug; });
+        var slug = hash.substring(6);
+        var post = blogPosts.find(function(p) { return p.slug === slug; });
         if (post) {
             openBlog(post.id);
             return;
@@ -32,34 +43,59 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ===================================
+// FILTERED POSTS
+// ===================================
+function getFilteredPosts() {
+    var filtered = blogPosts.slice();
+
+    if (searchQuery) {
+        filtered = filtered.filter(function(post) {
+            var title = (post.title || '').toLowerCase();
+            var summary = (post.summary || '').toLowerCase();
+            var tags = (post.tags || []).join(' ').toLowerCase();
+            return title.indexOf(searchQuery) !== -1 ||
+                   summary.indexOf(searchQuery) !== -1 ||
+                   tags.indexOf(searchQuery) !== -1;
+        });
+    }
+
+    // Sort by date descending (newest first)
+    filtered.sort(function(a, b) {
+        return new Date(b.date) - new Date(a.date);
+    });
+
+    return filtered;
+}
+
+// ===================================
 // BLOG LISTING
 // ===================================
 function renderBlogListing() {
     var grid = document.getElementById('blog-grid');
-    var pagination = document.getElementById('blog-pagination');
+    var paginationTop = document.getElementById('blog-pagination-top');
+    var paginationBottom = document.getElementById('blog-pagination-bottom');
 
-    // Empty state when no blog posts exist
-    if (blogPosts.length === 0) {
+    var filtered = getFilteredPosts();
+
+    // Empty state when no blog posts match
+    if (filtered.length === 0) {
         grid.innerHTML =
             '<div class="blog-empty">' +
                 '<div class="blog-empty-icon">&#128221;</div>' +
-                '<h3>No Blog Posts Yet</h3>' +
-                '<p>Blog posts will appear here once published. Stay tuned!</p>' +
+                '<h3>No Blog Posts Found</h3>' +
+                '<p>' + (searchQuery ? 'No posts match your search. Try a different keyword.' : 'Blog posts will appear here once published. Stay tuned!') + '</p>' +
             '</div>';
-        pagination.innerHTML = '';
+        paginationTop.innerHTML = '';
+        paginationBottom.innerHTML = '';
         return;
     }
 
-    // Sort by date descending (newest first)
-    var sorted = blogPosts.slice().sort(function(a, b) {
-        return new Date(b.date) - new Date(a.date);
-    });
-
     // Pagination calculations
-    var totalPages = Math.ceil(sorted.length / BLOGS_PER_PAGE);
+    var totalPages = Math.ceil(filtered.length / BLOGS_PER_PAGE);
+    if (currentPage > totalPages) currentPage = totalPages;
     var startIndex = (currentPage - 1) * BLOGS_PER_PAGE;
     var endIndex = startIndex + BLOGS_PER_PAGE;
-    var pageBlogs = sorted.slice(startIndex, endIndex);
+    var pageBlogs = filtered.slice(startIndex, endIndex);
 
     // Render blog cards
     var cardsHtml = '';
@@ -68,28 +104,32 @@ function renderBlogListing() {
     }
     grid.innerHTML = cardsHtml;
 
-    // Render pagination
-    if (totalPages > 1) {
-        var paginationHtml = '';
-
-        // Previous button
-        paginationHtml += '<button class="page-btn' + (currentPage === 1 ? ' disabled' : '') + '" onclick="goToPage(' + (currentPage - 1) + ')">&larr; Prev</button>';
-
-        // Page number buttons
-        for (var p = 1; p <= totalPages; p++) {
-            paginationHtml += '<button class="page-btn' + (p === currentPage ? ' active' : '') + '" onclick="goToPage(' + p + ')">' + p + '</button>';
-        }
-
-        // Next button
-        paginationHtml += '<button class="page-btn' + (currentPage === totalPages ? ' disabled' : '') + '" onclick="goToPage(' + (currentPage + 1) + ')">Next &rarr;</button>';
-
-        pagination.innerHTML = paginationHtml;
-    } else {
-        pagination.innerHTML = '';
-    }
+    // Render pagination (top and bottom)
+    var paginationHtml = renderPagination(totalPages);
+    paginationTop.innerHTML = paginationHtml;
+    paginationBottom.innerHTML = paginationHtml;
 
     // Animate cards on appear
     animateBlogCards();
+}
+
+function renderPagination(totalPages) {
+    if (totalPages <= 1) return '';
+
+    var html = '';
+
+    // Previous button
+    html += '<button class="page-btn' + (currentPage === 1 ? ' disabled' : '') + '" onclick="goToPage(' + (currentPage - 1) + ')">&larr; Prev</button>';
+
+    // Page number buttons
+    for (var p = 1; p <= totalPages; p++) {
+        html += '<button class="page-btn' + (p === currentPage ? ' active' : '') + '" onclick="goToPage(' + p + ')">' + p + '</button>';
+    }
+
+    // Next button
+    html += '<button class="page-btn' + (currentPage === totalPages ? ' disabled' : '') + '" onclick="goToPage(' + (currentPage + 1) + ')">Next &rarr;</button>';
+
+    return html;
 }
 
 function renderBlogCard(post) {
@@ -155,7 +195,8 @@ function animateBlogCards() {
 // PAGINATION
 // ===================================
 function goToPage(page) {
-    var totalPages = Math.ceil(blogPosts.length / BLOGS_PER_PAGE);
+    var filtered = getFilteredPosts();
+    var totalPages = Math.ceil(filtered.length / BLOGS_PER_PAGE);
     if (page < 1 || page > totalPages) return;
 
     currentPage = page;

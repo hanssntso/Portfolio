@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Track active section on scroll
     const navSections = [
-        { id: 'hero', link: document.querySelector('.nav-link[href="#hero"]') },
+        { id: 'profile', link: document.querySelector('.nav-link[href="#profile"]') },
         { id: 'project-ministry', link: document.querySelector('.nav-link[href="#project-ministry"]') },
         { id: 'skills', link: document.querySelector('.nav-link[href="#skills"]') },
         { id: 'involvement', link: document.querySelector('.nav-link[href="#involvement"]') },
@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===================================
     // Add skip to main content link
     const skipLink = document.createElement('a');
-    skipLink.href = '#hero';
+    skipLink.href = '#profile';
     skipLink.className = 'skip-link';
     skipLink.textContent = 'Skip to main content';
     skipLink.style.cssText = `

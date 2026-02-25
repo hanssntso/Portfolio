@@ -17,10 +17,10 @@
     <nav id="main-nav" class="main-nav nav-scrolled">
         <div class="nav-container">
             <ul class="nav-links">
-                <li><a href="index.html#hero" class="nav-link">Profile</a></li>
+                <li><a href="index.html#profile" class="nav-link">Profile</a></li>
                 <li><a href="index.html#project-ministry" class="nav-link">Project</a></li>
                 <li><a href="index.html#skills" class="nav-link">Skills</a></li>
-                <li><a href="index.html#involvement" class="nav-link">Activity</a></li>
+                <li><a href="index.html#involvement" class="nav-link">Involvement</a></li>
                 <li><a href="index.html#contact" class="nav-link">Contact</a></li>
                 <li><a href="blog.html" class="nav-link active">Blog</a></li>
             </ul>
@@ -30,15 +30,25 @@
     <!-- BLOG LISTING VIEW -->
     <div id="blog-listing" class="blog-page">
         <div class="container">
-            <h1 class="blog-page-title">Blog</h1>
+            <h1 class="blog-page-title">BLOG</h1>
             <p class="blog-page-subtitle">Thoughts, research, and insights on civil engineering and sustainable development</p>
+
+            <!-- Search Bar -->
+            <div class="blog-search-container">
+                <input type="text" id="blog-search" class="blog-search-input" placeholder="Search blog posts...">
+            </div>
+
+            <!-- Top Pagination -->
+            <div id="blog-pagination-top" class="blog-pagination">
+                <!-- Page buttons rendered by JavaScript -->
+            </div>
 
             <div id="blog-grid" class="blog-grid">
                 <!-- Blog cards rendered by JavaScript -->
             </div>
 
-            <!-- Pagination -->
-            <div id="blog-pagination" class="blog-pagination">
+            <!-- Bottom Pagination -->
+            <div id="blog-pagination-bottom" class="blog-pagination">
                 <!-- Page buttons rendered by JavaScript -->
             </div>
         </div>
