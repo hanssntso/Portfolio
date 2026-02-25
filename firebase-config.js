@@ -85,8 +85,20 @@ try {
     if (firebaseConfig.apiKey && firebaseConfig.apiKey.indexOf('YOUR_') === -1) {
         firebase.initializeApp(firebaseConfig);
         db = firebase.database();
+
+        // Test connectivity — writes a timestamp to verify rules allow access
+        db.ref('.info/connected').on('value', function(snap) {
+            if (snap.val() === true) {
+                console.log('[Firebase] Connected to Realtime Database');
+            } else {
+                console.warn('[Firebase] Disconnected from Realtime Database');
+            }
+        });
+    } else {
+        console.warn('[Firebase] Config contains placeholder values — replace YOUR_... values with real Firebase credentials');
     }
 } catch (e) {
-    console.warn('Firebase initialization failed:', e.message);
+    console.warn('[Firebase] Initialization failed:', e.message);
+    console.warn('[Firebase] Make sure firebase-app-compat.js and firebase-database-compat.js are loaded before this script');
     db = null;
 }

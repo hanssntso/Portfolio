@@ -23,6 +23,7 @@
 
     /**
      * Load a language JSON file. Returns cached data if available.
+     * Uses fetch() for reliability, with XHR fallback.
      */
     function loadLang(lang, callback) {
         if (langCache[lang]) {
@@ -30,11 +31,37 @@
             return;
         }
 
+        var url = 'lang/' + lang + '.json';
+
+        if (typeof fetch === 'function') {
+            fetch(url, { cache: 'no-cache' })
+                .then(function(response) {
+                    if (!response.ok) throw new Error('HTTP ' + response.status);
+                    return response.json();
+                })
+                .then(function(data) {
+                    langCache[lang] = data;
+                    callback(data);
+                })
+                .catch(function(error) {
+                    console.warn('i18n: fetch failed for ' + lang + '.json:', error.message);
+                    // Fallback to XHR
+                    loadLangXHR(lang, callback);
+                });
+        } else {
+            loadLangXHR(lang, callback);
+        }
+    }
+
+    /**
+     * XHR fallback for loading language files.
+     */
+    function loadLangXHR(lang, callback) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'lang/' + lang + '.json', true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
+                if (xhr.status === 200 || xhr.status === 0) {
                     try {
                         langCache[lang] = JSON.parse(xhr.responseText);
                     } catch (e) {
@@ -42,7 +69,7 @@
                         langCache[lang] = {};
                     }
                 } else {
-                    console.warn('i18n: Could not load ' + lang + '.json');
+                    console.warn('i18n: Could not load ' + lang + '.json (HTTP ' + xhr.status + ')');
                     langCache[lang] = {};
                 }
                 callback(langCache[lang]);
@@ -53,19 +80,26 @@
 
     /**
      * Apply translations to all elements with data-i18n attribute.
+     * Each element is wrapped in try-catch to prevent one failure
+     * from stopping the entire translation process.
      */
     function applyTranslations(data) {
+        if (!data || typeof data !== 'object') return;
+
         var elements = document.querySelectorAll('[data-i18n]');
         for (var i = 0; i < elements.length; i++) {
-            var el = elements[i];
-            var key = el.getAttribute('data-i18n');
-            if (data[key] !== undefined) {
-                // Check if element is an input with placeholder
-                if (el.tagName === 'INPUT' && el.hasAttribute('placeholder')) {
-                    el.setAttribute('placeholder', data[key]);
-                } else {
-                    el.textContent = data[key];
+            try {
+                var el = elements[i];
+                var key = el.getAttribute('data-i18n');
+                if (data[key] !== undefined) {
+                    if (el.tagName === 'INPUT' && el.hasAttribute('placeholder')) {
+                        el.setAttribute('placeholder', data[key]);
+                    } else {
+                        el.textContent = data[key];
+                    }
                 }
+            } catch (e) {
+                // Continue with next element even if one fails
             }
         }
 
@@ -95,6 +129,9 @@
         try {
             localStorage.setItem('portfolio-lang', lang);
         } catch (e) {}
+
+        // Clear cache for this language to force fresh load
+        delete langCache[lang];
 
         loadLang(lang, function(data) {
             applyTranslations(data);
@@ -142,12 +179,14 @@
     document.addEventListener('DOMContentLoaded', function() {
         updateActiveFlagDisplay(currentLang);
 
-        if (currentLang !== defaultLang) {
-            loadLang(currentLang, function(data) {
+        // Always load translation data (even for English)
+        // so getLangData() returns data for all languages
+        loadLang(currentLang, function(data) {
+            if (currentLang !== defaultLang) {
                 applyTranslations(data);
-                notifyLangChange(currentLang, data);
-            });
-        }
+            }
+            notifyLangChange(currentLang, data);
+        });
     });
 
     // Expose globally
