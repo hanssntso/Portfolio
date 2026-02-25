@@ -68,13 +68,13 @@
 // >>> REPLACE THESE VALUES WITH YOUR OWN <<<
 // =============================================
 var firebaseConfig = {
-    apiKey:            "YOUR_API_KEY",             // e.g., "AIzaSyB1234567890abcdefg"
-    authDomain:        "YOUR_PROJECT_ID.firebaseapp.com",  // e.g., "portfolio-blog.firebaseapp.com"
-    databaseURL:       "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",  // e.g., "https://portfolio-blog-default-rtdb.firebaseio.com"
-    projectId:         "YOUR_PROJECT_ID",          // e.g., "portfolio-blog"
-    storageBucket:     "YOUR_PROJECT_ID.appspot.com",      // e.g., "portfolio-blog.appspot.com"
-    messagingSenderId: "YOUR_SENDER_ID",           // e.g., "123456789012"
-    appId:             "YOUR_APP_ID"               // e.g., "1:123456789012:web:abc123def456"
+    apiKey:            "AIzaSyC3q8cq5WdZfYf4Rz28RKFKCQxsQngKNIw",             // e.g., "AIzaSyB1234567890abcdefg"
+    authDomain:        "hans-prtflo.firebaseapp.com",  // e.g., "portfolio-blog.firebaseapp.com"
+    databaseURL:       "https://hans-prtflo-default-rtdb.firebaseio.com",  // e.g., "https://portfolio-blog-default-rtdb.firebaseio.com"
+    projectId:         "hans-prtflo",          // e.g., "portfolio-blog"
+    storageBucket:     "hans-prtflo.firebasestorage.app",      // e.g., "portfolio-blog.appspot.com"
+    messagingSenderId: "666274040317",           // e.g., "123456789012"
+    appId:             "1:666274040317:web:2fce714018d6e21dd17194"               // e.g., "1:123456789012:web:abc123def456"
 };
 // =============================================
 
