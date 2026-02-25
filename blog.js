@@ -59,40 +59,43 @@ function getBlogText(post, field) {
 }
 
 // ===================================
-// LOCAL STATS (FALLBACK)
+// PERSISTENT STATS CACHE
 // ===================================
 
 /**
- * Get stats from localStorage (fallback when Firebase is unavailable).
+ * Load all stats from localStorage cache into statsCache.
+ * This runs BEFORE rendering so cards show last-known values instantly.
  */
-function getLocalStats(id) {
+function loadCachedStats() {
     try {
-        var stored = localStorage.getItem('blog-local-stats-' + id);
-        if (stored) return JSON.parse(stored);
+        var cached = localStorage.getItem('blog-stats-cache');
+        if (cached) {
+            var parsed = JSON.parse(cached);
+            for (var key in parsed) {
+                if (parsed.hasOwnProperty(key)) {
+                    statsCache[key] = parsed[key];
+                }
+            }
+        }
     } catch (e) {}
-    return { views: 0, likes: 0 };
 }
 
 /**
- * Save stats to localStorage.
+ * Save all current statsCache to localStorage.
+ * Called whenever Firebase data arrives or stats change.
  */
-function saveLocalStats(id, stats) {
+function saveCachedStats() {
     try {
-        localStorage.setItem('blog-local-stats-' + id, JSON.stringify(stats));
+        localStorage.setItem('blog-stats-cache', JSON.stringify(statsCache));
     } catch (e) {}
 }
 
 /**
  * Get the best available stats for a post.
- * Uses Firebase stats when available, merges with local fallback.
+ * statsCache now always has data (from localStorage on load, updated by Firebase).
  */
 function getStats(id) {
-    var fb = statsCache[id] || { views: 0, likes: 0 };
-    var local = getLocalStats(id);
-    return {
-        views: Math.max(fb.views, local.views),
-        likes: Math.max(fb.likes, local.likes)
-    };
+    return statsCache[id] || { views: 0, likes: 0 };
 }
 
 // ===================================
@@ -123,63 +126,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Load Firebase stats first, then render with correct numbers
-    waitForStatsAndRender();
+    // Load cached stats from localStorage — instant, no network wait
+    loadCachedStats();
+
+    // Render immediately with cached data
+    handleHashAndRender();
+
+    // Fetch fresh stats from Firebase in the background
+    loadAllStatsInBackground();
 });
-
-/**
- * Wait for Firebase stats before rendering the blog listing.
- * If Firebase responds within 2 seconds, render with Firebase data.
- * If Firebase is slow or unavailable, render with local data after 2s.
- * If Firebase arrives after the timeout, update cards in place.
- */
-function waitForStatsAndRender() {
-    if (!isFirebaseReady()) {
-        handleHashAndRender();
-        return;
-    }
-
-    var rendered = false;
-
-    db.ref('blog-stats').once('value', function(snapshot) {
-        var data = snapshot.val();
-        if (data) {
-            for (var key in data) {
-                if (data.hasOwnProperty(key)) {
-                    statsCache[key] = {
-                        views: data[key].views || 0,
-                        likes: data[key].likes || 0
-                    };
-                }
-            }
-        }
-        firebaseConnected = true;
-
-        if (!rendered) {
-            rendered = true;
-            handleHashAndRender();
-        } else {
-            // Already rendered — just update card numbers in place
-            refreshCardStats();
-            if (currentBlogId) updateBlogStats(currentBlogId);
-        }
-    }, function(error) {
-        console.warn('[Blog] Firebase read failed:', error.message);
-        if (!rendered) {
-            rendered = true;
-            handleHashAndRender();
-        }
-    });
-
-    // Fallback: render with local stats after 2 seconds if Firebase is slow
-    setTimeout(function() {
-        if (!rendered) {
-            rendered = true;
-            console.warn('[Blog] Firebase slow — rendering with local stats');
-            handleHashAndRender();
-        }
-    }, 2000);
-}
 
 /**
  * Check URL hash for deep-linking and render the appropriate view.
@@ -252,6 +207,8 @@ function loadAllStatsInBackground() {
                         };
                     }
                 }
+                // Persist to localStorage so next page load has fresh data
+                saveCachedStats();
             }
             // Refresh the card stats numbers on the page
             refreshCardStats();
@@ -317,10 +274,10 @@ function incrementView(id) {
         // sessionStorage unavailable
     }
 
-    // Always update local stats (works without Firebase)
-    var local = getLocalStats(id);
-    local.views = local.views + 1;
-    saveLocalStats(id, local);
+    // Update in-memory cache immediately
+    if (!statsCache[id]) statsCache[id] = { views: 0, likes: 0 };
+    statsCache[id].views = statsCache[id].views + 1;
+    saveCachedStats();
 
     // Also try Firebase for global tracking
     if (isFirebaseReady()) {
@@ -330,7 +287,6 @@ function incrementView(id) {
             }, function(error, committed, snapshot) {
                 if (error) {
                     console.warn('[Blog] Firebase views write failed:', error.message);
-                    // Local stats already updated above, so UI still works
                     updateBlogStats(id);
                     refreshCardStats();
                     return;
@@ -339,6 +295,7 @@ function incrementView(id) {
                     firebaseConnected = true;
                     if (!statsCache[id]) statsCache[id] = { views: 0, likes: 0 };
                     statsCache[id].views = snapshot.val();
+                    saveCachedStats();
                     updateBlogStats(id);
                     refreshCardStats();
                 }
@@ -377,10 +334,10 @@ function toggleLike() {
 
     var delta = isLiked ? -1 : 1;
 
-    // Always update local stats
-    var local = getLocalStats(currentBlogId);
-    local.likes = Math.max(0, local.likes + delta);
-    saveLocalStats(currentBlogId, local);
+    // Update in-memory cache immediately
+    if (!statsCache[currentBlogId]) statsCache[currentBlogId] = { views: 0, likes: 0 };
+    statsCache[currentBlogId].likes = Math.max(0, statsCache[currentBlogId].likes + delta);
+    saveCachedStats();
 
     // Also try Firebase for global tracking
     if (isFirebaseReady()) {
@@ -399,6 +356,7 @@ function toggleLike() {
                     firebaseConnected = true;
                     if (!statsCache[currentBlogId]) statsCache[currentBlogId] = { views: 0, likes: 0 };
                     statsCache[currentBlogId].likes = snapshot.val();
+                    saveCachedStats();
                     updateBlogStats(currentBlogId);
                     refreshCardStats();
                 }
@@ -442,6 +400,7 @@ function startStatsListener(id) {
                 views: data.views || 0,
                 likes: data.likes || 0
             };
+            saveCachedStats();
             updateBlogStats(id);
         }, function(error) {
             console.warn('[Blog] Firebase listener error for post ' + id + ':', error.message);
