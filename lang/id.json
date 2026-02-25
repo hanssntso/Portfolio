@@ -6,19 +6,19 @@
     "nav.contact": "Kontak",
     "nav.blog": "Blog",
 
-    "hero.title": "Peneliti Doktoral | Insinyur Sipil",
+    "hero.title": "Mahasiswa Doktoral/S3 | Konsultan Teknik Sipil",
     "hero.tagline": "Menyelesaikan tantangan infrastruktur melalui rekayasa berbasis data dan inovasi berkelanjutan",
     "hero.services": "Konsultasi • Kolaborasi • Bimbingan Penelitian",
     "hero.scroll": "Gulir untuk menjelajahi",
 
-    "research.sectionTitle": "Peneliti Doktoral",
+    "research.sectionTitle": "Mahasiswa Doktoral/S3",
     "research.heading": "Penelitian Saat Ini",
     "research.institution": "King Mongkut's Institute of Technology Ladkrabang (KMITL)",
     "research.location": "Bangkok, Thailand",
     "research.duration": "November 2025 - Sekarang",
     "research.focusTitle": "Fokus Penelitian",
     "research.focusText": "Pembangunan Berkelanjutan, Rekayasa Pesisir & Ketahanan Infrastruktur",
-    "research.description": "Mengembangkan kerangka kerja terpadu untuk adaptasi infrastruktur pesisir di wilayah rentan iklim, menerapkan analisis tingkat sistem dan metodologi berbasis data untuk memajukan strategi ketahanan iklim dan melindungi komunitas yang rentan.",
+    "research.description": "Mengembangkan kerangka kerja terintegrasi untuk adaptasi infrastruktur pesisir di wilayah yang rentan terhadap perubahan iklim, dengan menerapkan analisis tingkat sistem dan metodologi berbasis data untuk memperkuat strategi ketahanan iklim dan melindungi komunitas yang rentan.",
 
     "projects.sectionTitle": "Proyek Unggulan",
 
@@ -105,8 +105,8 @@
     "exp3.detail3": "Meningkatkan kepatuhan regulasi dan efisiensi operasional manajemen infrastruktur di seluruh kota",
 
     "skills.sectionTitle": "Kompetensi Teknis",
-    "skills.cat1": "Perangkat Lunak & Alat Rekayasa",
-    "skills.cat2": "Kompetensi Inti Rekayasa",
+    "skills.cat1": "Perangkat Lunak & Alat Teknik",
+    "skills.cat2": "Kompetensi Teknik Utama",
     "skills.cat3": "Keahlian Khusus",
     "skills.cat4": "Bahasa",
     "skills.lang1": "Inggris (Mahir)",
@@ -140,8 +140,8 @@
     "ach1.subtitle": "Sarjana Teknik Sipil",
     "ach1.event": "Universitas Sebelas Maret",
     "ach1.date": "IPK: 3.56/4.00 | Juli 2025",
-    "ach2.title": "Mahasiswa Pertukaran Internasional",
-    "ach2.subtitle": "Program Pertukaran Beasiswa Penuh",
+    "ach2.title": "Pertukaran Mahasiswa Internasional",
+    "ach2.subtitle": "Program Beasiswa Penuh",
     "ach2.event": "Universiti Tun Hussein Onn Malaysia",
     "ach2.date": "Oktober 2023 - Februari 2024",
     "ach3.title": "Juara 1",
@@ -161,7 +161,7 @@
     "ach6.event": "Civil Festival (CIVFEST) 2022, Politeknik Jakarta",
     "ach6.date": "Juli 2022",
 
-    "contact.title": "Mari Membangun Bersama",
+    "contact.title": "Mari Berkolaborasi Bersama",
     "contact.subtitle1": "Tertarik untuk berkolaborasi dalam solusi infrastruktur berkelanjutan?",
     "contact.subtitle2": "\"Terbuka untuk konsultasi terkait teknik sipil atau penelitian dan teknologi. Juga untuk hal-hal lain sesuai kebutuhan Anda\"",
     "contact.footer": "© 2026 Alan Timothy Lie Hans Santoso. Hak cipta dilindungi undang-undang.",
