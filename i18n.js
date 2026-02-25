@@ -31,10 +31,11 @@
             return;
         }
 
-        var url = 'lang/' + lang + '.json';
+        // Append timestamp to bypass CDN cache (GitHub Pages / Fastly)
+        var url = 'lang/' + lang + '.json?_=' + Date.now();
 
         if (typeof fetch === 'function') {
-            fetch(url, { cache: 'no-cache' })
+            fetch(url)
                 .then(function(response) {
                     if (!response.ok) throw new Error('HTTP ' + response.status);
                     return response.json();
@@ -58,7 +59,7 @@
      */
     function loadLangXHR(lang, callback) {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'lang/' + lang + '.json', true);
+        xhr.open('GET', 'lang/' + lang + '.json?_=' + Date.now(), true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200 || xhr.status === 0) {
@@ -138,6 +139,11 @@
             updateActiveFlagDisplay(lang);
             closeLangDropdown();
             notifyLangChange(lang, data);
+
+            // Re-apply after callbacks to ensure nothing overwrote translations
+            setTimeout(function() {
+                applyTranslations(data);
+            }, 100);
         });
     }
 
@@ -184,6 +190,12 @@
         loadLang(currentLang, function(data) {
             if (currentLang !== defaultLang) {
                 applyTranslations(data);
+
+                // Re-apply after other scripts finish to ensure
+                // all elements (including those at page bottom) are translated
+                setTimeout(function() {
+                    applyTranslations(data);
+                }, 200);
             }
             notifyLangChange(currentLang, data);
         });
