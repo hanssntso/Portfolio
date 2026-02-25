@@ -33,21 +33,24 @@
             <h1 class="blog-page-title">BLOG</h1>
             <p class="blog-page-subtitle">Thoughts, research, and insights on civil engineering and sustainable development</p>
 
-            <!-- Search Bar -->
-            <div class="blog-search-container">
-                <input type="text" id="blog-search" class="blog-search-input" placeholder="Search blog posts...">
+            <!-- Top Controls: Prev/Next (left) + Search (right) -->
+            <div class="blog-top-controls">
+                <div id="blog-nav-top" class="blog-nav-top">
+                    <!-- Prev/Next buttons rendered by JavaScript -->
+                </div>
+                <div class="blog-search-container">
+                    <input type="text" id="blog-search" class="blog-search-input" placeholder="Search blog posts...">
+                </div>
             </div>
 
-            <!-- Top Pagination -->
-            <div id="blog-pagination-top" class="blog-pagination">
-                <!-- Page buttons rendered by JavaScript -->
+            <!-- Scrollable Blog List Area -->
+            <div id="blog-scroll-area" class="blog-scroll-area">
+                <div id="blog-grid" class="blog-grid">
+                    <!-- Blog cards rendered by JavaScript -->
+                </div>
             </div>
 
-            <div id="blog-grid" class="blog-grid">
-                <!-- Blog cards rendered by JavaScript -->
-            </div>
-
-            <!-- Bottom Pagination -->
+            <!-- Bottom Pagination (centered) -->
             <div id="blog-pagination-bottom" class="blog-pagination">
                 <!-- Page buttons rendered by JavaScript -->
             </div>
@@ -87,6 +90,11 @@
             <p>&copy; 2026 Alan Timothy Lie Hans Santoso. All rights reserved.</p>
         </div>
     </div>
+
+    <!-- Firebase SDK (required for global likes & views) -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+    <script src="firebase-config.js"></script>
 
     <script src="blog-data.js"></script>
     <script src="blog.js"></script>
