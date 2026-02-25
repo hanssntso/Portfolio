@@ -55,15 +55,51 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===================================
 
 /**
+ * Check if Firebase is properly configured (not placeholder values).
+ */
+function isFirebaseConfigured() {
+    try {
+        return typeof db !== 'undefined' &&
+               typeof firebaseConfig !== 'undefined' &&
+               firebaseConfig.apiKey &&
+               firebaseConfig.apiKey.indexOf('YOUR_') === -1 &&
+               firebaseConfig.databaseURL &&
+               firebaseConfig.databaseURL.indexOf('YOUR_') === -1;
+    } catch (e) {
+        return false;
+    }
+}
+
+/**
  * Load all blog stats from Firebase once, then call callback.
- * Falls back to empty stats if Firebase is unavailable.
+ * Falls back to empty stats if Firebase is unavailable or not configured.
  */
 function loadAllStats(callback) {
+    // Skip Firebase if not configured (placeholder values)
+    if (!isFirebaseConfigured()) {
+        console.warn('Firebase not configured yet. Using default stats (0). See firebase-config.js for setup instructions.');
+        if (callback) callback();
+        return;
+    }
+
+    // Safety timeout: if Firebase hasn't responded in 5 seconds, render anyway
+    var called = false;
+    var timeout = setTimeout(function() {
+        if (!called) {
+            called = true;
+            console.warn('Firebase timed out, using default stats');
+            if (callback) callback();
+        }
+    }, 5000);
+
     try {
         db.ref('blog-stats').once('value', function(snapshot) {
+            if (called) return;
+            called = true;
+            clearTimeout(timeout);
+
             var data = snapshot.val();
             if (data) {
-                // data is an object like { "1": { views: 5, likes: 3 }, "2": { ... } }
                 for (var key in data) {
                     if (data.hasOwnProperty(key)) {
                         statsCache[key] = {
@@ -75,12 +111,19 @@ function loadAllStats(callback) {
             }
             if (callback) callback();
         }, function(error) {
+            if (called) return;
+            called = true;
+            clearTimeout(timeout);
             console.warn('Firebase read failed, using default stats:', error.message);
             if (callback) callback();
         });
     } catch (e) {
-        console.warn('Firebase not available, using default stats');
-        if (callback) callback();
+        if (!called) {
+            called = true;
+            clearTimeout(timeout);
+            console.warn('Firebase not available, using default stats');
+            if (callback) callback();
+        }
     }
 }
 
@@ -104,18 +147,20 @@ function incrementView(id) {
         // sessionStorage unavailable
     }
 
-    try {
-        db.ref('blog-stats/' + id + '/views').transaction(function(currentViews) {
-            return (currentViews || 0) + 1;
-        }, function(error, committed, snapshot) {
-            if (!error && committed) {
-                if (!statsCache[id]) statsCache[id] = { views: 0, likes: 0 };
-                statsCache[id].views = snapshot.val();
-                updateBlogStats(id);
-            }
-        });
-    } catch (e) {
-        console.warn('Firebase transaction failed for views');
+    if (isFirebaseConfigured()) {
+        try {
+            db.ref('blog-stats/' + id + '/views').transaction(function(currentViews) {
+                return (currentViews || 0) + 1;
+            }, function(error, committed, snapshot) {
+                if (!error && committed) {
+                    if (!statsCache[id]) statsCache[id] = { views: 0, likes: 0 };
+                    statsCache[id].views = snapshot.val();
+                    updateBlogStats(id);
+                }
+            });
+        } catch (e) {
+            console.warn('Firebase transaction failed for views');
+        }
     }
 
     try {
@@ -143,19 +188,21 @@ function toggleLike() {
 
     var delta = isLiked ? -1 : 1;
 
-    try {
-        db.ref('blog-stats/' + currentBlogId + '/likes').transaction(function(currentLikes) {
-            var newVal = (currentLikes || 0) + delta;
-            return newVal < 0 ? 0 : newVal;
-        }, function(error, committed, snapshot) {
-            if (!error && committed) {
-                if (!statsCache[currentBlogId]) statsCache[currentBlogId] = { views: 0, likes: 0 };
-                statsCache[currentBlogId].likes = snapshot.val();
-                updateBlogStats(currentBlogId);
-            }
-        });
-    } catch (e) {
-        console.warn('Firebase transaction failed for likes');
+    if (isFirebaseConfigured()) {
+        try {
+            db.ref('blog-stats/' + currentBlogId + '/likes').transaction(function(currentLikes) {
+                var newVal = (currentLikes || 0) + delta;
+                return newVal < 0 ? 0 : newVal;
+            }, function(error, committed, snapshot) {
+                if (!error && committed) {
+                    if (!statsCache[currentBlogId]) statsCache[currentBlogId] = { views: 0, likes: 0 };
+                    statsCache[currentBlogId].likes = snapshot.val();
+                    updateBlogStats(currentBlogId);
+                }
+            });
+        } catch (e) {
+            console.warn('Firebase transaction failed for likes');
+        }
     }
 
     // Toggle local "has liked" state
@@ -173,6 +220,8 @@ function toggleLike() {
  */
 function startStatsListener(id) {
     stopStatsListener();
+
+    if (!isFirebaseConfigured()) return;
 
     try {
         var ref = db.ref('blog-stats/' + id);
@@ -313,14 +362,21 @@ function renderBlogListing() {
 }
 
 /**
- * Top navigation: only Prev and Next buttons (left-aligned).
+ * Top navigation: same format as bottom (Prev / 1 / 2 / Next), left-aligned.
  */
 function renderTopNav(totalPages) {
     if (totalPages <= 1) return '';
 
     var html = '';
+
     html += '<button class="page-btn' + (currentPage === 1 ? ' disabled' : '') + '" onclick="goToPage(' + (currentPage - 1) + ')">&larr; Prev</button>';
+
+    for (var p = 1; p <= totalPages; p++) {
+        html += '<button class="page-btn' + (p === currentPage ? ' active' : '') + '" onclick="goToPage(' + p + ')">' + p + '</button>';
+    }
+
     html += '<button class="page-btn' + (currentPage === totalPages ? ' disabled' : '') + '" onclick="goToPage(' + (currentPage + 1) + ')">Next &rarr;</button>';
+
     return html;
 }
 
