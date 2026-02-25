@@ -78,6 +78,15 @@ var firebaseConfig = {
 };
 // =============================================
 
-// Initialize Firebase
-var firebaseApp = firebase.initializeApp(firebaseConfig);
-var db = firebase.database();
+// Initialize Firebase safely
+var db = null;
+try {
+    // Only initialize if config has been replaced with real values
+    if (firebaseConfig.apiKey && firebaseConfig.apiKey.indexOf('YOUR_') === -1) {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.database();
+    }
+} catch (e) {
+    console.warn('Firebase initialization failed:', e.message);
+    db = null;
+}
