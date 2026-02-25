@@ -76,17 +76,47 @@
    NOTES ON LIKES & VIEWS
    ==========================
 
-   Likes and views are stored in each visitor's browser (localStorage).
-   This means:
-   - Each person can like a blog post once per browser
-   - View counts increment once per browser session per post
-   - Counts are NOT shared across different visitors' browsers
+   Likes and views are tracked globally using Firebase Realtime Database.
+   - Each person can like a blog post once per browser (localStorage)
+   - View counts increment once per browser session per post (sessionStorage)
+   - All visitors see the same global counts from Firebase
 
-   For shared/global counters visible to all visitors, you would need
-   a backend service. Some free options:
-   - Firebase Realtime Database (free tier)
-   - Supabase (free tier)
-   - CountAPI or similar free counting services
+   ==========================
+   MULTILINGUAL BLOG CONTENT
+   ==========================
+
+   The blog system supports multilingual article content and metadata.
+
+   ARTICLE CONTENT (HTML files):
+   - English (default): blogs/content-1.html
+   - Indonesian:        blogs/content-1-id.html  (create when ready)
+   - Thai:              blogs/content-1-th.html   (create when ready)
+
+   When a non-English language is selected, the system automatically
+   tries to load the language-specific file. If it doesn't exist,
+   it falls back to the English version.
+
+   BLOG METADATA (titles & summaries):
+   To translate a blog post's title and summary shown on the card,
+   add optional titleI18n and/or summaryI18n objects:
+
+     {
+         id: 1,
+         title: "English Title",
+         titleI18n: {
+             id: "Judul dalam Bahasa Indonesia",
+             th: "ชื่อเรื่องภาษาไทย"
+         },
+         summary: "English summary...",
+         summaryI18n: {
+             id: "Ringkasan dalam Bahasa Indonesia...",
+             th: "สรุปภาษาไทย..."
+         },
+         ...
+     }
+
+   If titleI18n/summaryI18n are not provided, the English values
+   are used for all languages (graceful fallback).
 
    =================================== */
 

@@ -13,6 +13,7 @@
     var langCache = {};
     var currentLang = 'en';
     var defaultLang = 'en';
+    var langChangeCallbacks = [];
 
     // Detect saved language or use default
     try {
@@ -73,6 +74,19 @@
     }
 
     /**
+     * Notify all registered language change callbacks.
+     */
+    function notifyLangChange(lang, data) {
+        for (var i = 0; i < langChangeCallbacks.length; i++) {
+            try {
+                langChangeCallbacks[i](lang, data);
+            } catch (e) {
+                console.warn('i18n: Language change callback error:', e.message);
+            }
+        }
+    }
+
+    /**
      * Switch to a new language.
      */
     function switchLanguage(lang) {
@@ -86,6 +100,7 @@
             applyTranslations(data);
             updateActiveFlagDisplay(lang);
             closeLangDropdown();
+            notifyLangChange(lang, data);
         });
     }
 
@@ -128,11 +143,17 @@
         updateActiveFlagDisplay(currentLang);
 
         if (currentLang !== defaultLang) {
-            loadLang(currentLang, applyTranslations);
+            loadLang(currentLang, function(data) {
+                applyTranslations(data);
+                notifyLangChange(currentLang, data);
+            });
         }
     });
 
     // Expose globally
     window.switchLanguage = switchLanguage;
     window.toggleLangDropdown = toggleLangDropdown;
+    window.getCurrentLang = function() { return currentLang; };
+    window.getLangData = function() { return langCache[currentLang] || {}; };
+    window.onLanguageChange = function(callback) { langChangeCallbacks.push(callback); };
 })();

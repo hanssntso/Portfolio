@@ -170,5 +170,16 @@
     "blog.pageSubtitle": "Thoughts, research, and insights on civil engineering and sustainable development",
     "blog.searchPlaceholder": "Search blog posts...",
     "blog.backBtn": "← Back to Blog",
-    "blog.footer": "© 2026 Alan Timothy Lie Hans Santoso. All rights reserved."
+    "blog.footer": "© 2026 Alan Timothy Lie Hans Santoso. All rights reserved.",
+
+    "blog.prevBtn": "← Prev",
+    "blog.nextBtn": "Next →",
+    "blog.noPostsTitle": "No Blog Posts Found",
+    "blog.noPostsSearch": "No posts match your search. Try a different keyword.",
+    "blog.noPostsDefault": "Blog posts will appear here once published. Stay tuned!",
+    "blog.views": "views",
+    "blog.likes": "likes",
+    "blog.like": "Like",
+    "blog.liked": "Liked",
+    "blog.contentPreparing": "This blog post is being prepared. Please check back later."
 }
