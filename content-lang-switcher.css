@@ -1,0 +1,129 @@
+/* ===================================
+   CONTENT LANGUAGE SWITCHER
+   Separate language switcher displayed
+   at the top of the blog reader view.
+
+   This is independent from the navbar
+   language switcher. All class names
+   use the "content-lang-" prefix to
+   avoid any conflicts.
+   =================================== */
+
+/* --- Container: sits between back button and article --- */
+.content-lang-switcher-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* --- Wrapper: holds button + dropdown --- */
+.content-lang-switcher-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* --- Circular flag button (matches navbar style) --- */
+.content-lang-switcher-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid rgba(26, 35, 50, 0.4);
+    background: rgba(26, 35, 50, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    line-height: 1;
+    padding: 0;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.content-lang-switcher-btn:hover {
+    border-color: var(--bronze);
+    background: rgba(139, 111, 71, 0.3);
+}
+
+/* --- Label next to the button --- */
+.content-lang-label {
+    margin-right: 10px;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--dark-gray);
+    opacity: 0.7;
+    user-select: none;
+}
+
+/* --- Dropdown menu (matches navbar style) --- */
+.content-lang-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: var(--deep-navy);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    z-index: 1001;
+    min-width: 185px;
+    overflow: hidden;
+}
+
+.content-lang-dropdown.open {
+    display: block;
+}
+
+/* --- Language option buttons (matches navbar style) --- */
+.content-lang-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    background: transparent;
+    color: var(--cream);
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    text-align: left;
+}
+
+.content-lang-option:hover {
+    background: rgba(139, 111, 71, 0.35);
+}
+
+/* --- Highlight for active language --- */
+.content-lang-option-active {
+    background: rgba(139, 111, 71, 0.2);
+}
+
+/* --- Flag emoji size (matches navbar) --- */
+.content-lang-flag-small {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+@media (max-width: 768px) {
+    .content-lang-switcher-container {
+        margin-bottom: 15px;
+    }
+
+    .content-lang-label {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .content-lang-switcher-container {
+        margin-bottom: 12px;
+    }
+}
