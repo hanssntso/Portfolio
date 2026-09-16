@@ -5,12 +5,15 @@
     "nav.involvement": "Keterlibatan",
     "nav.contact": "Kontak",
     "nav.blog": "Blog",
-
     "hero.title": "Mahasiswa Doktoral/S3 | Konsultan Teknik Sipil",
     "hero.tagline": "Menyelesaikan tantangan infrastruktur melalui rekayasa berbasis data dan inovasi berkelanjutan",
     "hero.services": "Konsultasi • Kolaborasi • Bimbingan Penelitian",
     "hero.scroll": "Gulir untuk menjelajahi",
-
+    "hero.kicker": "Teknik sipil · Riset · Ketahanan",
+    "hero.workCta": "Jelajahi karya pilihan",
+    "hero.contactCta": "Mulai percakapan",
+    "hero.location": "Berbasis di Bangkok · Berkarya secara global",
+    "hero.availability": "Terbuka untuk kolaborasi",
     "research.sectionTitle": "Mahasiswa Doktoral/S3",
     "research.heading": "Penelitian Saat Ini",
     "research.institution": "King Mongkut's Institute of Technology Ladkrabang (KMITL)",
@@ -19,9 +22,7 @@
     "research.focusTitle": "Fokus Penelitian",
     "research.focusText": "Pembangunan Berkelanjutan, Rekayasa Pesisir & Ketahanan Infrastruktur",
     "research.description": "Mengembangkan kerangka kerja terintegrasi untuk adaptasi infrastruktur pesisir di wilayah yang rentan terhadap perubahan iklim, dengan menerapkan analisis tingkat sistem dan metodologi berbasis data untuk memperkuat strategi ketahanan iklim dan melindungi komunitas yang rentan.",
-
     "projects.sectionTitle": "Proyek Unggulan",
-
     "project1.title": "Revitalisasi Infrastruktur Sekolah: Menjamin Fasilitas Pendidikan Berkualitas",
     "project1.role": "Fasilitator | Kementerian Pendidikan Dasar dan Menengah, Republik Indonesia",
     "project1.date": "Agustus 2025 - Desember 2025",
@@ -42,7 +43,6 @@
     "project1.result3Num": "100%",
     "project1.result3Label": "Optimalisasi Anggaran",
     "project1.result4Label": "Penyelesaian Tepat Waktu",
-
     "project2.title": "Optimalisasi Transportasi Publik: Menjadikan Batik Solo Trans Lebih Efisien",
     "project2.role": "Asisten Konsultan | PT Transportasi Global Mandiri",
     "project2.date": "Agustus 2024 - Desember 2024",
@@ -62,7 +62,6 @@
     "project2.result2Label": "Optimalisasi Alokasi Anggaran",
     "project2.result3Label": "Peningkatan Kualitas Layanan",
     "project2.result4Label": "Peningkatan Efektivitas Biaya",
-
     "project3.title": "Keunggulan Konstruksi Jalan Tol: Pengendalian Mutu Berskala Besar",
     "project3.role": "Magang Insinyur Lapangan | PT PP (Persero) Tbk",
     "project3.date": "Juli 2024 - September 2024",
@@ -83,7 +82,6 @@
     "project3.result3Num": "0",
     "project3.result3Label": "Kesalahan Operasional Utama",
     "project3.result4Label": "Kontribusi Infrastruktur Nasional",
-
     "experience.sectionTitle": "Pengalaman Profesional Tambahan",
     "exp1.name": "DIBI Project",
     "exp1.role": "Asisten Konsultan",
@@ -103,7 +101,6 @@
     "exp3.detail1": "Menganalisis aliran pendapatan infrastruktur perkotaan dan pola operasional",
     "exp3.detail2": "Mengembangkan rekomendasi kebijakan strategis yang diproyeksikan meningkatkan pendapatan tahunan sebesar 5%",
     "exp3.detail3": "Meningkatkan kepatuhan regulasi dan efisiensi operasional manajemen infrastruktur di seluruh kota",
-
     "skills.sectionTitle": "Kompetensi Teknis",
     "skills.cat1": "Perangkat Lunak & Alat Teknik",
     "skills.cat2": "Kompetensi Teknik Utama",
@@ -111,7 +108,6 @@
     "skills.cat4": "Bahasa",
     "skills.lang1": "Inggris (Mahir)",
     "skills.lang2": "Indonesia (Bahasa Ibu)",
-
     "involvement.sectionTitle": "Kepemimpinan & Keterlibatan Komunitas",
     "inv1.name": "16th International Conference of Eastern Asia Society for Transportation Studies",
     "inv1.role": "Anggota Inti Panitia (Juli 2025 - September 2025)",
@@ -134,7 +130,6 @@
     "inv5.role": "Staf Departemen (Desember 2022 - Juli 2025)",
     "inv5.detail1": "Mengoordinasikan kebutuhan utama departemen dan proses akreditasi (IABEE, LAMTEK, PPSTS), berkontribusi pada pencapaian akreditasi internasional \"Unggul\"",
     "inv5.detail2": "Mendukung pelaksanaan rapat, konferensi, dan acara berskala nasional maupun internasional tingkat departemen",
-
     "achievements.sectionTitle": "Penghargaan & Prestasi",
     "ach1.title": "Lulusan Cumlaude",
     "ach1.subtitle": "Sarjana Teknik Sipil",
@@ -160,18 +155,15 @@
     "ach6.subtitle": "Inovasi Beton",
     "ach6.event": "Civil Festival (CIVFEST) 2022, Politeknik Jakarta",
     "ach6.date": "Juli 2022",
-
     "contact.title": "Mari Berkolaborasi Bersama",
     "contact.subtitle1": "Tertarik untuk berkolaborasi dalam solusi infrastruktur berkelanjutan?",
     "contact.subtitle2": "Terbuka untuk konsultasi terkait teknik sipil atau penelitian dan teknologi. Juga untuk hal-hal lain sesuai kebutuhan Anda",
     "contact.footer": "© 2026 Alan Timothy Lie Hans Santoso. Hak cipta dilindungi undang-undang.",
-
     "blog.pageTitle": "BLOG",
     "blog.pageSubtitle": "Pemikiran, penelitian, dan wawasan tentang teknik sipil dan pembangunan berkelanjutan",
     "blog.searchPlaceholder": "Cari artikel blog...",
     "blog.backBtn": "← Kembali ke Blog",
     "blog.footer": "© 2026 Alan Timothy Lie Hans Santoso. Hak cipta dilindungi undang-undang.",
-
     "blog.prevBtn": "← Sebelumnya",
     "blog.nextBtn": "Selanjutnya →",
     "blog.noPostsTitle": "Tidak Ada Postingan Blog Ditemukan",
