@@ -82,32 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', updateScrollProgress, { passive: true });
     updateScrollProgress();
 
-    const sectionRail = document.querySelector('.section-rail');
-    const sectionRailProgress = sectionRail?.querySelector('.section-rail-progress');
-    const sectionRailLinks = [...(sectionRail?.querySelectorAll('a') || [])];
-    const railSections = sectionRailLinks.map(link => document.querySelector(link.hash)).filter(Boolean);
-
-    const updateSectionRail = () => {
-        if (!sectionRailLinks.length) return;
-        const marker = window.scrollY + window.innerHeight * 0.4;
-        let activeIndex = 0;
-        railSections.forEach((section, index) => {
-            if (section.offsetTop <= marker) activeIndex = index;
-        });
-        sectionRailLinks.forEach((link, index) => {
-            const isActive = index === activeIndex;
-            link.classList.toggle('is-active', isActive);
-            if (isActive) link.setAttribute('aria-current', 'location');
-            else link.removeAttribute('aria-current');
-        });
-        if (sectionRailProgress) {
-            const denominator = Math.max(sectionRailLinks.length - 1, 1);
-            sectionRailProgress.style.setProperty('--rail-progress', `${(activeIndex / denominator) * 100}%`);
-        }
-    };
-    window.addEventListener('scroll', updateSectionRail, { passive: true });
-    updateSectionRail();
-
     function setNavigationOpen(isOpen) {
         navToggle?.setAttribute('aria-expanded', String(isOpen));
         primaryNavigation?.classList.toggle('is-open', isOpen);
@@ -220,7 +194,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const openImage = () => {
                 activeGalleryImage = image;
-                renderLightboxImage(index);
+                lightboxImage.src = image.currentSrc || image.src;
+                lightboxImage.alt = image.alt;
+                lightboxCaption.textContent = image.alt;
                 lightbox.showModal();
             };
 
@@ -233,8 +209,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        previousButton.addEventListener('click', () => renderLightboxImage(activeImageIndex - 1));
-        nextButton.addEventListener('click', () => renderLightboxImage(activeImageIndex + 1));
         closeButton.addEventListener('click', () => lightbox.close());
         lightbox.addEventListener('click', event => {
             if (event.target === lightbox) lightbox.close();
@@ -243,10 +217,6 @@ document.addEventListener('DOMContentLoaded', function() {
             lightboxImage.removeAttribute('src');
             activeGalleryImage?.focus();
             activeGalleryImage = null;
-        });
-        lightbox.addEventListener('keydown', event => {
-            if (event.key === 'ArrowLeft') renderLightboxImage(activeImageIndex - 1);
-            if (event.key === 'ArrowRight') renderLightboxImage(activeImageIndex + 1);
         });
     }
 
