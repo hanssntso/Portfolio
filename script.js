@@ -161,11 +161,33 @@ document.addEventListener('DOMContentLoaded', function() {
     if (lightbox) {
         const lightboxImage = lightbox.querySelector('img');
         const lightboxCaption = lightbox.querySelector('p');
+        const lightboxCounter = lightbox.querySelector('.lightbox-meta span');
         const closeButton = lightbox.querySelector('.lightbox-close');
+        const previousButton = lightbox.querySelector('.lightbox-prev');
+        const nextButton = lightbox.querySelector('.lightbox-next');
+        const galleryImages = [...document.querySelectorAll('.collage-item img')];
 
         let activeGalleryImage = null;
+        let activeImageIndex = 0;
 
-        document.querySelectorAll('.collage-item img').forEach(image => {
+        const renderLightboxImage = index => {
+            activeImageIndex = (index + galleryImages.length) % galleryImages.length;
+            const image = galleryImages[activeImageIndex];
+            lightboxImage.classList.add('is-changing');
+            lightboxImage.src = image.currentSrc || image.src;
+            lightboxImage.alt = image.alt;
+            lightboxCaption.textContent = image.alt;
+            lightboxCounter.textContent = `${String(activeImageIndex + 1).padStart(2, '0')} / ${String(galleryImages.length).padStart(2, '0')}`;
+            lightboxImage.addEventListener('load', () => lightboxImage.classList.remove('is-changing'), { once: true });
+
+            [-1, 1].forEach(offset => {
+                const adjacent = galleryImages[(activeImageIndex + offset + galleryImages.length) % galleryImages.length];
+                const preload = new Image();
+                preload.src = adjacent.currentSrc || adjacent.src;
+            });
+        };
+
+        galleryImages.forEach((image, index) => {
             image.setAttribute('tabindex', '0');
             image.setAttribute('role', 'button');
             image.setAttribute('aria-label', `Open image: ${image.alt}`);
