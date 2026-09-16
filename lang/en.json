@@ -5,12 +5,15 @@
     "nav.involvement": "Involvement",
     "nav.contact": "Contact",
     "nav.blog": "Blog",
-
     "hero.title": "Doctoral Researcher | Civil Engineer",
     "hero.tagline": "Solving infrastructure challenges through data-driven engineering and sustainable innovation",
     "hero.services": "Consultation • Collaboration • Research Guidance",
     "hero.scroll": "Scroll to explore",
-
+    "hero.kicker": "Civil engineering · Research · Resilience",
+    "hero.workCta": "Explore selected work",
+    "hero.contactCta": "Start a conversation",
+    "hero.location": "Based in Bangkok · Working globally",
+    "hero.availability": "Available for collaboration",
     "research.sectionTitle": "Doctoral Researcher",
     "research.heading": "Current Research",
     "research.institution": "King Mongkut's Institute of Technology Ladkrabang (KMITL)",
@@ -19,9 +22,7 @@
     "research.focusTitle": "Research Focus",
     "research.focusText": "Sustainable Development, Coastal Engineering & Infrastructure Resilience",
     "research.description": "Developing integrated frameworks for coastal infrastructure adaptation in climate-vulnerable regions, applying systems-level analysis and data-driven methodologies to advance climate resilience strategies and protect vulnerable communities.",
-
     "projects.sectionTitle": "Featured Projects",
-
     "project1.title": "School Infrastructure Revitalization: Ensuring Quality Education Facilities",
     "project1.role": "Facilitator | Ministry of Primary and Secondary Education, Republic of Indonesia",
     "project1.date": "August 2025 - December 2025",
@@ -42,7 +43,6 @@
     "project1.result3Num": "100%",
     "project1.result3Label": "Budget Optimization",
     "project1.result4Label": "On-Schedule Completion",
-
     "project2.title": "Public Transit Optimization: Making Batik Solo Trans More Efficient",
     "project2.role": "Assistant Consultant | PT Transportasi Global Mandiri",
     "project2.date": "August 2024 - December 2024",
@@ -62,7 +62,6 @@
     "project2.result2Label": "Budget Allocation Optimization",
     "project2.result3Label": "Enhanced Service Quality",
     "project2.result4Label": "Improved Cost-Effectiveness",
-
     "project3.title": "Highway Construction Excellence: Quality Control at Scale",
     "project3.role": "Site Engineer Intern | PT PP (Persero) Tbk",
     "project3.date": "July 2024 - September 2024",
@@ -83,7 +82,6 @@
     "project3.result3Num": "0",
     "project3.result3Label": "Major Operational Error",
     "project3.result4Label": "National Infrastructure Contribution",
-
     "experience.sectionTitle": "Additional Professional Experience",
     "exp1.name": "DIBI Project",
     "exp1.role": "Assistant Consultant",
@@ -103,7 +101,6 @@
     "exp3.detail1": "Analyzed urban infrastructure revenue streams and operational patterns",
     "exp3.detail2": "Developed strategic policy recommendations projected to increase annual income by 5%",
     "exp3.detail3": "Improved regulatory compliance and operational efficiency of city-wide infrastructure management",
-
     "skills.sectionTitle": "Technical Competencies",
     "skills.cat1": "Engineering Software & Tools",
     "skills.cat2": "Core Engineering Competencies",
@@ -111,7 +108,6 @@
     "skills.cat4": "Languages",
     "skills.lang1": "English (Proficient)",
     "skills.lang2": "Indonesian (Native)",
-
     "involvement.sectionTitle": "Leadership & Community Engagement",
     "inv1.name": "16th International Conference of Eastern Asia Society for Transportation Studies",
     "inv1.role": "Core Committee Member (July 2025 - September 2025)",
@@ -134,7 +130,6 @@
     "inv5.role": "Department Staff (December 2022 - July 2025)",
     "inv5.detail1": "Coordinated department's key requirements and accreditation processes (IABEE, LAMTEK, PPSTS), contributing to attainment of \"Unggul\" (Excellent) international accreditation",
     "inv5.detail2": "Supported implementation of major departmental national or international meetings, conferences, and events",
-
     "achievements.sectionTitle": "Recognition & Awards",
     "ach1.title": "Cumlaude Graduate",
     "ach1.subtitle": "Bachelor's Degree in Civil Engineering",
@@ -160,18 +155,15 @@
     "ach6.subtitle": "Concrete Innovation",
     "ach6.event": "Civil Festival (CIVFEST) 2022, Polytechnic Jakarta",
     "ach6.date": "July 2022",
-
     "contact.title": "Let's Build Something Together",
     "contact.subtitle1": "Interested in collaborating on sustainable infrastructure solutions?",
     "contact.subtitle2": "\"Open for consultation related to civil engineering or research and technology. Also for other matters according to your needs\"",
     "contact.footer": "© 2026 Alan Timothy Lie Hans Santoso. All rights reserved.",
-
     "blog.pageTitle": "BLOG",
     "blog.pageSubtitle": "Thoughts, research, and insights on civil engineering and sustainable development",
     "blog.searchPlaceholder": "Search blog posts...",
     "blog.backBtn": "← Back to Blog",
     "blog.footer": "© 2026 Alan Timothy Lie Hans Santoso. All rights reserved.",
-
     "blog.prevBtn": "← Prev",
     "blog.nextBtn": "Next →",
     "blog.noPostsTitle": "No Blog Posts Found",
