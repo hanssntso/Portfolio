@@ -5,17 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alan Timothy Lie Hans Santoso | Civil Engineer & Doctoral Researcher</title>
     <meta name="description" content="Portfolio of Alan Timothy Lie Hans Santoso - Civil Engineer and Doctoral Researcher specializing in sustainable infrastructure solutions and problem-solving.">
+    <meta name="theme-color" content="#151515">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Alan Timothy | Civil Engineer & Doctoral Researcher">
+    <meta property="og:description" content="Data-driven engineering, resilient infrastructure, and sustainable innovation.">
+    <meta property="og:image" content="images/PROFILE.png">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <a class="skip-link" href="#profile">Skip to main content</a>
+    <div class="scroll-progress" aria-hidden="true"></div>
 
     <!-- NAVIGATION MENU -->
     <nav id="main-nav" class="main-nav">
         <div class="nav-container">
-            <ul class="nav-links">
+            <a href="#profile" class="nav-brand" aria-label="Hans Santoso home">
+                <span class="brand-symbol" aria-hidden="true"></span>
+            </a>
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
+                <span class="sr-only">Open navigation</span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="primary-navigation">
                 <li><a href="#profile" class="nav-link active" data-i18n="nav.profile">Profile</a></li>
                 <li><a href="#project-ministry" class="nav-link" data-i18n="nav.project">Project</a></li>
                 <li><a href="#skills" class="nav-link" data-i18n="nav.skills">Skills</a></li>
@@ -40,49 +53,62 @@
     <section id="profile" class="hero-section">
         <div class="container">
             <div class="hero-content">
-                <!-- REPLACE WITH YOUR PHOTO -->
-                <div class="profile-photo">
-                    <img src="images/PROFILE.png" alt="Alan Timothy Lie Hans Santoso">
+                <div class="hero-copy">
+                    <p class="hero-index">Portfolio / 2026</p>
+                    <p class="hero-kicker" data-i18n="hero.kicker">Civil engineering · Research · Resilience</p>
+                    <h1 class="hero-name"><span>ALAN TIMOTHY</span> LIE HANS SANTOSO</h1>
+                    <p class="hero-title" data-i18n="hero.title">Doctoral Researcher | Civil Engineer</p>
+                    <p class="hero-tagline" data-i18n="hero.tagline">Solving infrastructure challenges through data-driven engineering and sustainable innovation</p>
+                    <p class="hero-tagline hero-services" data-i18n="hero.services">Consultation • Collaboration • Research Guidance</p>
+                    <div class="hero-actions">
+                        <a href="#project-ministry" class="primary-action"><span data-i18n="hero.workCta">Explore selected work</span> <b aria-hidden="true">↗</b></a>
+                        <a href="#contact" class="text-action"><span data-i18n="hero.contactCta">Start a conversation</span> <b aria-hidden="true">→</b></a>
+                    </div>
                 </div>
-                <h1 class="hero-name">ALAN TIMOTHY LIE HANS SANTOSO</h1>
-                <p class="hero-title" data-i18n="hero.title">Doctoral Researcher | Civil Engineer</p>
-                <p class="hero-tagline" data-i18n="hero.tagline">Solving infrastructure challenges through data-driven engineering and sustainable innovation</p>
-                <p class="hero-tagline" data-i18n="hero.services">Consultation • Collaboration • Research Guidance</p>
-
-
-                <div class="hero-contact">
+                <div class="hero-portrait">
+                    <div class="profile-photo">
+                        <img src="images/PROFILE-transparent.png" alt="Alan Timothy Lie Hans Santoso" width="481" height="481">
+                    </div>
+                    <span class="portrait-caption" data-i18n="hero.location">Based in Bangkok · Working globally</span>
+                    <span class="availability-badge"><i></i><span data-i18n="hero.availability">Available for collaboration</span></span>
+                </div>
+                <div class="hero-contact" aria-label="Social links">
                     <a href="mailto:hanssntso@gmail.com" class="contact-link">
                         <img src="images/EMAIL-logo.png" alt="Email" class="contact-logo">
                         <span class="contact-text">Email</span>
                     </a>
-                    <a href="https://wa.me/+6283856838811" target="_blank" class="contact-link">
+                    <a href="https://wa.me/+6283856838811" target="_blank" rel="noopener noreferrer" class="contact-link">
                         <img src="images/WHATSAPP-logo.png" alt="WhatsApp" class="contact-logo">
                         <span class="contact-text">Whatsapp</span>
                     </a>
-                    <a href="https://www.instagram.com/liehans/" target="_blank" class="contact-link">
-                        <img src="images/INSTAGRAM-logo.png" alt="Lynk.id" class="contact-logo">
+                    <a href="https://www.instagram.com/liehans/" target="_blank" rel="noopener noreferrer" class="contact-link">
+                        <img src="images/INSTAGRAM-logo.png" alt="Instagram" class="contact-logo">
                         <span class="contact-text">Instagram</span>
                     </a>
-                    <a href="https://lynk.id/hanssntso" target="_blank" class="contact-link">
+                    <a href="https://lynk.id/hanssntso" target="_blank" rel="noopener noreferrer" class="contact-link">
                         <img src="images/LYNKID-logo.png" alt="Lynk.id" class="contact-logo">
                         <span class="contact-text">Lynk.id</span>
                     </a>
-                    <a href="https://www.linkedin.com/in/alan-timothy-lie-hans-santoso-926602222" target="_blank" class="contact-link">
+                    <a href="https://www.linkedin.com/in/alan-timothy-lie-hans-santoso-926602222" target="_blank" rel="noopener noreferrer" class="contact-link">
                         <img src="images/LINKEDIN-logo.png" alt="LinkedIn" class="contact-logo">
                         <span class="contact-text">LinkedIn</span>
                     </a>
                 </div>
 
-                <div class="scroll-indicator">
-                    <span data-i18n="hero.scroll">Scroll to explore</span>
-                    <div class="scroll-arrow">↓</div>
-                </div>
+                <div class="scroll-indicator"><span data-i18n="hero.scroll">Scroll to explore</span><div class="scroll-arrow">↓</div></div>
             </div>
         </div>
     </section>
 
+    <div class="expertise-strip" aria-label="Areas of expertise">
+        <div class="expertise-track">
+            <span>Coastal resilience</span><i>✳</i><span>Infrastructure</span><i>✳</i><span>Transport systems</span><i>✳</i><span>Research</span><i>✳</i><span>Sustainable design</span><i>✳</i>
+            <span aria-hidden="true">Coastal resilience</span><i aria-hidden="true">✳</i><span aria-hidden="true">Infrastructure</span><i aria-hidden="true">✳</i><span aria-hidden="true">Transport systems</span><i aria-hidden="true">✳</i><span aria-hidden="true">Research</span><i aria-hidden="true">✳</i><span aria-hidden="true">Sustainable design</span><i aria-hidden="true">✳</i>
+        </div>
+    </div>
+
     <!-- SECTION 2: CURRENT RESEARCH AFFILIATION -->
-    <section id="research" class="research-section">
+    <section id="research" class="research-section" data-section-number="01">
         <div class="container">
             <div class="research-grid">
                 <!-- Research Image Carousel -->
@@ -94,9 +120,9 @@
                         <div class="photo-collage-wrapper" id="research-photos">
                             <div class="photo-collage research-photo-collage">
                                 <!-- REPLACE WITH KMITL CAMPUS PHOTOS -->
-                                <div class="collage-item"><img src="images/KMITL1.jpg" alt="King Mongkut's Institute of Technology Ladkrabang campus view 1"></div>
-                                <div class="collage-item"><img src="images/KMITL2.jpg" alt="King Mongkut's Institute of Technology Ladkrabang campus view 2"></div>
-                                <div class="collage-item"><img src="images/KMITL3.jpg" alt="King Mongkut's Institute of Technology Ladkrabang campus view 3"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/KMITL1.jpg" alt="King Mongkut's Institute of Technology Ladkrabang campus view 1"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/KMITL2.jpg" alt="King Mongkut's Institute of Technology Ladkrabang campus view 2"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/KMITL3.jpg" alt="King Mongkut's Institute of Technology Ladkrabang campus view 3"></div>
                             </div>
                         </div>
                         <button class="scroll-btn scroll-btn-right" onclick="scrollProjectPhotos('research-photos', 1)" aria-label="Scroll right">
@@ -126,7 +152,7 @@
     </section>
     
     <!-- SECTION 3: FEATURED PROJECT #1 - MINISTRY OF EDUCATION -->
-    <section id="project-ministry" class="project-section project-dark">
+    <section id="project-ministry" class="project-section project-dark" data-section-number="02 / Selected work">
         <div class="container">
             <h2 class="section-title" data-i18n="projects.sectionTitle">Featured Projects</h2>
             <div class="project-header">
@@ -146,11 +172,11 @@
                         </button>
                         <div class="photo-collage-wrapper" id="ministry-challenge-photos">
                             <div class="photo-collage">
-                                <div class="collage-item"><img src="images/ministry1.jpg" alt="School infrastructure renovation 1"></div>
-                                <div class="collage-item"><img src="images/ministry2.jpg" alt="School infrastructure renovation 2"></div>
-                                <div class="collage-item"><img src="images/ministry3.jpg" alt="School infrastructure renovation 3"></div>
-                                <div class="collage-item"><img src="images/ministry4.jpg" alt="School infrastructure renovation 4"></div>
-                                <div class="collage-item"><img src="images/ministry5.jpg" alt="School infrastructure renovation 5"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/ministry1.jpg" alt="School infrastructure renovation 1"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/ministry2.jpg" alt="School infrastructure renovation 2"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/ministry3.jpg" alt="School infrastructure renovation 3"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/ministry4.jpg" alt="School infrastructure renovation 4"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/ministry5.jpg" alt="School infrastructure renovation 5"></div>
                             </div>
                         </div>
                         <button class="scroll-btn scroll-btn-right" onclick="scrollProjectPhotos('ministry-challenge-photos', 1)" aria-label="Scroll right">
@@ -207,7 +233,7 @@
     </section> 
                 
     <!-- SECTION 4: FEATURED PROJECT #2 - BATIK SOLO TRANS -->
-    <section id="project-transport" class="project-section project-light">
+    <section id="project-transport" class="project-section project-light" data-section-number="03 / Selected work">
         <div class="container">
             <div class="project-header">
                 <h3 class="project-title" data-i18n="project2.title">Public Transit Optimization: Making Batik Solo Trans More Efficient</h3>
@@ -226,11 +252,11 @@
                         </button>
                         <div class="photo-collage-wrapper" id="transport-challenge-photos">
                             <div class="photo-collage">
-                                <div class="collage-item"><img src="images/BST1.jpg" alt="Batik Solo Trans bus 1"></div>
-                                <div class="collage-item"><img src="images/BST2.jpg" alt="Batik Solo Trans bus 2"></div>
-                                <div class="collage-item"><img src="images/BST3.jpg" alt="Batik Solo Trans bus 3"></div>
-                                <div class="collage-item"><img src="images/BST4.jpg" alt="Batik Solo Trans bus 4"></div>
-                                <div class="collage-item"><img src="images/BST5.jpg" alt="Batik Solo Trans bus 5"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/BST1.jpg" alt="Batik Solo Trans bus 1"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/BST2.jpg" alt="Batik Solo Trans bus 2"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/BST3.jpg" alt="Batik Solo Trans bus 3"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/BST4.jpg" alt="Batik Solo Trans bus 4"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/BST5.jpg" alt="Batik Solo Trans bus 5"></div>
                             </div>
                         </div>
                         <button class="scroll-btn scroll-btn-right" onclick="scrollProjectPhotos('transport-challenge-photos', 1)" aria-label="Scroll right">
@@ -286,7 +312,7 @@
         </section>
 
     <!-- SECTION 5: FEATURED PROJECT #3 - HIGHWAY INFRASTRUCTURE -->
-    <section id="project-highway" class="project-section project-dark">
+    <section id="project-highway" class="project-section project-dark" data-section-number="04 / Selected work">
         <div class="container">
             <div class="project-header">
                 <h3 class="project-title" data-i18n="project3.title">Highway Construction Excellence: Quality Control at Scale</h3>
@@ -305,11 +331,11 @@
                         </button>
                         <div class="photo-collage-wrapper" id="highway-challenge-photos">
                             <div class="photo-collage">
-                                <div class="collage-item"><img src="images/highway1.jpg" alt="Highway construction 1"></div>
-                                <div class="collage-item"><img src="images/highway2.jpg" alt="Highway construction 2"></div>
-                                <div class="collage-item"><img src="images/highway3.jpg" alt="Highway construction 3"></div>
-                                <div class="collage-item"><img src="images/highway4.jpg" alt="Highway construction 4"></div>
-                                <div class="collage-item"><img src="images/highway5.jpg" alt="Highway construction 5"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/highway1.jpg" alt="Highway construction 1"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/highway2.jpg" alt="Highway construction 2"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/highway3.jpg" alt="Highway construction 3"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/highway4.jpg" alt="Highway construction 4"></div>
+                                <div class="collage-item"><img loading="lazy" decoding="async" src="images/highway5.jpg" alt="Highway construction 5"></div>
                             </div>
                         </div>
                         <button class="scroll-btn scroll-btn-right" onclick="scrollProjectPhotos('highway-challenge-photos', 1)" aria-label="Scroll right">
@@ -365,7 +391,7 @@
         </section>
 
     <!-- SECTION 6: OTHER PROFESSIONAL EXPERIENCES -->
-    <section id="other-experience" class="experience-section">
+    <section id="other-experience" class="experience-section" data-section-number="05">
         <div class="container">
             <h2 class="section-title" data-i18n="experience.sectionTitle">Additional Professional Experience</h2>
             <div class="experience-list">
@@ -414,7 +440,7 @@
     </section>
 
     <!-- SECTION 7: TECHNICAL SKILLS -->
-    <section id="skills" class="skills-section">
+    <section id="skills" class="skills-section" data-section-number="06">
         <div class="container">
             <h2 class="section-title" data-i18n="skills.sectionTitle">Technical Competencies</h2>
 
@@ -470,7 +496,7 @@
     </section>
 
     <!-- SECTION 8: EVENTS & ORGANIZATIONAL INVOLVEMENT -->
-    <section id="involvement" class="involvement-section">
+    <section id="involvement" class="involvement-section" data-section-number="07">
         <div class="container">
             <h2 class="section-title" data-i18n="involvement.sectionTitle">Leadership & Community Engagement</h2>
 
@@ -482,18 +508,18 @@
 
                 <div class="photo-collage-wrapper" id="involvement-photos">
                     <div class="photo-collage">
-                        <div class="collage-item"><img src="images/event1.jpg" alt="Event photo 1"></div>
-                        <div class="collage-item"><img src="images/event2.jpg" alt="Event photo 2"></div>
-                        <div class="collage-item"><img src="images/event3.jpg" alt="Event photo 3"></div>
-                        <div class="collage-item"><img src="images/event4.jpg" alt="Event photo 4"></div>
-                        <div class="collage-item"><img src="images/event5.jpg" alt="Event photo 5"></div>
-                        <div class="collage-item"><img src="images/event6.jpg" alt="Event photo 6"></div>
-                        <div class="collage-item"><img src="images/event7.jpg" alt="Event photo 7"></div>
-                        <div class="collage-item"><img src="images/event8.jpg" alt="Event photo 8"></div>
-                        <div class="collage-item"><img src="images/event9.jpg" alt="Event photo 9"></div>
-                        <div class="collage-item"><img src="images/event10.jpg" alt="Event photo 10"></div>
-                        <div class="collage-item"><img src="images/event11.jpg" alt="Event photo 11"></div>
-                        <div class="collage-item"><img src="images/event12.jpg" alt="Event photo 12"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/event1.jpg" alt="Event photo 1"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/event2.jpg" alt="Event photo 2"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/event3.jpg" alt="Event photo 3"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/event4.jpg" alt="Event photo 4"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/event5.jpg" alt="Event photo 5"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/event6.jpg" alt="Event photo 6"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/event7.jpg" alt="Event photo 7"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/event8.jpg" alt="Event photo 8"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/event9.jpg" alt="Event photo 9"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/event10.jpg" alt="Event photo 10"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/event11.jpg" alt="Event photo 11"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/event12.jpg" alt="Event photo 12"></div>
                     </div>
                 </div>
 
@@ -571,7 +597,7 @@
     </section>
 
     <!-- SECTION 9: ACHIEVEMENTS & CERTIFICATIONS -->
-    <section id="achievements" class="achievements-section">
+    <section id="achievements" class="achievements-section" data-section-number="08">
         <div class="container">
             <h2 class="section-title" data-i18n="achievements.sectionTitle">Recognition & Awards</h2>
 
@@ -583,12 +609,12 @@
 
                 <div class="photo-collage-wrapper" id="achievements-photos">
                     <div class="photo-collage">
-                        <div class="collage-item"><img src="images/achivement1.jpg" alt="Achievement photo 1"></div>
-                        <div class="collage-item"><img src="images/achivement2.jpg" alt="Achievement photo 2"></div>
-                        <div class="collage-item"><img src="images/achivement3.jpg" alt="Achievement photo 3"></div>
-                        <div class="collage-item"><img src="images/achivement4.jpg" alt="Achievement photo 4"></div>
-                        <div class="collage-item"><img src="images/achivement5.jpg" alt="Achievement photo 5"></div>
-                        <div class="collage-item"><img src="images/achivement6.jpg" alt="Achievement photo 6"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/achivement1.jpg" alt="Achievement photo 1"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/achivement2.jpg" alt="Achievement photo 2"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/achivement3.jpg" alt="Achievement photo 3"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/achivement4.jpg" alt="Achievement photo 4"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/achivement5.jpg" alt="Achievement photo 5"></div>
+                        <div class="collage-item"><img loading="lazy" decoding="async" src="images/achivement6.jpg" alt="Achievement photo 6"></div>
                     </div>
                 </div>
 
@@ -655,27 +681,27 @@
         <div class="container">
             <div class="contact-content">
                 <h2 class="contact-title" data-i18n="contact.title">Let's Build Something Together</h2>
-                <p class=”contact-subtitle” data-i18n=”contact.subtitle1”>Interested in collaborating on sustainable infrastructure solutions?</p>
-                <p class=”contact-subtitle” data-i18n=”contact.subtitle2”>”Open for consultation related to civil engineering or research and technology. Also for other matters according to your needs”</p>
+                <p class="contact-subtitle" data-i18n="contact.subtitle1">Interested in collaborating on sustainable infrastructure solutions?</p>
+                <p class="contact-subtitle" data-i18n="contact.subtitle2">Open for consultation related to civil engineering or research and technology—and other challenges according to your needs.</p>
             
                 <div class="hero-contact">
                     <a href="mailto:hanssntso@gmail.com" class="contact-link">
                         <img src="images/EMAIL-logo.png" alt="Email" class="contact-logo">
                         <span class="contact-text">Email</span>
                     </a>
-                    <a href="https://wa.me/+6283856838811" target="_blank" class="contact-link">
+                    <a href="https://wa.me/+6283856838811" target="_blank" rel="noopener noreferrer" class="contact-link">
                         <img src="images/WHATSAPP-logo.png" alt="WhatsApp" class="contact-logo">
                         <span class="contact-text">Whatsapp</span>
                     </a>
-                    <a href="https://www.instagram.com/liehans/" target="_blank" class="contact-link">
-                        <img src="images/INSTAGRAM-logo.png" alt="Lynk.id" class="contact-logo">
+                    <a href="https://www.instagram.com/liehans/" target="_blank" rel="noopener noreferrer" class="contact-link">
+                        <img src="images/INSTAGRAM-logo.png" alt="Instagram" class="contact-logo">
                         <span class="contact-text">Instagram</span>
                     </a>
-                    <a href="https://lynk.id/hanssntso" target="_blank" class="contact-link">
+                    <a href="https://lynk.id/hanssntso" target="_blank" rel="noopener noreferrer" class="contact-link">
                         <img src="images/LYNKID-logo.png" alt="Lynk.id" class="contact-logo">
                         <span class="contact-text">Lynk.id</span>
                     </a>
-                    <a href="https://www.linkedin.com/in/alan-timothy-lie-hans-santoso-926602222" target="_blank" class="contact-link">
+                    <a href="https://www.linkedin.com/in/alan-timothy-lie-hans-santoso-926602222" target="_blank" rel="noopener noreferrer" class="contact-link">
                         <img src="images/LINKEDIN-logo.png" alt="LinkedIn" class="contact-logo">
                         <span class="contact-text">LinkedIn</span>
                     </a>
@@ -690,5 +716,12 @@
 
     <script src="i18n.js"></script>
     <script src="script.js"></script>
+    <dialog class="image-lightbox" id="image-lightbox" aria-label="Expanded portfolio image">
+        <button class="lightbox-close" type="button" aria-label="Close image">×</button>
+        <button class="lightbox-nav lightbox-prev" type="button" aria-label="Previous image">←</button>
+        <img src="" alt="">
+        <div class="lightbox-meta"><p></p><span aria-live="polite"></span></div>
+        <button class="lightbox-nav lightbox-next" type="button" aria-label="Next image">→</button>
+    </dialog>
 </body>
 </html>
