@@ -13,12 +13,10 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <a class="skip-link" href="#profile">Skip to main content</a>
-    <div class="page-loader" aria-hidden="true"><span class="loader-mark">AT.</span><span class="loader-line"></span></div>
-    <noscript><style>.page-loader{display:none!important}</style></noscript>
     <div class="scroll-progress" aria-hidden="true"></div>
 
     <!-- NAVIGATION MENU -->
@@ -28,7 +26,10 @@
                 <span class="brand-mark">AT</span>
                 <span class="brand-name">Alan Timothy</span>
             </a>
-            <ul class="nav-links">
+            <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
+                <span class="sr-only">Open navigation</span><span></span><span></span>
+            </button>
+            <ul class="nav-links" id="primary-navigation">
                 <li><a href="#profile" class="nav-link active" data-i18n="nav.profile">Profile</a></li>
                 <li><a href="#project-ministry" class="nav-link" data-i18n="nav.project">Project</a></li>
                 <li><a href="#skills" class="nav-link" data-i18n="nav.skills">Skills</a></li>
@@ -54,21 +55,22 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-copy">
-                    <p class="hero-kicker">Civil engineering · Research · Resilience</p>
+                    <p class="hero-kicker" data-i18n="hero.kicker">Civil engineering · Research · Resilience</p>
                     <h1 class="hero-name"><span>ALAN TIMOTHY</span> LIE HANS SANTOSO</h1>
                     <p class="hero-title" data-i18n="hero.title">Doctoral Researcher | Civil Engineer</p>
                     <p class="hero-tagline" data-i18n="hero.tagline">Solving infrastructure challenges through data-driven engineering and sustainable innovation</p>
                     <p class="hero-tagline hero-services" data-i18n="hero.services">Consultation • Collaboration • Research Guidance</p>
                     <div class="hero-actions">
-                        <a href="#project-ministry" class="primary-action">Explore selected work <span aria-hidden="true">↗</span></a>
-                        <a href="#contact" class="text-action">Start a conversation <span aria-hidden="true">→</span></a>
+                        <a href="#project-ministry" class="primary-action"><span data-i18n="hero.workCta">Explore selected work</span> <b aria-hidden="true">↗</b></a>
+                        <a href="#contact" class="text-action"><span data-i18n="hero.contactCta">Start a conversation</span> <b aria-hidden="true">→</b></a>
                     </div>
                 </div>
                 <div class="hero-portrait">
                     <div class="profile-photo">
-                        <img src="images/PROFILE.png" alt="Alan Timothy Lie Hans Santoso">
+                        <img src="images/PROFILE-transparent.png" alt="Alan Timothy Lie Hans Santoso" width="481" height="481">
                     </div>
-                    <span class="portrait-caption">Based in Bangkok · Working globally</span>
+                    <span class="portrait-caption" data-i18n="hero.location">Based in Bangkok · Working globally</span>
+                    <span class="availability-badge"><i></i><span data-i18n="hero.availability">Available for collaboration</span></span>
                 </div>
                 <div class="hero-contact" aria-label="Social links">
                     <a href="mailto:hanssntso@gmail.com" class="contact-link">
