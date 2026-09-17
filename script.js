@@ -61,6 +61,148 @@ function scrollProjectPhotos(wrapperId, direction) {
 // ===================================
 document.addEventListener('DOMContentLoaded', function() {
 
+    // Agency-style entrance, page progress, and image viewing experience
+    const scrollProgress = document.querySelector('.scroll-progress');
+    const lightbox = document.getElementById('image-lightbox');
+    const navToggle = document.querySelector('.nav-toggle');
+    const primaryNavigation = document.getElementById('primary-navigation');
+
+    function updateScrollProgress() {
+        if (!scrollProgress) return;
+        const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+        scrollProgress.style.width = `${Math.min(progress, 100)}%`;
+    }
+
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+    updateScrollProgress();
+
+    function setNavigationOpen(isOpen) {
+        navToggle?.setAttribute('aria-expanded', String(isOpen));
+        primaryNavigation?.classList.toggle('is-open', isOpen);
+        document.body.classList.toggle('menu-open', isOpen);
+        const label = navToggle?.querySelector('.sr-only');
+        if (label) label.textContent = isOpen ? 'Close navigation' : 'Open navigation';
+    }
+
+    navToggle?.addEventListener('click', () => {
+        setNavigationOpen(navToggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    primaryNavigation?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => setNavigationOpen(false));
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && navToggle?.getAttribute('aria-expanded') === 'true') {
+            setNavigationOpen(false);
+            navToggle.focus();
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768) setNavigationOpen(false);
+    });
+
+    // Make each visual gallery draggable while retaining buttons, snapping, and keyboard access.
+    document.querySelectorAll('.photo-collage-wrapper').forEach(gallery => {
+        let pointerStart = 0;
+        let scrollStart = 0;
+        let didDrag = false;
+
+        gallery.addEventListener('pointerdown', event => {
+            if (event.pointerType === 'mouse' && event.button !== 0) return;
+            pointerStart = event.clientX;
+            scrollStart = gallery.scrollLeft;
+            didDrag = false;
+            gallery.classList.add('is-dragging');
+            gallery.setPointerCapture(event.pointerId);
+        });
+        gallery.addEventListener('pointermove', event => {
+            if (!gallery.classList.contains('is-dragging')) return;
+            if (Math.abs(event.clientX - pointerStart) > 6) didDrag = true;
+            gallery.scrollLeft = scrollStart - (event.clientX - pointerStart);
+        });
+        const stopDragging = event => {
+            gallery.classList.remove('is-dragging');
+            if (gallery.hasPointerCapture(event.pointerId)) gallery.releasePointerCapture(event.pointerId);
+        };
+        gallery.addEventListener('pointerup', stopDragging);
+        gallery.addEventListener('pointercancel', stopDragging);
+        gallery.addEventListener('click', event => {
+            if (!didDrag) return;
+            event.preventDefault();
+            event.stopPropagation();
+            didDrag = false;
+        }, true);
+    });
+
+    if (lightbox) {
+        const lightboxImage = lightbox.querySelector('img');
+        const lightboxCaption = lightbox.querySelector('p');
+        const lightboxCounter = lightbox.querySelector('.lightbox-meta span');
+        const closeButton = lightbox.querySelector('.lightbox-close');
+        const previousButton = lightbox.querySelector('.lightbox-prev');
+        const nextButton = lightbox.querySelector('.lightbox-next');
+        const galleryImages = [...document.querySelectorAll('.collage-item img')];
+
+        let activeGalleryImage = null;
+        let activeImageIndex = 0;
+
+        const renderLightboxImage = index => {
+            activeImageIndex = (index + galleryImages.length) % galleryImages.length;
+            const image = galleryImages[activeImageIndex];
+            lightboxImage.classList.add('is-changing');
+            lightboxImage.src = image.currentSrc || image.src;
+            lightboxImage.alt = image.alt;
+            lightboxCaption.textContent = image.alt;
+            lightboxCounter.textContent = `${String(activeImageIndex + 1).padStart(2, '0')} / ${String(galleryImages.length).padStart(2, '0')}`;
+            lightboxImage.addEventListener('load', () => lightboxImage.classList.remove('is-changing'), { once: true });
+
+            [-1, 1].forEach(offset => {
+                const adjacent = galleryImages[(activeImageIndex + offset + galleryImages.length) % galleryImages.length];
+                const preload = new Image();
+                preload.src = adjacent.currentSrc || adjacent.src;
+            });
+        };
+
+        galleryImages.forEach((image, index) => {
+            image.setAttribute('tabindex', '0');
+            image.setAttribute('role', 'button');
+            image.setAttribute('aria-label', `Open image: ${image.alt}`);
+
+            const openImage = () => {
+                activeGalleryImage = image;
+                renderLightboxImage(index);
+                lightbox.showModal();
+            };
+
+            image.addEventListener('click', openImage);
+            image.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openImage();
+                }
+            });
+        });
+
+        previousButton.addEventListener('click', () => renderLightboxImage(activeImageIndex - 1));
+        nextButton.addEventListener('click', () => renderLightboxImage(activeImageIndex + 1));
+        closeButton.addEventListener('click', () => lightbox.close());
+        lightbox.addEventListener('click', event => {
+            if (event.target === lightbox) lightbox.close();
+        });
+        lightbox.addEventListener('close', () => {
+            lightboxImage.removeAttribute('src');
+            activeGalleryImage?.focus();
+            activeGalleryImage = null;
+        });
+        lightbox.addEventListener('keydown', event => {
+            if (event.key === 'ArrowLeft') renderLightboxImage(activeImageIndex - 1);
+            if (event.key === 'ArrowRight') renderLightboxImage(activeImageIndex + 1);
+        });
+    }
+
     // ===================================
     // NAVIGATION MENU
     // ===================================
