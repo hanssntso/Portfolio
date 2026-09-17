@@ -550,3 +550,37 @@ section[data-section-number]::before { top: 40px; left: clamp(24px,5vw,78px); }
   .hero-contact { padding-block: 12px; }
   .nav-links { padding-top: 70px; }
 }
+
+/* Phone hero: preserve the desktop left-copy / right-portrait relationship */
+@media (max-width: 560px) and (orientation: portrait) {
+  .hero-section { min-height: 100svh; background-color: var(--dark); background-image: linear-gradient(90deg,rgba(10,10,9,.82) 0%,rgba(10,10,9,.48) 48%,rgba(10,10,9,.04) 76%),linear-gradient(0deg,rgba(10,10,9,.72) 0%,transparent 30%),url('images/Website Profile.jpg'); background-position: center center; background-size: cover; background-repeat: no-repeat; }
+  .hero-content { position: relative; display: grid; grid-template-columns: minmax(0,58%) minmax(0,42%); grid-template-rows: 1fr auto; min-height: 100svh; align-items: center; }
+  .hero-copy { grid-column: 1; grid-row: 1; width: 100%; padding: 100px 10px 96px 0; align-self: center; }
+  .hero-index { display: none; }
+  .hero-kicker { max-width: 220px; margin: 0 0 12px; font-size: .53rem; line-height: 1.45; letter-spacing: .1em; }
+  .hero-name { max-width: 100%; font-size: clamp(2.05rem,10.5vw,2.75rem); line-height: .84; letter-spacing: -.06em; overflow-wrap: normal; word-break: normal; }
+  .hero-name span { display: block; }
+  .hero-title { max-width: 230px; margin-top: 17px; font-size: .6rem; line-height: 1.4; letter-spacing: .055em; }
+  .hero-tagline { max-width: 230px; margin-top: 9px; font-size: .7rem; line-height: 1.45; color: rgba(255,255,255,.74); }
+  .hero-services { display: none; }
+  .hero-actions { align-items: flex-start; gap: 10px; margin-top: 18px; }
+  .primary-action { width: auto; padding: 10px 12px; font-size: .6rem; }
+  .primary-action b { margin-left: 8px; }
+  .text-action { font-size: .64rem; }
+  .hero-status { display: none; }
+  .hero-contact { position: absolute; z-index: 2; right: 0; bottom: 0; left: 0; grid-column: 1 / -1; grid-row: 2; padding: 13px 0 17px; flex-wrap: nowrap; overflow-x: auto; border-top-color: rgba(255,255,255,.25); scrollbar-width: none; }
+  .hero-contact::-webkit-scrollbar { display: none; }
+  .hero-contact .contact-link { flex: 0 0 auto; padding: 6px 9px; background: rgba(16,16,14,.28); backdrop-filter: blur(8px); }
+  .hero-contact .contact-logo { width: 14px; height: 14px; }
+  .contact-text { font-size: .59rem; }
+}
+
+@media (max-width: 390px) and (orientation: portrait) {
+  .hero-content { grid-template-columns: minmax(0,60%) minmax(0,40%); }
+  .hero-copy { padding-top: 88px; padding-right: 8px; }
+  .hero-kicker { font-size: .49rem; }
+  .hero-name { font-size: clamp(1.9rem,10.2vw,2.35rem); }
+  .hero-title { font-size: .55rem; }
+  .hero-tagline { font-size: .64rem; }
+  .primary-action { padding: 9px 10px; font-size: .55rem; }
+}
