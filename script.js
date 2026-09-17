@@ -62,15 +62,10 @@ function scrollProjectPhotos(wrapperId, direction) {
 document.addEventListener('DOMContentLoaded', function() {
 
     // Agency-style entrance, page progress, and image viewing experience
-    const pageLoader = document.querySelector('.page-loader');
     const scrollProgress = document.querySelector('.scroll-progress');
     const lightbox = document.getElementById('image-lightbox');
     const navToggle = document.querySelector('.nav-toggle');
     const primaryNavigation = document.getElementById('primary-navigation');
-
-    requestAnimationFrame(() => {
-        window.setTimeout(() => pageLoader?.classList.add('is-hidden'), 550);
-    });
 
     function updateScrollProgress() {
         if (!scrollProgress) return;
@@ -108,22 +103,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', () => {
         if (window.innerWidth > 768) setNavigationOpen(false);
     });
-
-    // Subtle pointer depth on the cutout portrait; disabled for touch and reduced motion.
-    const heroPortrait = document.querySelector('.hero-portrait');
-    const portraitImage = heroPortrait?.querySelector('.profile-photo img');
-    const allowsMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (heroPortrait && portraitImage && allowsMotion && window.matchMedia('(pointer: fine)').matches) {
-        heroPortrait.addEventListener('pointermove', event => {
-            const bounds = heroPortrait.getBoundingClientRect();
-            const x = (event.clientX - bounds.left) / bounds.width - 0.5;
-            const y = (event.clientY - bounds.top) / bounds.height - 0.5;
-            portraitImage.style.transform = `translate(${x * 9}px, ${y * 6 + 2}px)`;
-        });
-        heroPortrait.addEventListener('pointerleave', () => {
-            portraitImage.style.transform = 'translate(0, 2px)';
-        });
-    }
 
     // Make each visual gallery draggable while retaining buttons, snapping, and keyboard access.
     document.querySelectorAll('.photo-collage-wrapper').forEach(gallery => {
@@ -194,9 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const openImage = () => {
                 activeGalleryImage = image;
-                lightboxImage.src = image.currentSrc || image.src;
-                lightboxImage.alt = image.alt;
-                lightboxCaption.textContent = image.alt;
+                renderLightboxImage(index);
                 lightbox.showModal();
             };
 
@@ -209,6 +186,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
+        previousButton.addEventListener('click', () => renderLightboxImage(activeImageIndex - 1));
+        nextButton.addEventListener('click', () => renderLightboxImage(activeImageIndex + 1));
         closeButton.addEventListener('click', () => lightbox.close());
         lightbox.addEventListener('click', event => {
             if (event.target === lightbox) lightbox.close();
@@ -217,6 +196,10 @@ document.addEventListener('DOMContentLoaded', function() {
             lightboxImage.removeAttribute('src');
             activeGalleryImage?.focus();
             activeGalleryImage = null;
+        });
+        lightbox.addEventListener('keydown', event => {
+            if (event.key === 'ArrowLeft') renderLightboxImage(activeImageIndex - 1);
+            if (event.key === 'ArrowRight') renderLightboxImage(activeImageIndex + 1);
         });
     }
 

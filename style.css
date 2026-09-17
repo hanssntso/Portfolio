@@ -1649,6 +1649,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body { background: var(--cream); }
+.skip-link { position: fixed; top: 12px; left: 12px; z-index: 10000; padding: 12px 18px; background: var(--cream); color: #151515; font: 700 .8rem var(--font-body); transform: translateY(-160%); transition: transform .2s ease; }
+.skip-link:focus { transform: translateY(0); }
+:focus-visible { outline: 3px solid var(--warm-brown); outline-offset: 4px; }
+.project-dark :focus-visible, .hero-section :focus-visible { outline-color: var(--bronze); }
 .container { max-width: 1380px; padding-inline: clamp(22px, 5vw, 76px); }
 section { border-bottom: 1px solid var(--line); }
 .section-title {
@@ -1681,7 +1685,8 @@ section { border-bottom: 1px solid var(--line); }
 .hero-services { opacity: .55; font-size: .9rem; }
 .hero-actions { display: flex; align-items: center; gap: 28px; margin-top: 38px; }
 .primary-action { background: var(--warm-brown); color: #151515; padding: 18px 24px; font: 700 .8rem var(--font-heading); text-transform: uppercase; letter-spacing: .06em; }
-.primary-action span { margin-left: 18px; }
+.primary-action b, .text-action b { display: inline-block; margin-left: 18px; font: inherit; transition: transform .25s ease; }
+.primary-action:hover b, .text-action:hover b { transform: translate(4px,-4px); }
 .text-action { border-bottom: 1px solid rgba(255,255,255,.4); padding-bottom: 7px; font-size: .9rem; }
 .hero-portrait { position: relative; z-index: 1; }
 .profile-photo { width: 100%; height: min(58vh,640px); border: 0; border-radius: 2px; margin: 0; box-shadow: none; background: #292925; }
@@ -1735,7 +1740,6 @@ section { border-bottom: 1px solid var(--line); }
 }
 
 @media (max-width: 768px) {
-    .main-nav .nav-links li:nth-child(3), .main-nav .nav-links li:nth-child(4), .main-nav .nav-links li:nth-child(6) { display: none; }
     .nav-container { justify-content: space-between; }
     .hero-section { padding-top: 115px; }
     .hero-name { font-size: clamp(3.2rem,16vw,5.2rem); }
@@ -1852,6 +1856,100 @@ section[data-section-number]::before { content: attr(data-section-number); posit
     .project-block .block-title { margin-bottom: 25px; }
     .project-gallery { --gallery-size: min(78vw,330px); --gallery-columns: 1; }
     .experience-item { grid-template-columns: 1fr; gap: 18px; }
+}
+
+/* ===================================
+   PROFESSIONAL ENGINEERING REFINEMENT
+   Quiet, precise and content-first
+   =================================== */
+:root {
+    --deep-navy: #17324d;
+    --navy-accent: #24455f;
+    --warm-brown: #b67a35;
+    --bronze: #c89455;
+    --cream: #f5f6f3;
+    --light-gray: #dfe4e5;
+    --dark-gray: #26343d;
+    --accent-gold: #b67a35;
+    --line: rgba(23,50,77,.16);
+    --font-heading: 'IBM Plex Sans', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+}
+
+body { background: #f5f6f3; color: var(--dark-gray); }
+.container { max-width: 1240px; padding-inline: clamp(22px,4vw,58px); }
+section { padding-block: clamp(72px,8vw,108px); }
+section[data-section-number]::before { top: 28px; left: max(22px,calc((100vw - 1240px)/2 + 58px)); color: var(--deep-navy); opacity: .48; }
+.project-dark[data-section-number]::before { color: white; }
+.section-title { max-width: 800px; margin-bottom: 42px; font-size: clamp(2rem,4vw,3.8rem); line-height: 1.04; letter-spacing: -.035em; text-transform: none; }
+
+.main-nav { padding: 14px 0; background: rgba(245,246,243,.94); border-bottom: 1px solid var(--line); backdrop-filter: blur(12px); }
+.main-nav::after { display: none; }
+.main-nav.nav-scrolled { padding: 10px 0; background: rgba(245,246,243,.97); box-shadow: 0 8px 30px rgba(23,50,77,.07); }
+.nav-brand, .nav-link { color: var(--deep-navy); }
+.brand-mark { background: var(--deep-navy); color: white; border-radius: 3px; }
+.nav-link { font-size: .72rem; letter-spacing: .08em; }
+.nav-link:hover, .nav-link.active { color: var(--warm-brown); }
+.lang-switcher-btn { border-color: rgba(23,50,77,.25); background: white; }
+
+.hero-section { min-height: min(900px,100svh); padding: 130px 0 38px; background: #eef1ef; color: var(--deep-navy); }
+.hero-section::before { display: none; }
+.hero-content { grid-template-columns: minmax(0,1.1fr) minmax(330px,.72fr); gap: clamp(40px,7vw,90px); }
+.hero-kicker { margin-bottom: 20px; color: var(--warm-brown); font-size: .7rem; }
+.hero-name { max-width: 760px; margin-bottom: 28px; color: var(--deep-navy); font-size: clamp(3rem,6vw,5.8rem); line-height: .91; letter-spacing: -.055em; }
+.hero-name span { color: var(--deep-navy); }
+.hero-title { color: var(--warm-brown); font-size: .82rem; }
+.hero-tagline { max-width: 570px; color: var(--dark-gray); font-size: clamp(1rem,1.3vw,1.2rem); line-height: 1.65; opacity: 1; }
+.hero-services { color: #66747d; opacity: 1; }
+.primary-action { background: var(--deep-navy); color: white; }
+.text-action { color: var(--deep-navy); border-color: rgba(23,50,77,.4); }
+.hero-portrait { min-height: 560px; overflow: hidden; border-bottom: 1px solid rgba(23,50,77,.25); background-color: #dde5e7; background-image: linear-gradient(rgba(23,50,77,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(23,50,77,.055) 1px,transparent 1px); background-size: 28px 28px; }
+.hero-portrait::before, .hero-portrait::after { display: none; }
+.profile-photo { width: min(96%,500px); height: auto; background: transparent !important; }
+.profile-photo img { height: auto; object-fit: contain; filter: drop-shadow(0 18px 18px rgba(23,50,77,.2)); transform: none; }
+.portrait-caption { left: 14px; bottom: 12px; padding: 5px 8px; background: rgba(245,246,243,.86); color: var(--deep-navy); }
+.availability-badge { top: 18px; right: 18px; background: rgba(245,246,243,.9); border-color: rgba(23,50,77,.18); color: var(--deep-navy); }
+.hero-contact { margin-top: 6px; padding-top: 18px; border-color: rgba(23,50,77,.18); }
+.hero-section .contact-logo { filter: brightness(0); }
+.hero-section .contact-link { color: var(--deep-navy); border-color: rgba(23,50,77,.2); background: transparent; }
+.scroll-indicator { color: var(--deep-navy); }
+
+.expertise-strip { padding: 17px 0; background: var(--deep-navy); color: white; }
+.expertise-track { width: 100%; margin-inline: auto; justify-content: center; flex-wrap: wrap; animation: none; gap: 22px; transform: none; }
+.expertise-track span { font-size: clamp(.76rem,1vw,.9rem); font-weight: 500; letter-spacing: .06em; }
+.expertise-track i { color: var(--bronze); font-size: .65rem; }
+.expertise-track [aria-hidden='true'] { display: none; }
+
+.research-section, .experience-section, .achievements-section, .project-light { background: #f5f6f3; }
+.skills-section, .involvement-section { background: #e7ebea; }
+.project-dark { background: var(--deep-navy); }
+.project-title { font-size: clamp(2rem,3.7vw,3.8rem); line-height: 1.06; letter-spacing: -.035em; }
+.project-header { margin-bottom: 52px; }
+.project-role { color: var(--bronze); }
+.block-title { font-size: .72rem; }
+.approach-item, .result-item { padding: 26px; }
+.approach-icon { font-size: 1.75rem; }
+.result-number { font-size: clamp(2.2rem,4vw,3.8rem); }
+.project-gallery .collage-item img { filter: none; }
+.experience-item { gap: 40px; padding: 28px 0; }
+.achievement-card:hover { transform: translateY(-4px); }
+
+.contact-section { background: var(--deep-navy); color: white; }
+.contact-title { max-width: 850px; color: white; font-size: clamp(2.6rem,6vw,5.8rem); line-height: .98; letter-spacing: -.05em; text-transform: none; }
+.contact-section .contact-link { border-color: rgba(255,255,255,.28); color: white; }
+.contact-section .contact-logo { filter: brightness(0) invert(1); }
+
+@media (max-width: 900px) {
+    .hero-content { grid-template-columns: 1fr; }
+    .hero-portrait { min-height: 500px; width: min(100%,520px); }
+}
+@media (max-width: 768px) {
+    .nav-toggle { color: var(--deep-navy); }
+    .nav-links { background: #f5f6f3; }
+    .nav-link { color: var(--deep-navy); }
+    .hero-section { padding-top: 110px; }
+    .hero-name { font-size: clamp(2.8rem,13vw,4.4rem); }
+    .hero-portrait { min-height: 420px; }
 }
 
 /* Persistent chapter navigation and cinematic gallery viewer */
